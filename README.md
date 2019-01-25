@@ -14,3 +14,5 @@ After you have React Native installed, in your project directory, run this:
 which will install all the dependencies you need to run the app.
 
 After that's done, open Android Studio (as admin on PC), and start your emulator. Then in your command line, run `react-native run-android`. This should start the app in your emulator. You might run into errors, this happens somewhat frequently (particularly in Android development) and you'll have to Google how to sort them out.
+
+![](hist-roots.gif)

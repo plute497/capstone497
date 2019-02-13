@@ -3,6 +3,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.ar" />
 
     <application
       android:name=".MainApplication"
@@ -10,6 +12,11 @@
       android:icon="@mipmap/ic_launcher"
       android:allowBackup="false"
       android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.ar.API_KEY"
+            android:value="AIzaSyDQRFc7K5nWrTUMVw3S2oNz1zJc18c53i0"/>
+
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
@@ -18,9 +25,11 @@
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
+            <category android:name="com.google.intent.category.CARDBOARD" />
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+        <meta-data android:name="com.google.ar.core" android:value="required" />
     </application>
 
 </manifest>

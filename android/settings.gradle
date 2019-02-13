@@ -1,6 +1,15 @@
 rootProject.name = 'studentApp'
+include ':app'
+
 include ':react-native-gesture-handler'
 project(':react-native-gesture-handler').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-gesture-handler/android')
+include ':react_viro'
+project(':react_viro').projectDir = new File(rootProject.projectDir, '../node_modules/react-viro/android/react_viro')
+include ':arcore_client'
+project(':arcore_client').projectDir = new File(rootProject.projectDir, '../node_modules/react-viro/android/arcore_client')
+include ':gvr_common'
+project(':gvr_common').projectDir = new File(rootProject.projectDir, '../node_modules/react-viro/android/gvr_common')
+include ':viro_renderer'
+project(':viro_renderer').projectDir = new File(rootProject.projectDir, '../node_modules/react-viro/android/viro_renderer')
 
-include ':app'
 

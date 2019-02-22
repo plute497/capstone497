@@ -67,14 +67,19 @@ const TabNavigator = createBottomTabNavigator({
  * 
  * Details here: https://reactnavigation.org/docs/en/stack-navigator.html
  */
-const MainNav = createStackNavigator({
+const MainNav = createDrawerNavigator({
     Main: {
-        screen: TabNavigator,
+        screen: MapMain,
         navigationOptions: {
             title: "Historic Roots",
             headerLeft: UserButton
         }
     },
+    Video: VideoMain,
+    Ar: ArMain,
+    Story: StoryMain,
+    Audio: AudioMain,
+    
     VideoView: {
         screen: VideoView,
         navigationOptions: {

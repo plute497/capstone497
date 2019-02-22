@@ -10,11 +10,17 @@ import {
     TouchableOpacity
 } from 'react-native';
 
+import Header from '../header/header-main';
+
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
 const { height, width }= Dimensions.get('window');
 
 export default class MapMain extends Component {
+    static navigationOptions = {
+        drawerLabel: 'Map'
+    };
+
     state = {
         contextTop: height - 130
     };
@@ -36,9 +42,15 @@ export default class MapMain extends Component {
         
     }
 
+    openDrawer = () => {
+        this.props.navigation.openDrawer();
+    }
+
     render() {
         return (
             <View style={{flex: 1}}>
+                <Header navigation={this.props.navigation} />
+
                 <View style={{flex: 1, backgroundColor: 'lightgray', alignItems: 'center', justifyContent: 'center'}}>
                     <Button title="Toggle Pin" style={{elevation: 10}} onPress={this.openContext}></Button>
                 </View>

@@ -17,7 +17,7 @@ import {
  * here we are importing the navigation setup functions,
  * this is a third-party package that is set up to set this up for us
  */
-import { createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator, createStackNavigator, createAppContainer, createDrawerNavigator } from 'react-navigation';
 
 /**
  * These are react components I've written where we'll put our content
@@ -111,8 +111,8 @@ const MainNav = createDrawerNavigator({
         }
     }
 }, {
-    mode: 'modal',
-    headerMode: 'float'
+    drawerType: 'slide',
+    drawerLockMode: 'unlocked'
 });
 
 export const Navigator = createAppContainer(MainNav);

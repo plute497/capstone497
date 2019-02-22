@@ -9,7 +9,7 @@ import React, { Component } from 'react';
  * Anything we want to use, like buttons, text, input fields, everything in the 
  * render function of our class will NEED to be imported
  */
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 
 /**
  * This is a component I wrote, it's in the same directory, (hence the './' part),
@@ -43,7 +43,7 @@ export default class App extends Component {
         return (
             <View style={styles.container}>
                 <View style={{ height: '100%', flex: 1, width: '100%' }}>
-                    <Navigator style={{ flex: 1 }} />
+                    <Navigator ref={ref => this.navigator = ref} style={{ flex: 1 }} />
                 </View>
             </View>
         );

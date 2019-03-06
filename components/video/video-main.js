@@ -22,8 +22,14 @@ export default class VideoMain extends Component {
 
     componentDidMount() {
         FetchVideos().then(res => {
-            this.setState({videos: res, loading: false});
-        })
+            if(res.error) {
+                console.log(res);
+            } else {
+                this.setState({videos: res, loading: false});
+            }
+        }).catch(e => {
+            console.log(e);
+        });
     }
 
     openVideo = () => {
@@ -46,9 +52,9 @@ export default class VideoMain extends Component {
     }
 
     render() {
+        console.log(this.state);
         return (
             <View style={{flex: 1, backgroundColor: '#eee', justifyContent: 'center', alignItems: 'center'}}>
-                <Header navigation={this.props.navigation} />
                 {this.state.loading ? (
                     <ActivityIndicator size={'large'} animating={true} />
                 ) : (

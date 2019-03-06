@@ -10,6 +10,14 @@ import React, { Component } from 'react';
  * render function of our class will NEED to be imported
  */
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import Header from './components/header/header-main';
+import { NavigationActions } from 'react-navigation';
+
+const navigate = (route) => {
+    return NavigationActions.navigate({
+        routeName: route,
+    });
+} 
 
 /**
  * This is a component I wrote, it's in the same directory, (hence the './' part),
@@ -39,6 +47,10 @@ import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { Navigator } from './Navigator';
 
 export default class App extends Component {
+    state = {
+        navigationSet: false
+    };
+    
     render() {
         return (
             <View style={styles.container}>

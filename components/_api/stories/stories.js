@@ -1,7 +1,7 @@
 let api = "http://142.93.27.45:8080";
 
-export const FetchVideos = () => {
-    return fetch(api + "/video/fetch-videos", {
+export const FetchStories = () => {
+    return fetch(api + "/stories/fetch-stories", {
         method: 'post',
         headers: {
             'Accept': 'application/json',

@@ -12,7 +12,7 @@ export default class ArMain extends Component {
 
     render() {
         return (
-            <View style={{flex: 1, backgroundColor: 'green', justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{flex: 1, backgroundColor: '#eeeeee', justifyContent: 'center', alignItems: 'center'}}>
                 <Text>Ar List</Text>
                 <Button onPress={this.openAr} title="Go to ar" />
             </View>

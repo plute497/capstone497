@@ -9,7 +9,7 @@ export default class Header extends Component {
     render() {
         return (
             <View style={{height: 50, width: '100%', elevation: 10, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', backgroundColor: '#fff'}}>
-                <TouchableOpacity onPress={this.props.navigation.openDrawer}>
+                <TouchableOpacity onPress={/*this.props.navigation.openDrawer*/() => {}}>
                     <Text>Menu</Text>
                 </TouchableOpacity>
                 <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>

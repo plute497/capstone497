@@ -17,12 +17,13 @@ import {
  * here we are importing the navigation setup functions,
  * this is a third-party package that is set up to set this up for us
  */
-import { createBottomTabNavigator, createStackNavigator, createAppContainer, createDrawerNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createStackNavigator, createAppContainer, createDrawerNavigator, DrawerItems } from 'react-navigation';
 
 /**
  * These are react components I've written where we'll put our content
  */
 import MapMain from './components/map/map-main';
+import MapLocation from './components/map/map-location';
 import AudioMain from './components/audio/audio-main';
 import AudioView from './components/audio/audio-view';
 import VideoMain from './components/video/video-main';
@@ -32,6 +33,52 @@ import ArView from './components/ar/ar-view';
 import StoryMain from './components/story/story-main';
 import StoryView from './components/story/story-view';
 import ProfileView from './components/profile/profile-view';
+import SignIn from './components/profile/sign-in';
+import SignOut from './components/profile/sign-out';
+import SignUp from './components/profile/sign-up';
+import SubmitStory from './components/profile/submit-story';
+
+const listenerFunctions = [];
+const onOpenDrawer = (func) => {
+    listenerFunctions.forEach(func => func());
+}
+
+const addDrawerListener = (func) => {
+    listenerFunctions.push(func);
+}
+
+class DrawerContent extends Component {
+    componentDidMount(){
+        addDrawerListener(this.props.navigation.openDrawer);
+    }
+
+    render() {
+        return (
+            <DrawerItems {...this.props} />
+        )        
+    }
+}
+// const DrawerContent = (props) => {
+//     console.log("DrawerContent", props);
+//     return (
+//     <View style={{backgroundColor: 'red', height: 200}}>
+//       <View
+//         style={{
+//           backgroundColor: '#f50057',
+//           height: 140,
+//           alignItems: 'center',
+//           justifyContent: 'center',
+//         }}
+//       >
+//         <Text style={{ color: 'white', fontSize: 30 }}>
+//           Header
+//         </Text>
+//       </View>
+//       <DrawerItems {...props} />
+//     </View>
+//   )}
+  
+
 
 /**
  * I have created a tiny react component here that does just one thing,
@@ -75,44 +122,76 @@ const MainNav = createDrawerNavigator({
             headerLeft: UserButton
         }
     },
+    MapLocation: {
+        screen: MapLocation,
+        navigationOptions: {
+            drawerLabel: () => null
+        },
+    },
     Video: VideoMain,
     Ar: ArMain,
     Story: StoryMain,
     Audio: AudioMain,
-    
+    SignUp: {
+        screen: SignUp,
+        navigationOptions: {
+            title: "Sign Up/in"
+        }
+    },
+    SubmitStory: {
+        screen: SubmitStory,
+        navigationOptions: {
+            title: "Submit Story"
+        }
+    },
     VideoView: {
         screen: VideoView,
         navigationOptions: {
-            title: "Video"
-        }
+            drawerLabel: () => null
+        },
     },
     AudioView: {
         screen: AudioView,
         navigationOptions: {
-            title: "Audio"
-        }
+            drawerLabel: () => null
+        },
     },
     ArView: {
         screen: ArView,
         navigationOptions: {
-            title: "Augmented Reality"
-        }
+            drawerLabel: () => null
+        },
     },
     StoryView: {
         screen: StoryView,
         navigationOptions: {
-            title: "Story"
-        }
+            drawerLabel: () => null
+        },
     },
-    UserMenu: {
-        screen: ProfileView,
+    SignOut: {
+        screen: SignOut,
         navigationOptions: {
-            title: "User"
+            title: "Sign Out"
         }
     }
 }, {
     drawerType: 'slide',
-    drawerLockMode: 'unlocked'
+    drawerLockMode: 'unlocked',
+    contentComponent: DrawerContent
 });
 
-export const Navigator = createAppContainer(MainNav);
+const Main = createStackNavigator({
+    Root: {
+        screen: MainNav,
+        navigationOptions: () => ({
+            title: "Historic Roots",
+            headerLeft: (
+                <TouchableOpacity onPress={() => onOpenDrawer()}>
+                    <Text>Menu</Text>
+                </TouchableOpacity>
+            )
+        })
+    }
+})
+
+export const Navigator = createAppContainer(Main);

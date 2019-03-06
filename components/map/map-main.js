@@ -28,18 +28,7 @@ export default class MapMain extends Component {
     contextOpen = false;
 
     openContext = () => {
-        
-
-        if(!this.contextOpen) {
-            this.contextOpen = true;
-            LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-            this.setState({ contextTop: 60});    
-        } else {
-            this.contextOpen = false;
-            LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-            this.setState({contextTop: height - 130});
-        }
-        
+        this.props.navigation.navigate("MapLocation");
     }
 
     openDrawer = () => {
@@ -49,12 +38,12 @@ export default class MapMain extends Component {
     render() {
         return (
             <View style={{flex: 1}}>
-                <Header navigation={this.props.navigation} />
+                {/* <Header navigation={this.props.navigation} /> */}
 
                 <View style={{flex: 1, backgroundColor: 'lightgray', alignItems: 'center', justifyContent: 'center'}}>
                     <Button title="Toggle Pin" style={{elevation: 10}} onPress={this.openContext}></Button>
                 </View>
-                <View style={{position: 'absolute', top: this.state.contextTop, left: 0, right: 0, height: height, backgroundColor: '#333333',  elevation: 10}}>
+                {/* <View style={{position: 'absolute', top: this.state.contextTop, left: 0, right: 0, height: height, backgroundColor: '#333333',  elevation: 10}}>
                     <View style={{height: height - 190}}>
                     <TouchableOpacity onPress={this.openContext}><View style={{ padding: 10}}><Text>X</Text></View></TouchableOpacity>
                     <ScrollView contentContainerStyle={{paddingBottom: 50}} style={{padding: 40, flex: 0}}>
@@ -79,7 +68,7 @@ export default class MapMain extends Component {
                         
                     </ScrollView>
                     </View>
-                </View>
+                </View> */}
             </View>
         )
     }

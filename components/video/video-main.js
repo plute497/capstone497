@@ -14,6 +14,8 @@ import Header from '../header/header-main';
 
 import { FetchVideos } from '../_api/video/video';
 
+const width = Dimensions.get('window').width;
+
 export default class VideoMain extends Component {
     state = {
         videos: [],
@@ -32,20 +34,22 @@ export default class VideoMain extends Component {
         });
     }
 
-    openVideo = () => {
-        this.props.navigation.navigate("VideoView");
+    openVideo = (video) => {
+        this.props.navigation.navigate("VideoView", video);
     }
 
     renderVideo = (video, i) => {
         return (
-            <TouchableNativeFeedback key={i}>
-                <View style={{flexDirection: 'row', marginBottom: 10, elevation: 3, backgroundColor: '#fff', maxHeight: 100}}>
-                    <Image style={{height: 100, width: 100}} source={{uri: video.thumbnail}} />
-                    <View style={{paddingHorizontal: 15, flex: 1}}>
-                        <Text style={{fontSize: 18, marginTop: 15, marginBottom: 10}}>{video.title}</Text>
-                        <Text numberOfLines={3}>{video.description}</Text>
-                    </View>
+            <TouchableNativeFeedback onPress={() => this.openVideo(video)} key={i}>
+                <View style={{marginBottom: 15, elevation: 3, backgroundColor: '#fff'}}>
+                    <Image style={{minHeight: 300, width: '100%'}} source={{uri: video.thumbnail}} />
+                        
+                        <View style={{paddingHorizontal: 15, flex: 1, backgroundColor: '#fff', paddingBottom: 15}}>
+                            <Text style={{fontSize: 18, marginTop: 15, marginBottom: 10}}>{video.title}</Text>
+                            <Text numberOfLines={3}>{video.description}</Text>
+                        </View>
                 </View>
+                
             </TouchableNativeFeedback>
             
         )

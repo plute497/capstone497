@@ -32,13 +32,13 @@ export default class StoryMain extends Component {
         });
     }
 
-    openStory = () => {
-        this.props.navigation.navigate("StoryView");
+    openStory = (story) => {
+        this.props.navigation.navigate("StoryView", story);
     }
 
     renderStory = (story, i) => {
         return (
-            <TouchableNativeFeedback key={i}>
+            <TouchableNativeFeedback onPress={() => this.openStory(story)} key={i}>
                 <View style={{flexDirection: 'row', marginBottom: 10, elevation: 3, backgroundColor: '#fff', maxHeight: 100}}>
                     <Image style={{height: 100, width: 100}} source={{uri: story.thumbnail}} />
                     <View style={{paddingHorizontal: 15, flex: 1}}>

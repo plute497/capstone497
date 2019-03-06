@@ -32,13 +32,13 @@ export default class AudioMain extends Component {
         });
     }
 
-    openAudio = () => {
-        this.props.navigation.navigate("AudioView");
+    openAudio = (audio) => {
+        this.props.navigation.navigate("AudioView", audio);
     }
 
     renderAudio = (audio, i) => {
         return (
-            <TouchableNativeFeedback key={i}>
+            <TouchableNativeFeedback onPress={() => this.openAudio(audio)} key={i}>
                 <View style={{flexDirection: 'row', marginBottom: 10, elevation: 3, backgroundColor: '#fff', maxHeight: 100}}>
                     <Image style={{height: 100, width: 100}} source={{uri: audio.thumbnail}} />
                     <View style={{paddingHorizontal: 15, flex: 1}}>

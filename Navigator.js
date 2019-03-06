@@ -122,12 +122,6 @@ const MainNav = createDrawerNavigator({
             headerLeft: UserButton
         }
     },
-    MapLocation: {
-        screen: MapLocation,
-        navigationOptions: {
-            drawerLabel: () => null
-        },
-    },
     Video: VideoMain,
     Ar: ArMain,
     Story: StoryMain,
@@ -143,30 +137,6 @@ const MainNav = createDrawerNavigator({
         navigationOptions: {
             title: "Submit Story"
         }
-    },
-    VideoView: {
-        screen: VideoView,
-        navigationOptions: {
-            drawerLabel: () => null
-        },
-    },
-    AudioView: {
-        screen: AudioView,
-        navigationOptions: {
-            drawerLabel: () => null
-        },
-    },
-    ArView: {
-        screen: ArView,
-        navigationOptions: {
-            drawerLabel: () => null
-        },
-    },
-    StoryView: {
-        screen: StoryView,
-        navigationOptions: {
-            drawerLabel: () => null
-        },
     },
     SignOut: {
         screen: SignOut,
@@ -191,7 +161,37 @@ const Main = createStackNavigator({
                 </TouchableOpacity>
             )
         })
-    }
+    },
+    MapLocation: {
+        screen: MapLocation,
+        navigationOptions: {
+            drawerLabel: () => null
+        },
+    },
+    VideoView: {
+        screen: VideoView,
+        navigationOptions: {
+            header: null
+        },
+    },
+    AudioView: {
+        screen: AudioView,
+        navigationOptions: {
+            header: null
+        },
+    },
+    ArView: {
+        screen: ArView,
+        navigationOptions: {
+            drawerLabel: () => null
+        },
+    },
+    StoryView: {
+        screen: StoryView,
+        navigationOptions: {
+            drawerLabel: () => null
+        },
+    },
 })
 
 export const Navigator = createAppContainer(Main);

@@ -1,15 +1,47 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text
+    Text,
+    Image,
+    Dimensions,
+    TouchableOpacity,
+    ScrollView
 } from 'react-native';
 
+const width = Dimensions.get('window').width;
+
 export default class AudioView extends Component {
+    state = {
+        thumbnail: null,
+        title: "",
+        description: "",
+        location: "",
+        loaded: false
+    }
+    componentDidMount() {
+        let { navigation } = this.props;
+
+        this.setState({
+            thumbnail: navigation.getParam('thumbnail'),
+            title: navigation.getParam('title'),
+            description: navigation.getParam('description'),
+            location: navigation.getParam('location'),
+            loaded: true
+        }, () => console.log(this.state.thumbnail));
+    }
     render() {
-        return (
+        return this.state.loaded ? (
             <View style={{flex: 1, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center'}}>
-                <Text>Audio View</Text>
+                <View style={{backgroundColor: '#000000', height: 200, width: width}}>
+                    <TouchableOpacity style={{position: 'absolute', top: 0, left: 0}} onPress={() => this.props.navigation.goBack()} style={{padding: 15}}>
+                        <Text style={{color: '#fff'}}>▼</Text>
+                    </TouchableOpacity>
+                </View>
+                <ScrollView contentContainerStyle={{padding: 15}}>
+                    <Text style={{fontSize: 24, marginBottom: 15}}>{this.state.title}</Text>
+                    <Text style={{marginTop: 15}}>{this.state.description}</Text>
+                </ScrollView>
             </View>
-        )
+        ) : <View></View>
     }
 }

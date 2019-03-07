@@ -165,6 +165,10 @@ android {
             }
         }
     }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -177,7 +181,7 @@ dependencies {
     compile project(':gvr_common')
     compile project(path: ':viro_renderer')
     compile project(path: ':react_viro')
-    compile 'com.google.android.exoplayer:exoplayer:2.7.1'
+    compile 'com.google.android.exoplayer:exoplayer:2.9.3'
     compile 'com.google.protobuf.nano:protobuf-javanano:3.0.0-alpha-7'
     compile 'com.amazonaws:aws-android-sdk-core:2.2.+'
     compile 'com.amazonaws:aws-android-sdk-ddb:2.2.+'

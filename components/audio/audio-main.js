@@ -6,7 +6,7 @@ import {
     Image,
     ActivityIndicator,
     ScrollView,
-    TouchableNativeFeedback,
+    TouchableOpacity,
     Dimensions
 } from 'react-native';
 
@@ -38,7 +38,7 @@ export default class AudioMain extends Component {
 
     renderAudio = (audio, i) => {
         return (
-            <TouchableNativeFeedback onPress={() => this.openAudio(audio)} key={i}>
+            <TouchableOpacity onPress={() => this.openAudio(audio)} key={i}>
                 <View style={{flexDirection: 'row', marginBottom: 10, elevation: 3, backgroundColor: '#fff', maxHeight: 100}}>
                     <Image style={{height: 100, width: 100}} source={{uri: audio.thumbnail}} />
                     <View style={{paddingHorizontal: 15, flex: 1}}>
@@ -46,7 +46,7 @@ export default class AudioMain extends Component {
                         <Text numberOfLines={3}>{audio.description}</Text>
                     </View>
                 </View>
-            </TouchableNativeFeedback>
+            </TouchableOpacity>
             
         )
     }

@@ -6,7 +6,7 @@ import {
     Image,
     ActivityIndicator,
     ScrollView,
-    TouchableNativeFeedback,
+    TouchableOpacity,
     Dimensions
 } from 'react-native';
 
@@ -40,7 +40,7 @@ export default class VideoMain extends Component {
 
     renderVideo = (video, i) => {
         return (
-            <TouchableNativeFeedback onPress={() => this.openVideo(video)} key={i}>
+            <TouchableOpacity onPress={() => this.openVideo(video)} key={i}>
                 <View style={{marginBottom: 15, elevation: 3, backgroundColor: '#fff'}}>
                     <Image style={{minHeight: 300, width: '100%'}} source={{uri: video.thumbnail}} />
                         
@@ -50,7 +50,7 @@ export default class VideoMain extends Component {
                         </View>
                 </View>
                 
-            </TouchableNativeFeedback>
+            </TouchableOpacity>
             
         )
     }

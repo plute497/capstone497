@@ -192,6 +192,8 @@ const Main = createStackNavigator({
             drawerLabel: () => null
         },
     },
+}, {
+    mode: 'modal'
 })
 
 export const Navigator = createAppContainer(Main);

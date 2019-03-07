@@ -6,7 +6,7 @@ import {
     Image,
     ActivityIndicator,
     ScrollView,
-    TouchableNativeFeedback,
+    TouchableOpacity,
     Dimensions
 } from 'react-native';
 
@@ -38,7 +38,7 @@ export default class StoryMain extends Component {
 
     renderStory = (story, i) => {
         return (
-            <TouchableNativeFeedback onPress={() => this.openStory(story)} key={i}>
+            <TouchableOpacity onPress={() => this.openStory(story)} key={i}>
                 <View style={{flexDirection: 'row', marginBottom: 10, elevation: 3, backgroundColor: '#fff', maxHeight: 100}}>
                     <Image style={{height: 100, width: 100}} source={{uri: story.thumbnail}} />
                     <View style={{paddingHorizontal: 15, flex: 1}}>
@@ -46,7 +46,7 @@ export default class StoryMain extends Component {
                         <Text numberOfLines={3}>{story.description}</Text>
                     </View>
                 </View>
-            </TouchableNativeFeedback>
+            </TouchableOpacity>
             
         )
     }

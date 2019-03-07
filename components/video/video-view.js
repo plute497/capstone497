@@ -8,6 +8,8 @@ import {
     ScrollView
 } from 'react-native';
 
+import Video from 'react-native-video';
+
 const width = Dimensions.get('window').width;
 
 export default class VideoView extends Component {
@@ -29,13 +31,34 @@ export default class VideoView extends Component {
             loaded: true
         }, () => console.log(this.state.thumbnail));
     }
+
+    togglePaused = () => {
+        //set paused to the opposive of itself - effectively toggling it on or off each time this function is called
+        this.setState({paused: !this.state.paused});
+    }
+
     render() {
         return this.state.loaded ? (
             <View style={{flex: 1, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center'}}>
                 <View style={{backgroundColor: '#000000', height: width * (9/16), width: width}}>
+                    <Video 
+                        source={{uri: this.state.location}}
+                        ref={ref => this.video = ref}
+                        paused={this.state.paused}
+                        style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0
+                        }}
+                        />
                     <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{padding: 15}}>
                         <Text style={{color: '#fff'}}>▼</Text>
                     </TouchableOpacity>
+                    <TouchableOpacity 
+                        style={{alignSelf: 'center', backgroundColor: '#fff'}}
+                        onPress={this.togglePaused}><Text>{this.state.paused ? "PLAY" : "PAUSE"}</Text></TouchableOpacity>
                 </View>
                 <ScrollView contentContainerStyle={{padding: 15}}>
                     <Text style={{fontSize: 24, marginBottom: 15}}>{this.state.title}</Text>

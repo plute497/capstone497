@@ -60,7 +60,7 @@ export default class AudioView extends Component {
                     this.playing = true;
                 });
             } else {//the audio file IS playing, so we want to pause it
-                this.audioPlayer.pause((err) => {
+                this.audioPlayer.pause((error) => {
                     if(error) {
                         alert('Could not pause audio file');
                         return;

@@ -40,6 +40,7 @@
 		A08C89359C3AE96CED9BC91C /* Pods_studentApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5F1117F108C793A02DB04D /* Pods_studentApp.framework */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		BC332ED22230E6EE00BB277C /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC332EBC2230E6DC00BB277C /* libRCTVideo.a */; };
+		BCA665C322377D2600604D42 /* libReactNativeAudioToolkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCA665C122377D0D00604D42 /* libReactNativeAudioToolkit.a */; };
 		BCA8CF272237519D0047553C /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCA8CEFF223751880047553C /* libAirMaps.a */; };
 		BCA8CF29223752050047553C /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCA8CF28223752040047553C /* GoogleMapsBase.framework */; };
 		BCA8CF2C2237521E0047553C /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCA8CF2A2237521D0047553C /* GoogleMaps.framework */; };
@@ -351,6 +352,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNGestureHandler;
 		};
+		BCA665C022377D0D00604D42 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCA6659522377D0D00604D42 /* ReactNativeAudioToolkit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5E8FD9831D269F5D00CF68CC;
+			remoteInfo = ReactNativeAudioToolkit;
+		};
 		BCA8CEFE223751880047553C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCA8CEFA223751880047553C /* AirMaps.xcodeproj */;
@@ -393,6 +401,7 @@
 		8B5F1117F108C793A02DB04D /* Pods_studentApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_studentApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		BC332EA62230E6DC00BB277C /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/ios/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
+		BCA6659522377D0D00604D42 /* ReactNativeAudioToolkit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeAudioToolkit.xcodeproj; path = "../node_modules/react-native-audio-toolkit/ios/ReactNativeAudioToolkit/ReactNativeAudioToolkit.xcodeproj"; sourceTree = "<group>"; };
 		BCA8CEFA223751880047553C /* AirMaps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		BCA8CF28223752040047553C /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsBase.framework; path = GoogleMaps/GoogleMapsBase.framework; sourceTree = "<group>"; };
 		BCA8CF2A2237521D0047553C /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = GoogleMaps/GoogleMaps.framework; sourceTree = SOURCE_ROOT; };
@@ -461,6 +470,7 @@
 				F8D6767273C6414A97177612 /* libRNGestureHandler.a in Frameworks */,
 				BC332ED22230E6EE00BB277C /* libRCTVideo.a in Frameworks */,
 				BCA8CF272237519D0047553C /* libAirMaps.a in Frameworks */,
+				BCA665C322377D2600604D42 /* libReactNativeAudioToolkit.a in Frameworks */,
 				A08C89359C3AE96CED9BC91C /* Pods_studentApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -665,6 +675,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				BCA6659522377D0D00604D42 /* ReactNativeAudioToolkit.xcodeproj */,
 				BCA8CEFA223751880047553C /* AirMaps.xcodeproj */,
 				BC332EA62230E6DC00BB277C /* RCTVideo.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -749,6 +760,14 @@
 			isa = PBXGroup;
 			children = (
 				BC3EF32622289CDF00C5FD0A /* libRNGestureHandler.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BCA6659622377D0D00604D42 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BCA665C122377D0D00604D42 /* libReactNativeAudioToolkit.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -930,6 +949,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = BCA6659622377D0D00604D42 /* Products */;
+					ProjectRef = BCA6659522377D0D00604D42 /* ReactNativeAudioToolkit.xcodeproj */;
 				},
 				{
 					ProductGroup = BC3EF32222289CDF00C5FD0A /* Products */;
@@ -1218,6 +1241,13 @@
 			fileType = archive.ar;
 			path = libRNGestureHandler.a;
 			remoteRef = BC3EF32522289CDF00C5FD0A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BCA665C122377D0D00604D42 /* libReactNativeAudioToolkit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReactNativeAudioToolkit.a;
+			remoteRef = BCA665C022377D0D00604D42 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		BCA8CEFF223751880047553C /* libAirMaps.a */ = {

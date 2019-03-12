@@ -173,6 +173,7 @@ android {
 
 dependencies {
     compile project(':react-native-maps')
+    compile project(':react-native-audio-toolkit')
     compile project(':react-native-video')
     compile project(':react-native-gesture-handler')
     implementation fileTree(dir: "libs", include: ["*.jar"])

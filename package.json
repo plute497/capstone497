@@ -10,6 +10,7 @@
   "dependencies": {
     "react": "16.6.3",
     "react-native": "0.57.8",
+    "react-native-audio-toolkit": "^1.0.6",
     "react-native-gesture-handler": "^1.0.12",
     "react-native-maps": "^0.23.0",
     "react-native-video": "^4.4.0",

@@ -46,7 +46,13 @@ export default class MapMain extends Component {
                 </View> */}
                 <MapView
                     provider={PROVIDER_GOOGLE}
-                    style={{flex: 1}}
+                    style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}
+                    region={{
+         latitude: 37.78825,
+         longitude: -122.4324,
+         latitudeDelta: 0.015,
+         longitudeDelta: 0.0121,
+       }}
                 ></MapView>
                 {/* <View style={{position: 'absolute', top: this.state.contextTop, left: 0, right: 0, height: height, backgroundColor: '#333333',  elevation: 10}}>
                     <View style={{height: height - 190}}>

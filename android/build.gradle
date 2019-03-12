@@ -7,6 +7,7 @@ buildscript {
         compileSdkVersion = 27
         targetSdkVersion = 26
         supportLibVersion = "27.1.1"
+        androidMapsUtilsVersion = "0.5+"
     }
     repositories {
         google()

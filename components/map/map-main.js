@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import Header from '../header/header-main';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
@@ -40,9 +41,13 @@ export default class MapMain extends Component {
             <View style={{flex: 1}}>
                 {/* <Header navigation={this.props.navigation} /> */}
 
-                <View style={{flex: 1, backgroundColor: 'lightgray', alignItems: 'center', justifyContent: 'center'}}>
+                {/* <View style={{flex: 1, backgroundColor: 'lightgray', alignItems: 'center', justifyContent: 'center'}}>
                     <Button title="Toggle Pin" style={{elevation: 10}} onPress={this.openContext}></Button>
-                </View>
+                </View> */}
+                <MapView
+                    provider={PROVIDER_GOOGLE}
+                    style={{flex: 1}}
+                ></MapView>
                 {/* <View style={{position: 'absolute', top: this.state.contextTop, left: 0, right: 0, height: height, backgroundColor: '#333333',  elevation: 10}}>
                     <View style={{height: height - 190}}>
                     <TouchableOpacity onPress={this.openContext}><View style={{ padding: 10}}><Text>X</Text></View></TouchableOpacity>

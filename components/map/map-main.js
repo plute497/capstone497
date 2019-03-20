@@ -1,50 +1,50 @@
 import React, { Component } from 'react';
 import {
-    View,
-    Text,
-    LayoutAnimation,
-    Button,
-    UIManager,
-    ScrollView,
-    Dimensions,
-    TouchableOpacity
+	View,
+	Text,
+	LayoutAnimation,
+	Button,
+	UIManager,
+	ScrollView,
+	Dimensions,
+	TouchableOpacity
 } from 'react-native';
 
 import Header from '../header/header-main';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+// import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
-const { height, width }= Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 export default class MapMain extends Component {
-    static navigationOptions = {
-        drawerLabel: 'Map'
-    };
+	static navigationOptions = {
+		drawerLabel: 'Map'
+	};
 
-    state = {
-        contextTop: height - 130
-    };
+	state = {
+		contextTop: height - 130
+	};
 
-    contextOpen = false;
+	contextOpen = false;
 
-    openContext = () => {
-        this.props.navigation.navigate("MapLocation");
-    }
+	openContext = () => {
+		this.props.navigation.navigate("MapLocation");
+	}
 
-    openDrawer = () => {
-        this.props.navigation.openDrawer();
-    }
+	openDrawer = () => {
+		this.props.navigation.openDrawer();
+	}
 
-    render() {
-        return (
-            <View style={{flex: 1}}>
-                {/* <Header navigation={this.props.navigation} /> */}
+	render() {
+		return (
+			<View style={{ flex: 1 }}>
+				{/* <Header navigation={this.props.navigation} /> */}
 
-                {/* <View style={{flex: 1, backgroundColor: 'lightgray', alignItems: 'center', justifyContent: 'center'}}>
+				{/* <View style={{flex: 1, backgroundColor: 'lightgray', alignItems: 'center', justifyContent: 'center'}}>
                     <Button title="Toggle Pin" style={{elevation: 10}} onPress={this.openContext}></Button>
                 </View> */}
-                <MapView
+				{/* <MapView
                     provider={PROVIDER_GOOGLE}
                     style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}
                     region={{
@@ -53,8 +53,8 @@ export default class MapMain extends Component {
          latitudeDelta: 0.015,
          longitudeDelta: 0.0121,
        }}
-                ></MapView>
-                {/* <View style={{position: 'absolute', top: this.state.contextTop, left: 0, right: 0, height: height, backgroundColor: '#333333',  elevation: 10}}>
+                ></MapView> */}
+				{/* <View style={{position: 'absolute', top: this.state.contextTop, left: 0, right: 0, height: height, backgroundColor: '#333333',  elevation: 10}}>
                     <View style={{height: height - 190}}>
                     <TouchableOpacity onPress={this.openContext}><View style={{ padding: 10}}><Text>X</Text></View></TouchableOpacity>
                     <ScrollView contentContainerStyle={{paddingBottom: 50}} style={{padding: 40, flex: 0}}>
@@ -80,7 +80,7 @@ export default class MapMain extends Component {
                     </ScrollView>
                     </View>
                 </View> */}
-            </View>
-        )
-    }
+			</View>
+		)
+	}
 }

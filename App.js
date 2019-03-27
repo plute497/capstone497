@@ -13,11 +13,12 @@ import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import Header from './components/header/header-main';
 import { NavigationActions } from 'react-navigation';
 
+
 const navigate = (route) => {
-    return NavigationActions.navigate({
-        routeName: route,
-    });
-} 
+	return NavigationActions.navigate({
+		routeName: route,
+	});
+}
 
 /**
  * This is a component I wrote, it's in the same directory, (hence the './' part),
@@ -47,19 +48,19 @@ const navigate = (route) => {
 import { Navigator } from './Navigator';
 
 export default class App extends Component {
-    state = {
-        navigationSet: false
-    };
-    
-    render() {
-        return (
-            <View style={styles.container}>
-                <View style={{ height: '100%', flex: 1, width: '100%' }}>
-                    <Navigator ref={ref => this.navigator = ref} style={{ flex: 1 }} />
-                </View>
-            </View>
-        );
-    }
+	state = {
+		navigationSet: false
+	};
+
+	render() {
+		return (
+			<View style={styles.container}>
+				<View style={{ height: '100%', flex: 1, width: '100%' }}>
+					<Navigator ref={ref => this.navigator = ref} style={{ flex: 1 }} />
+				</View>
+			</View>
+		);
+	}
 }
 
 /**
@@ -69,10 +70,10 @@ export default class App extends Component {
  * so get a handle on that: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
  */
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        backgroundColor: '#eeffee',
-    }
+	container: {
+		flex: 1,
+		justifyContent: 'flex-start',
+		alignItems: 'flex-start',
+		backgroundColor: '#eeffee',
+	}
 });

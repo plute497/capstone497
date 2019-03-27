@@ -39,8 +39,12 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Use for AR</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Needed to view map location</string>
 	<key>NSLocationUsageDescription</key>
 	<string>Use for Map Location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Needed to view map location</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

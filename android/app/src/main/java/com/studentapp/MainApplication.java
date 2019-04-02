@@ -3,7 +3,6 @@ package com.studentapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.airbnb.android.react.maps.MapsPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.facebook.react.ReactNativeHost;
@@ -12,6 +11,7 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 //import com.viromedia.bridge.ReactViroPackage;
 import com.futurice.rctaudiotoolkit.AudioPackage;
+import com.mapbox.rctmgl.RCTMGLPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
               new AudioPackage(),
-            new MapsPackage(),
+              new RCTMGLPackage(),
             new ReactVideoPackage(),
             new RNGestureHandlerPackage()
 //              new ReactViroPackage(ReactViroPackage.ViroPlatform.valueOf(BuildConfig.VR_PLATFORM))

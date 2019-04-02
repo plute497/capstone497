@@ -21,7 +21,8 @@ const { height, width } = Dimensions.get('window');
 
 const access_token = "sk.eyJ1IjoiY2FyZC1iIiwiYSI6ImNqdHJzcTJpaTB0azM0ZG0yYWxnNGhicTgifQ.jO1HLoCY0hE27lpd7kPTGA";
 
-// MapboxGL.setAccessToken(access_token);
+MapboxGL.setAccessToken(access_token);
+
 
 function onSortOptions(a, b) {
 	if (a.label < b.label) {

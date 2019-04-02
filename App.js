@@ -9,9 +9,10 @@ import React, { Component } from 'react';
  * Anything we want to use, like buttons, text, input fields, everything in the 
  * render function of our class will NEED to be imported
  */
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text, AsyncStorage, SafeAreaView } from 'react-native';
 import Header from './components/header/header-main';
 import { NavigationActions } from 'react-navigation';
+import * as jwtDecode from 'jwt-decode';
 
 const navigate = (route) => {
     return NavigationActions.navigate({
@@ -48,16 +49,51 @@ import { Navigator } from './Navigator';
 
 export default class App extends Component {
     state = {
-        navigationSet: false
+        navigationSet: false,
+        token: "",
+        user: {
+            unset: true
+        }
     };
+
+    //build in react method, calls right when this component wakes up, which is right on app open
+    componentDidMount() {
+        this.checkSignedIn();
+    }
+
+    setToken = (token) => {
+        let user = jwtDecode(token);
+
+        AsyncStorage.setItem('token', token);
+
+        this.setState({token: token, user: user});
+    }
+
+    checkSignedIn = async () => {
+        let token = await AsyncStorage.getItem('token');
+
+        if(token) {
+            this.setToken(token);
+        }
+    }
+
+    signOut = () => {
+        this.setState({user: {unset: true}, token: ""});
+    }
     
     render() {
         return (
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
                 <View style={{ height: '100%', flex: 1, width: '100%' }}>
-                    <Navigator ref={ref => this.navigator = ref} style={{ flex: 1 }} />
+                    <Navigator 
+                        ref={ref => this.navigator = ref} 
+                        setToken={this.setToken}
+                        signOut={this.signOut}
+                        user={this.state.user}
+                        token={this.state.token}
+                        style={{ flex: 1 }} />
                 </View>
-            </View>
+            </SafeAreaView>
         );
     }
 }

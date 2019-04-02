@@ -9,13 +9,32 @@ import {
 	Dimensions,
 	TouchableOpacity
 } from 'react-native';
+import MapboxGL from '@mapbox/react-native-mapbox-gl';
 
 import Header from '../header/header-main';
+
 // import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
 const { height, width } = Dimensions.get('window');
+
+const access_token = "sk.eyJ1IjoiY2FyZC1iIiwiYSI6ImNqdHJzcTJpaTB0azM0ZG0yYWxnNGhicTgifQ.jO1HLoCY0hE27lpd7kPTGA";
+
+MapboxGL.setAccessToken(access_token);
+
+
+function onSortOptions(a, b) {
+	if (a.label < b.label) {
+		return -1;
+	}
+
+	if (a.label > b.label) {
+		return 1;
+	}
+
+	return 0;
+}
 
 export default class MapMain extends Component {
 	static navigationOptions = {
@@ -25,6 +44,17 @@ export default class MapMain extends Component {
 	state = {
 		contextTop: height - 130
 	};
+
+	_mapOptions = Object.keys(MapboxGL.StyleURL).map(key => {
+		return {
+			label: key,
+			data: MapboxGL.StyleURL[key],
+		};
+	}).sort(onSortOptions);
+
+	componentDidMount() {
+		console.log(this._mapOptions);
+	}
 
 	contextOpen = false;
 
@@ -39,6 +69,14 @@ export default class MapMain extends Component {
 	render() {
 		return (
 			<View style={{ flex: 1 }}>
+				<MapboxGL.MapView
+					showUserLocation={true}
+					zoomLevel={12}
+					centerCoordinate={[-122.674, 45.626]}
+					userTrackingMode={MapboxGL.UserTrackingModes.Follow}
+					styleURL={"mapbox://styles/card-b/cjtrt57f8310m1fms7zq61bt5"}
+					style={{ flex: 1 }}
+				/>
 				{/* <Header navigation={this.props.navigation} /> */}
 
 				{/* <View style={{flex: 1, backgroundColor: 'lightgray', alignItems: 'center', justifyContent: 'center'}}>

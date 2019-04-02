@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { PureComponent } from 'react';
 import {
     SafeAreaView,
     View,
@@ -10,69 +10,97 @@ import {
 
 import { FetchSignUp } from '../_api/user/user';
 
-export default function SignUp(props) {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
-    const [loading, setLoading] = useState(false);
+export default class SignUp extends PureComponent {
+    state = {
+        email: "",
+        password: "",
+        firstName: "",
+        lastName: "",
+        errorMessage: "",
+        loading: false
+    }
 
-    async function submitSignUp() {
+    submitSignUp = async () => {
+        let { email, password, firstName, lastName } = this.state;
+
         if(email, password, firstName, lastName) {
-            setErrorMessage("");
+            this.setState({errorMessage: ""});
 
             try {
-                setLoading(true);
+                this.setState({loading: true});
                 let user = await FetchSignUp(email, password, firstName, lastName);
-                setLoading(false);
+                this.setState({loading: false});
                 if(user.error) {
-                    setErrorMessage("We're sorry, we ran into an issue with the sign up. Please check your inputs and try again.");
+                    this.setState({errorMessage: "We're sorry, we ran into an issue with the sign up. Please check your inputs and try again."});
                 } else {
                     props.setToken(user.token);
                     props.navigation.navigate("SignUpSuccess");
                 }
             } catch(e) {
-                setErrorMessage("We're sorry, we ran into an issue with the sign up. Please check your inputs and try again.");
+                this.setState({errorMessage: "We're sorry, we ran into an issue with the sign up. Please check your inputs and try again."});
             }
         } else {
-            setErrorMessage("Please ensure you have filled out the entire form.");
+            this.setState({errorMessage: "Please ensure you have filled out the entire form."});
         }
     }
 
-    return (
-        <SafeAreaView style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Text>Sign Up</Text>
-            <TextInput 
-                onChangeText={setFirstName}
-                textContentType="name"
-                placeholder="First Name" />
-            <TextInput 
-                onChangeText={setLastName}
-                textContentType="familyName"
-                placeholder="Last Name" />
-            <TextInput 
-                onChangeText={setEmail}
-                textContentType="emailAddress"
-                placeholder="Email Address" />
-            <TextInput 
-                onChangeText={setPassword}
-                textContentType="password"
-                placeholder="Enter a password" />
-            <TouchableOpacity
-                onPress={submitSignUp}
-                style={{flex: 0, height: 50, backgroundColor: 'blue'}}>
-                {loading ? (
-                    <ActivityIndicator
-                        size="small"
-                        color="#fff" />
-                ) : (
-                    <Text style={{color: '#fff'}}>Sign Up</Text>
-                )}
-            </TouchableOpacity>
-            {errorMessage ? (
-                <Text>{errorMessage}</Text>
-            ) : null}
-        </SafeAreaView>
-    )
+    setFirst = (text) => {
+        this.setState({firstName: text});
+    }
+
+    setLast = (text) => {
+        this.setState({lastName: text});
+    }
+
+    setEmail = (text) => {
+        this.setState({email: text});
+    }
+
+    setPassword = (text) => {
+        this.setState({password: text});
+    }
+
+    render() {
+        return (
+            <SafeAreaView style={{flex: 1}}>
+                <Text>Sign Up</Text>
+                <TextInput 
+                    onChangeText={this.setFirst}
+                    autoCapitalize="words"
+                    underlineColorAndroid="#333"
+                    placeholder="First Name" />
+                <TextInput 
+                    onChangeText={this.setLast}
+                    underlineColorAndroid="#333"
+                    placeholder="Last Name" />
+                <TextInput 
+                    onChangeText={this.setEmail}
+                    underlineColorAndroid="#333"
+                    keyboardType={"email-address"}
+                    autoCapitalize="none"
+                    placeholder="Email Address" />
+                <TextInput 
+                    onChangeText={this.setPassword}
+                    underlineColorAndroid="#333"
+                    secureTextEntry={true}
+                    autoCapitalize="none"
+                    placeholder="Enter a password" />
+                <TouchableOpacity
+                    onPress={this.submitSignUp}
+                    style={{flex: 0, height: 50, backgroundColor: 'blue'}}>
+                    {this.state.loading ? (
+                        <ActivityIndicator
+                            size="small"
+                            color="#fff" />
+                    ) : (
+                        <Text style={{color: '#fff'}}>Sign Up</Text>
+                    )}
+                </TouchableOpacity>
+                {this.state.errorMessage ? (
+                    <Text>{this.state.errorMessage}</Text>
+                ) : null}
+            </SafeAreaView>
+        )
+    }
+    
 }

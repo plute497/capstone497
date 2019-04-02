@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { PureComponent } from 'react';
 import {
     SafeAreaView,
     View,
@@ -7,61 +7,78 @@ import {
     TouchableOpacity,
     ActivityIndicator
 } from 'react-native';
-
 import { FetchSignIn } from '../_api/user/user';
 
-export default function SignIn(props) {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [loading, setLoading]
 
-    async function submitSignIn() {
+export default class SignIn extends PureComponent {
+    state = {
+        email: "",
+        password: "",
+        firstName: "",
+        lastName: "",
+        errorMessage: "",
+        loading: false
+    }
+
+    submitSignIn = async () => {
+        let { email, password } = this.state;
         if(email, password) {
-            setErrorMessage("");
+            this.setState({errorMessage: ""});
 
             try {
-                setLoading(true);
+                this.setState({loading: true});
                 let user = await FetchSignIn(email, password);
-                setLoading(false);
+                this.setState({loading: false});
                 if(user.error) {
-                    setErrorMessage("We're sorry, we ran into an issue with the sign up. Please check your inputs and try again.");
+                    this.setState({errorMessage: "We're sorry, we ran into an issue with the sign up. Please check your inputs and try again."});
                 } else {
                     props.setToken(user.token);
                     props.navigation.navigate("SignUpSuccess");
                 }
             } catch(e) {
-                setErrorMessage("We're sorry, we ran into an issue with the sign up. Please check your inputs and try again.");
+                this.setState({errorMessage: "We're sorry, we ran into an issue with the sign up. Please check your inputs and try again."});
             }
         } else {
-            setErrorMessage("Please ensure you have filled out the entire form.");
+            this.setState({errorMessage: "Please ensure you have filled out the entire form."});
         }
     }
 
-    return (
-        <SafeAreaView style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Text>Sign In</Text>
-            <TextInput 
-                onChangeText={setEmail}
-                textContentType="emailAddress"
-                placeholder="Email Address" />
-            <TextInput 
-                onChangeText={setPassword}
-                textContentType="password"
-                placeholder="Enter a password" />
-            <TouchableOpacity
-                onPress={submitSignIn}
-                style={{flex: 0, height: 50, backgroundColor: 'blue'}}>
-                {loading ? (
-                    <ActivityIndicator
-                        size="small"
-                        color="#fff" />
-                ) : (
-                    <Text style={{color: '#fff'}}>Sign Up</Text>
-                )}
-            </TouchableOpacity>
-            {errorMessage ? (
-                <Text>{errorMessage}</Text>
-            ) : null}
-        </SafeAreaView>
-    )
+    setEmail = (text) => {
+        this.setState({email: text});
+    }
+
+    setPassword = (text) => {
+        this.setState({password: text});
+    }
+
+    render() {
+        return (
+            <SafeAreaView style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <Text>Sign In</Text>
+                <TextInput 
+                    onChangeText={this.setEmail}
+                    textContentType="emailAddress"
+                    placeholder="Email Address" />
+                <TextInput 
+                    onChangeText={this.setPassword}
+                    textContentType="password"
+                    placeholder="Enter a password" />
+                <TouchableOpacity
+                    onPress={this.submitSignIn}
+                    style={{flex: 0, height: 50, backgroundColor: 'blue'}}>
+                    {this.state.loading ? (
+                        <ActivityIndicator
+                            size="small"
+                            color="#fff" />
+                    ) : (
+                        <Text style={{color: '#fff'}}>Sign Up</Text>
+                    )}
+                </TouchableOpacity>
+                {this.state.errorMessage ? (
+                    <Text>{this.state.errorMessage}</Text>
+                ) : null}
+            </SafeAreaView>
+        )
+    }
+    
 }

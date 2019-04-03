@@ -1,4 +1,4 @@
-let api = "http://localhost:8080";
+let api = "http://142.93.27.45:8080";
 
 /**
  * 
@@ -9,6 +9,7 @@ let api = "http://localhost:8080";
  * to add more later.
  */
 export const FetchSignUp = (email, password, first_name, last_name) => {
+    console.log(email, password, first_name, last_name, api + "/users/sign-up");
     return fetch(api + "/users/sign-up", {
         method: "POST",
         headers: {
@@ -20,18 +21,19 @@ export const FetchSignUp = (email, password, first_name, last_name) => {
             password: password,
             first_name: first_name,
             last_name: last_name
-        }).then(res => {
-            try {
-                let response = res.json();
-                return response;
-            } catch(e) {
-                console.error(e);
-                return {error: e};
-            }
-        }).catch(e => {
+        })
+    }).then(res => {
+        console.log(res);
+        try {
+            let response = res.json();
+            return response;
+        } catch(e) {
             console.error(e);
             return {error: e};
-        })
+        }
+    }).catch(e => {
+        console.error(e);
+        return {error: e};
     });
 }
 
@@ -50,18 +52,19 @@ export const FetchSignIn = (email, password) => {
         body: JSON.stringify({
             email: email,
             password: password
-        }).then(res => {
-            try {
-                let response = res.json();
-                return response;
-            } catch(e) {
-                console.error(e);
-                return {error: e};
-            }
-        }).catch(e => {
+        })
+    }).then(res => {
+        console.log(res);
+        try {
+            let response = res.json();
+            return response;
+        } catch(e) {
             console.error(e);
             return {error: e};
-        })
+        }
+    }).catch(e => {
+        console.error(e);
+        return {error: e};
     });
 }
 
@@ -78,18 +81,19 @@ export const FetchRefreshUser = (token) => {
         },
         body: JSON.stringify({
             token: token
-        }).then(res => {
-            try {
-                let response = res.json();
-                return response;
-            } catch(e) {
-                console.error(e);
-                return {error: e};
-            }
-        }).catch(e => {
+        })
+    }).then(res => {
+        console.log(res);
+        try {
+            let response = res.json();
+            return response;
+        } catch(e) {
             console.error(e);
             return {error: e};
-        })
+        }
+    }).catch(e => {
+        console.error(e);
+        return {error: e};
     });
 }
 
@@ -104,18 +108,19 @@ export const FetchChangePassword = (token, oldPassword, newPassword) => {
             token: token,
             oldPassword: oldPassword,
             newPassword: newPassword
-        }).then(res => {
-            try {
-                let response = res.json();
-                return response;
-            } catch(e) {
-                console.error(e);
-                return {error: e};
-            }
-        }).catch(e => {
+        })
+    }).then(res => {
+        console.log(res);
+        try {
+            let response = res.json();
+            return response;
+        } catch(e) {
             console.error(e);
             return {error: e};
-        })
+        }
+    }).catch(e => {
+        console.error(e);
+        return {error: e};
     });
 }
 
@@ -128,18 +133,19 @@ export const FetchForgotPassword = (email) => {
         },
         body: JSON.stringify({
             email: email
-        }).then(res => {
-            try {
-                let response = res.json();
-                return response;
-            } catch(e) {
-                console.error(e);
-                return {error: e};
-            }
-        }).catch(e => {
+        })
+    }).then(res => {
+        console.log(res);
+        try {
+            let response = res.json();
+            return response;
+        } catch(e) {
             console.error(e);
             return {error: e};
-        })
+        }
+    }).catch(e => {
+        console.error(e);
+        return {error: e};
     });
 }
 
@@ -153,17 +159,18 @@ export const FetchUpdateProfile = (token, profile) => {
         body: JSON.stringify({
             token: token,
             profile: profile
-        }).then(res => {
-            try {
-                let response = res.json();
-                return response;
-            } catch(e) {
-                console.error(e);
-                return {error: e};
-            }
-        }).catch(e => {
+        })
+    }).then(res => {
+        console.log(res);
+        try {
+            let response = res.json();
+            return response;
+        } catch(e) {
             console.error(e);
             return {error: e};
-        })
+        }
+    }).catch(e => {
+        console.error(e);
+        return {error: e};
     });
 }

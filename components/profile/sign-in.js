@@ -30,12 +30,13 @@ export default class SignIn extends PureComponent {
                 let user = await FetchSignIn(email, password);
                 this.setState({loading: false});
                 if(user.error) {
-                    this.setState({errorMessage: "We're sorry, we ran into an issue with the sign up. Please check your inputs and try again."});
+                    this.setState({errorMessage: user.error});
                 } else {
-                    props.setToken(user.token);
-                    props.navigation.navigate("SignUpSuccess");
+                    this.props.screenProps.setToken(user.token);
+                    this.props.navigation.navigate("SignUpSuccess");
                 }
             } catch(e) {
+                console.log(e);
                 this.setState({errorMessage: "We're sorry, we ran into an issue with the sign up. Please check your inputs and try again."});
             }
         } else {
@@ -57,11 +58,15 @@ export default class SignIn extends PureComponent {
                 <Text>Sign In</Text>
                 <TextInput 
                     onChangeText={this.setEmail}
-                    textContentType="emailAddress"
+                    underlineColorAndroid="#333"
+                    keyboardType={"email-address"}
+                    autoCapitalize="none"
                     placeholder="Email Address" />
                 <TextInput 
                     onChangeText={this.setPassword}
-                    textContentType="password"
+                    underlineColorAndroid="#333"
+                    secureTextEntry={true}
+                    autoCapitalize="none"
                     placeholder="Enter a password" />
                 <TouchableOpacity
                     onPress={this.submitSignIn}
@@ -71,7 +76,7 @@ export default class SignIn extends PureComponent {
                             size="small"
                             color="#fff" />
                     ) : (
-                        <Text style={{color: '#fff'}}>Sign Up</Text>
+                        <Text style={{color: '#fff'}}>Sign In</Text>
                     )}
                 </TouchableOpacity>
                 {this.state.errorMessage ? (

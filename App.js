@@ -12,7 +12,8 @@ import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text, AsyncStorage, SafeAreaView } from 'react-native';
 import Header from './components/header/header-main';
 import { NavigationActions } from 'react-navigation';
-import * as jwtDecode from 'jwt-decode';
+
+const jwtDecode = require('jwt-decode');
 
 const navigate = (route) => {
     return NavigationActions.navigate({
@@ -71,13 +72,14 @@ export default class App extends Component {
 
     checkSignedIn = async () => {
         let token = await AsyncStorage.getItem('token');
-
+        console.log("token", token);
         if(token) {
             this.setToken(token);
         }
     }
 
     signOut = () => {
+        AsyncStorage.removeItem('token');
         this.setState({user: {unset: true}, token: ""});
     }
     
@@ -87,10 +89,12 @@ export default class App extends Component {
                 <View style={{ height: '100%', flex: 1, width: '100%' }}>
                     <Navigator 
                         ref={ref => this.navigator = ref} 
-                        setToken={this.setToken}
-                        signOut={this.signOut}
-                        user={this.state.user}
-                        token={this.state.token}
+                        screenProps={{
+                            setToken: this.setToken,
+                            signOut: this.signOut,
+                            user: this.state.user,
+                            token: this.state.token
+                        }}
                         style={{ flex: 1 }} />
                 </View>
             </SafeAreaView>

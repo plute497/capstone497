@@ -36,6 +36,8 @@ import ProfileView from './components/profile/profile-view';
 import SignIn from './components/profile/sign-in';
 import SignOut from './components/profile/sign-out';
 import SignUp from './components/profile/sign-up';
+import SignUpIn from './components/profile/sign-up-in';
+import SignUpSuccess from './components/profile/sign-up-success';
 import SubmitStory from './components/profile/submit-story';
 
 const listenerFunctions = [];
@@ -95,20 +97,6 @@ const UserButton = (e) => {
 };
 
 /**
- * Here is our main tabs, it's the first route in our "Card Stack" down below
- * and contains our 5 main components
- * 
- * Details here: https://reactnavigation.org/docs/en/tab-navigator.html
- */
-const TabNavigator = createBottomTabNavigator({
-    Map: MapMain,
-    Video: VideoMain,
-    Ar: ArMain,
-    Story: StoryMain,
-    Audio: AudioMain
-});
-
-/**
  * Here's our parent navigator. It consist of our first route, our Tab Navigator,
  * and the other routes which will overdraw the tabs when we navigate to them
  * 
@@ -126,10 +114,19 @@ const MainNav = createDrawerNavigator({
     Ar: ArMain,
     Story: StoryMain,
     Audio: AudioMain,
-    SignUp: {
-        screen: SignUp,
-        navigationOptions: {
-            title: "Sign Up/in"
+    SignUpIn: {
+        screen: SignUpIn,
+        navigationOptions: (props) => {
+            //check if user is signed in
+            if(props.screenProps.user.unset) {
+                return {
+                    title: "Sign Up/In"
+                }
+            } else {
+                return {
+                    drawerLabel: () => null
+                }
+            }
         }
     },
     SubmitStory: {
@@ -140,8 +137,17 @@ const MainNav = createDrawerNavigator({
     },
     SignOut: {
         screen: SignOut,
-        navigationOptions: {
-            title: "Sign Out"
+        navigationOptions: (props) => {
+            //check if user is signed in
+            if(props.screenProps.user.unset) {
+                return {
+                    drawerLabel: () => null
+                }
+            } else {
+                return {
+                    title: "Sign Out"
+                }
+            }
         }
     }
 }, {
@@ -154,7 +160,7 @@ const Main = createStackNavigator({
     Root: {
         screen: MainNav,
         navigationOptions: () => ({
-            title: "Historic Roots",
+            title: "Historic Routes",
             headerLeft: (
                 <TouchableOpacity onPress={() => onOpenDrawer()}>
                     <Text>Menu</Text>
@@ -192,6 +198,24 @@ const Main = createStackNavigator({
             drawerLabel: () => null
         },
     },
+    SignUp: {
+        screen: SignUp,
+        navigationOptions: (props) => ({
+            drawerLabel: () => null
+        })
+    },
+    SignIn: {
+        screen: SignIn,
+        navigationOptions: (props) => ({
+            drawerLabel: () => null
+        })
+    },
+    SignUpSuccess: {
+        screen: SignUpSuccess,
+        navigationOptions: {
+            drawerLabel: null
+        }
+    }
 }, {
     mode: 'modal'
 })

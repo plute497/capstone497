@@ -20,6 +20,10 @@ export default class SignUp extends PureComponent {
         loading: false
     }
 
+    componentDidMount() {
+        console.log(this.props);
+    }
+
     submitSignUp = async () => {
         let { email, password, firstName, lastName } = this.state;
 
@@ -29,14 +33,17 @@ export default class SignUp extends PureComponent {
             try {
                 this.setState({loading: true});
                 let user = await FetchSignUp(email, password, firstName, lastName);
+                console.log(user);
                 this.setState({loading: false});
                 if(user.error) {
-                    this.setState({errorMessage: "We're sorry, we ran into an issue with the sign up. Please check your inputs and try again."});
+                    
+                    this.setState({errorMessage: user.error});
                 } else {
-                    props.setToken(user.token);
-                    props.navigation.navigate("SignUpSuccess");
+                    this.props.screenProps.setToken(user.token);
+                    this.props.navigation.navigate("SignUpSuccess");
                 }
             } catch(e) {
+                console.log(e);
                 this.setState({errorMessage: "We're sorry, we ran into an issue with the sign up. Please check your inputs and try again."});
             }
         } else {

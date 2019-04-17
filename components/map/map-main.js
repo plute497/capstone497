@@ -37,10 +37,6 @@ function onSortOptions(a, b) {
 }
 
 export default class MapMain extends Component {
-	static navigationOptions = {
-		drawerLabel: 'Map'
-	};
-
 	state = {
 		contextTop: height - 130
 	};

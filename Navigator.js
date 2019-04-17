@@ -10,6 +10,7 @@ import {
     StyleSheet, 
     Text, 
     View,
+    Image,
     TouchableOpacity
 } from 'react-native';
 
@@ -18,6 +19,20 @@ import {
  * this is a third-party package that is set up to set this up for us
  */
 import { createBottomTabNavigator, createStackNavigator, createAppContainer, createDrawerNavigator, DrawerItems } from 'react-navigation';
+import Colors from './components/colors';
+import menuIcon from './components/images/menu.png';
+import closeIcon from './components/images/close.png';
+
+import historicRoutesLogo from './components/images/historicRoutesLogo.png';
+import arIcon from './components/images/ar.png';
+import busIcon from './components/images/bus.png';
+import clockIcon from './components/images/clock.png';
+import handsetIcon from './components/images/handset.png';
+import quillIcon from './components/images/quill.png';
+import radioIcon from './components/images/radio.png';
+import tvIcon from './components/images/television-classic.png';
+import loginIcon from './components/images/login-variant.png';
+import logoutIcon from './components/images/logout-variant.png';
 
 /**
  * These are react components I've written where we'll put our content
@@ -51,50 +66,58 @@ const addDrawerListener = (func) => {
 
 class DrawerContent extends Component {
     componentDidMount(){
-        addDrawerListener(this.props.navigation.openDrawer);
+        addDrawerListener(this.toggleDrawer);
+    }
+
+    toggleDrawer = () => {
+        if(!this.props.navigation.state.isDrawerOpen) {
+            this.props.navigation.openDrawer();
+        } else {
+            this.props.navigation.closeDrawer();
+        }
     }
 
     render() {
         return (
-            <DrawerItems {...this.props} />
+            <View style={{
+                flex: 1
+            }}>
+                <View style={{
+                    backgroundColor: Colors.white,
+                    height: 140,
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+                    <Image style={{flex: 1, width: '100%'}} source={historicRoutesLogo} resizeMode={'contain'} />
+                </View>
+
+                <DrawerItems {...this.props} />
+            </View>
         )        
     }
 }
+
 // const DrawerContent = (props) => {
 //     console.log("DrawerContent", props);
 //     return (
-//     <View style={{backgroundColor: 'red', height: 200}}>
-//       <View
-//         style={{
-//           backgroundColor: '#f50057',
-//           height: 140,
-//           alignItems: 'center',
-//           justifyContent: 'center',
-//         }}
-//       >
-//         <Text style={{ color: 'white', fontSize: 30 }}>
-//           Header
+//         <View style={{ backgroundColor: 'red', height: 200 }}>
+//             <View
+//                 style={{
+//                     backgroundColor: '#f50057',
+//                     height: 140,
+//                     alignItems: 'center',
+//                     justifyContent: 'center',
+//                 }}
+//             >
+//                 <Text style={{ color: 'white', fontSize: 30 }}>
+//                     Header
 //         </Text>
-//       </View>
-//       <DrawerItems {...props} />
-//     </View>
-//   )}
+//             </View>
+//             <DrawerItems {...props} />
+//         </View>
+//     )
+// }
   
-
-
-/**
- * I have created a tiny react component here that does just one thing,
- * acts as our left button from our main route, the tabs
- */
-const UserButton = (e) => {
-    let nav = e.scene.descriptor.navigation;
-    return (
-        <TouchableOpacity 
-            onPress={() => nav.navigate("UserMenu")}>
-            <Text style={{marginLeft: 10, fontSize: 20}}>😊</Text>
-        </TouchableOpacity>
-    ); 
-};
 
 /**
  * Here's our parent navigator. It consist of our first route, our Tab Navigator,
@@ -102,25 +125,74 @@ const UserButton = (e) => {
  * 
  * Details here: https://reactnavigation.org/docs/en/stack-navigator.html
  */
+const generateIcon = (icon, tint) => {
+    function getStyle() {
+        if(tint) {
+            return {
+                height: 20,
+                width: 20,
+                tintColor: Colors.black
+            }
+        } else {
+            return {
+                height: 20,
+                width: 20
+            }
+        }
+    }
+    return (
+        <Image
+            source={icon}
+            style={getStyle()}
+            resizeMode={'contain'}
+        />
+    )
+}
+
 const MainNav = createDrawerNavigator({
     Main: {
         screen: MapMain,
         navigationOptions: {
-            title: "Historic Roots",
-            headerLeft: UserButton
+            title: "Let's Go",
+            drawerIcon: generateIcon(busIcon)
         }
     },
-    Video: VideoMain,
-    Ar: ArMain,
-    Story: StoryMain,
-    Audio: AudioMain,
+    Video: {
+        screen: VideoMain,
+        navigationOptions: {
+            title: "Videos",
+            drawerIcon: generateIcon(tvIcon, true)
+        }
+    },
+    Ar: {
+        screen: ArMain,
+        navigationOptions: {
+            title: "Then & Now",
+            drawerIcon: generateIcon(arIcon)
+        }
+    },
+    Story: {
+        screen: StoryMain,
+        navigationOptions: {
+            title: "Nowadays",
+            drawerIcon: generateIcon(handsetIcon)
+        }
+    },
+    Audio: {
+        screen: AudioMain,
+        navigationOptions: {
+            title: "Audio",
+            drawerIcon: generateIcon(radioIcon, true)
+        }
+    },
     SignUpIn: {
         screen: SignUpIn,
         navigationOptions: (props) => {
             //check if user is signed in
             if(props.screenProps.user.unset) {
                 return {
-                    title: "Sign Up/In"
+                    title: "Sign Up/In",
+                    drawerIcon: generateIcon(loginIcon, true)
                 }
             } else {
                 return {
@@ -132,7 +204,8 @@ const MainNav = createDrawerNavigator({
     SubmitStory: {
         screen: SubmitStory,
         navigationOptions: {
-            title: "Submit Story"
+            title: "Folktells",
+            drawerIcon: generateIcon(quillIcon)
         }
     },
     SignOut: {
@@ -145,7 +218,8 @@ const MainNav = createDrawerNavigator({
                 }
             } else {
                 return {
-                    title: "Sign Out"
+                    title: "Sign Out",
+                    drawerIcon: generateIcon(logoutIcon, true)
                 }
             }
         }
@@ -159,14 +233,29 @@ const MainNav = createDrawerNavigator({
 const Main = createStackNavigator({
     Root: {
         screen: MainNav,
-        navigationOptions: () => ({
-            title: "Historic Routes",
-            headerLeft: (
-                <TouchableOpacity onPress={() => onOpenDrawer()}>
-                    <Text>Menu</Text>
-                </TouchableOpacity>
-            )
-        })
+        navigationOptions: (props) => {
+            const { isDrawerOpen, isTransitioning, isDrawerIdle, drawerMovementDirection } = props.navigation.state;
+
+            let shouldShowX = drawerMovementDirection === "opening" || isDrawerOpen && !drawerMovementDirection === "closing";
+
+            return {
+                title: "Historic Routes",
+                headerStyle: {
+                    backgroundColor: Colors.blue
+                },
+                headerTintColor: {
+                    color: Colors.white
+                },
+                headerTitleStyle: {
+                    color: Colors.white
+                },
+                headerLeft: (
+                    <TouchableOpacity onPress={() => onOpenDrawer()}>
+                        <Image style={{height: 27, width: 27, marginLeft: 12, tintColor: Colors.white}} resizeMode={'contain'} source={shouldShowX ? closeIcon : menuIcon} />
+                    </TouchableOpacity>
+                )
+            }
+        }
     },
     MapLocation: {
         screen: MapLocation,

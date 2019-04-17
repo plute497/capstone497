@@ -3,20 +3,79 @@ import {
     View,
     TouchableOpacity,
     Text,
-    Alert
+    Image,
+    StyleSheet
 } from 'react-native';
+
+import historicRoutesLogo from '../images/historicRoutesLogo.png';
+import Colors from '../colors';
 
 export default function SignUpIn(props) {
     return (
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Text>Want to sign up?</Text>
-            <TouchableOpacity onPress={props.navigation.navigate.bind(this, "SignUp")} style={{backgroundColor: 'blue', flex: 0, height: 60, marginBottom: 40}}>
-                <Text style={{color: '#fff'}}>Sign Up</Text>
+        <View style={styles.wrapper}>
+            <Image source={historicRoutesLogo} style={styles.headerLogo} resizeMode={'contain'} />
+            <TouchableOpacity onPress={props.navigation.navigate.bind(this, "SignUp")} style={styles.signUp}>
+                <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
-            <Text>Already have an account?</Text>
-            <TouchableOpacity onPress={props.navigation.navigate.bind(this, "SignIn")} style={{backgroundColor: 'red', flex: 0, height: 60}}>
-                <Text style={{color: '#fff'}}>Sign In</Text>
+            
+            <TouchableOpacity onPress={props.navigation.navigate.bind(this, "SignIn")} style={styles.signIn}>
+                <Text style={styles.buttonText}>Sign In</Text>
             </TouchableOpacity>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    wrapper: {
+        flex: 1,
+        alignItems: 'center',
+        padding: 30,
+        backgroundColor: Colors.white
+    },
+    header: {
+        color: Colors.orange,
+        fontSize: 30,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        position: 'absolute',
+        top: 30,
+        left: 0,
+        right: 0
+    },
+    headerLogo: {
+        flex: 0,
+        width: '75%'
+    },  
+    signUp: {
+        flex: 0,
+        height: 50,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Colors.blue,
+        borderRadius: 6,
+        shadowColor: Colors.black,
+        shadowOffset: { width: 0, height: 3},
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+        marginBottom: 30
+    },
+    signIn: {
+        flex: 0,
+        height: 50,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Colors.orange,
+        borderRadius: 6,
+        shadowOffset: { width: 0, height: 3},
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+        marginBottom: 30
+    },
+    buttonText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: Colors.white
+    }
+})

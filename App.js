@@ -12,6 +12,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text, AsyncStorage, SafeAreaView } from 'react-native';
 import Header from './components/header/header-main';
 import { NavigationActions } from 'react-navigation';
+import Colors from './components/colors';
 
 const jwtDecode = require('jwt-decode');
 
@@ -85,7 +86,7 @@ export default class App extends Component {
     
     render() {
         return (
-            <SafeAreaView style={styles.container}>
+            <View style={styles.container}>
                 <View style={{ height: '100%', flex: 1, width: '100%' }}>
                     <Navigator 
                         ref={ref => this.navigator = ref} 
@@ -97,7 +98,7 @@ export default class App extends Component {
                         }}
                         style={{ flex: 1 }} />
                 </View>
-            </SafeAreaView>
+            </View>
         );
     }
 }

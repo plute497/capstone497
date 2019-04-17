@@ -7,10 +7,11 @@ import {
     ActivityIndicator,
     ScrollView,
     TouchableOpacity,
-    Dimensions
+    Dimensions,
+    StyleSheet
 } from 'react-native';
 
-import Header from '../header/header-main';
+import Card from '../ui-components/card';
 
 import { FetchVideos } from '../_api/video/video';
 
@@ -40,18 +41,13 @@ export default class VideoMain extends Component {
 
     renderVideo = (video, i) => {
         return (
-            <TouchableOpacity onPress={() => this.openVideo(video)} key={i}>
-                <View style={{marginBottom: 15, elevation: 3, backgroundColor: '#fff'}}>
-                    <Image style={{minHeight: 300, width: '100%'}} source={{uri: video.thumbnail}} />
-                        
-                        <View style={{paddingHorizontal: 15, flex: 1, backgroundColor: '#fff', paddingBottom: 15}}>
-                            <Text style={{fontSize: 18, marginTop: 15, marginBottom: 10}}>{video.title}</Text>
-                            <Text numberOfLines={3}>{video.description}</Text>
-                        </View>
-                </View>
-                
-            </TouchableOpacity>
-            
+            <Card
+                onPress={this.openVideo}
+                thumbnail={video.thumbnail}
+                title={video.title}
+                description={video.description}
+                key={'video_' + i}
+            />
         )
     }
 

@@ -7,7 +7,8 @@ import {
 	UIManager,
 	ScrollView,
 	Dimensions,
-	TouchableOpacity
+	TouchableOpacity,
+	WebView
 } from 'react-native';
 import MapboxGL from '@mapbox/react-native-mapbox-gl';
 
@@ -36,10 +37,60 @@ function onSortOptions(a, b) {
 	return 0;
 }
 
+const html = `
+<!DOCTYPE html>
+
+<head>
+	<script src='https://static-assets.mapbox.com/gl-pricing/dist/mapbox-gl.js'></script>
+	<link href='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	<div id='map' style='position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px;'></div>
+	<script>
+		mapboxgl.accessToken = 'pk.eyJ1IjoiY2FyZC1iIiwiYSI6ImNqdG45bmVvYjA4Ymc0YW1xenR5YjE4dDgifQ.BSraC2WHncupQX8aWt_2dA';
+		const map = new mapboxgl.Map({
+			container: 'map',
+			style: 'mapbox://styles/card-b/cju1tmxi71ojf1fo0ongxvlqq',
+			center: [-122.671605, 45.627714],
+			zoom: 15.5
+		});
+
+		var options = {
+			enableHighAccuracy: false,
+			timeout: 5000,
+			maximumAge: 0
+		};
+
+		map.addControl(new mapboxgl.GeolocateControl({
+			positionOptions: {
+				enableHighAccuracy: true
+			},
+			trackUserLocation: true
+		}));
+
+		document.addEventListener('message', function (data) {
+			let { lat, long } = JSON.parse(data.data);
+
+			try {
+				map.flyTo({ center: [long, lat] });
+
+			} catch (e) {
+				console.log(e);
+			}
+		});
+
+	</script>
+</body>
+`;
+
 export default class MapMain extends Component {
 	state = {
 		contextTop: height - 130
 	};
+
+
 
 	_mapOptions = Object.keys(MapboxGL.StyleURL).map(key => {
 		return {
@@ -50,6 +101,10 @@ export default class MapMain extends Component {
 
 	componentDidMount() {
 		console.log(this._mapOptions);
+
+		setInterval(() => {
+			this.webview.postMessage(JSON.stringify({ lat: 45.626765, long: -122.674841 }));
+		}, 3000);
 	}
 
 	contextOpen = false;
@@ -65,55 +120,13 @@ export default class MapMain extends Component {
 	render() {
 		return (
 			<View style={{ flex: 1 }}>
-				<MapboxGL.MapView
-					showUserLocation={true}
-					zoomLevel={12}
-					centerCoordinate={[-122.674, 45.626]}
-					userTrackingMode={MapboxGL.UserTrackingModes.Follow}
-					styleURL={"mapbox://styles/card-b/cjtrt57f8310m1fms7zq61bt5"}
+				<WebView
 					style={{ flex: 1 }}
+					geolocationEnabled={true}
+					source={{ html: html }}
+					ref={ref => this.webview = ref}
 				/>
-				{/* <Header navigation={this.props.navigation} /> */}
 
-				{/* <View style={{flex: 1, backgroundColor: 'lightgray', alignItems: 'center', justifyContent: 'center'}}>
-                    <Button title="Toggle Pin" style={{elevation: 10}} onPress={this.openContext}></Button>
-                </View> */}
-				{/* <MapView
-                    provider={PROVIDER_GOOGLE}
-                    style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}
-                    region={{
-         latitude: 37.78825,
-         longitude: -122.4324,
-         latitudeDelta: 0.015,
-         longitudeDelta: 0.0121,
-       }}
-                ></MapView> */}
-				{/* <View style={{position: 'absolute', top: this.state.contextTop, left: 0, right: 0, height: height, backgroundColor: '#333333',  elevation: 10}}>
-                    <View style={{height: height - 190}}>
-                    <TouchableOpacity onPress={this.openContext}><View style={{ padding: 10}}><Text>X</Text></View></TouchableOpacity>
-                    <ScrollView contentContainerStyle={{paddingBottom: 50}} style={{padding: 40, flex: 0}}>
-                        
-                            <Text style={{color: '#ffffff', fontSize: 24, marginBottom: 15}}>Location Title</Text>
-                            <Text style={{color: '#ffffff', marginBottom: 15}}>
-                            Component that wraps platform ScrollView while providing integration with touch locking "responder" system.
-
-                            Keep in mind that ScrollViews must have a bounded height in order to work, since they contain unbounded-height children into a bounded container (via a scroll interaction). In order to bound the height of a ScrollView, either set the height of the view directly (discouraged) or make sure all parent views have bounded height. Forgetting to transfer  down the view stack can lead to errors here, which the element inspector makes easy to debug.
-
-                            Doesn't yet support other contained responders from blocking this scroll view from becoming the responder.
-
-                            mhut6hjmb
-                            </Text>
-                            <Button title="Open Video A" onPress={() => this.props.navigation.navigate("VideoView", {id: 1, title: "Video A"})}></Button>
-                            <View style={{height: 10}}></View>
-                            <Button title="Open Story A" onPress={() => this.props.navigation.navigate("StoryView", {id: 1})}></Button>
-                            <View style={{height: 10}}></View>
-                            <Button title="Open AR A" onPress={() => this.props.navigation.navigate("ArView", {id: 1})}></Button>
-                            <View style={{height: 10}}></View>
-                            <Button title="Open Audio A" onPress={() => this.props.navigation.navigate("AudioView", {id: 1})}></Button>
-                        
-                    </ScrollView>
-                    </View>
-                </View> */}
 			</View>
 		)
 	}

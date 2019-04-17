@@ -236,7 +236,7 @@ const Main = createStackNavigator({
         navigationOptions: (props) => {
             const { isDrawerOpen, isTransitioning, isDrawerIdle, drawerMovementDirection } = props.navigation.state;
 
-            let shouldShowX = drawerMovementDirection === "opening" || isDrawerOpen && !drawerMovementDirection === "closing";
+            let shouldShowX = drawerMovementDirection === "opening" || isDrawerOpen && drawerMovementDirection !== "closing";
 
             return {
                 title: "Historic Routes",

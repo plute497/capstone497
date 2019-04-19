@@ -90,21 +90,8 @@ export default class MapMain extends Component {
 		contextTop: height - 130
 	};
 
-
-
-	_mapOptions = Object.keys(MapboxGL.StyleURL).map(key => {
-		return {
-			label: key,
-			data: MapboxGL.StyleURL[key],
-		};
-	}).sort(onSortOptions);
-
 	componentDidMount() {
-		console.log(this._mapOptions);
 
-		setInterval(() => {
-			this.webview.postMessage(JSON.stringify({ lat: 45.626765, long: -122.674841 }));
-		}, 3000);
 	}
 
 	contextOpen = false;
@@ -126,7 +113,6 @@ export default class MapMain extends Component {
 					source={{ html: html }}
 					ref={ref => this.webview = ref}
 				/>
-
 			</View>
 		)
 	}

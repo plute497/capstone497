@@ -57,7 +57,9 @@ const html = `
 			container: 'map',
 			style: 'mapbox://styles/card-b/cju1tmxi71ojf1fo0ongxvlqq',
 			center: [-122.671605, 45.627714],
-			zoom: 15.5
+			zoom: 15.5,
+			pitch: 40,
+			bearing: -20
 		});
 
 		var options = {

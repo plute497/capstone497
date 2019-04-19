@@ -8,11 +8,15 @@ import {
 	ScrollView,
 	Dimensions,
 	TouchableOpacity,
-	WebView
+	WebView,
+	Platform,
+ 	Alert
 } from 'react-native';
-import MapboxGL from '@mapbox/react-native-mapbox-gl';
 
-import Header from '../header/header-main';
+import MapboxGL from '@mapbox/react-native-mapbox-gl';
+// import Header from '../header/header-main';
+import GeoFence from './geo-fence';
+// import LocationDrawer from './location-drawer';
 
 // import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
@@ -23,7 +27,6 @@ const { height, width } = Dimensions.get('window');
 const access_token = "sk.eyJ1IjoiY2FyZC1iIiwiYSI6ImNqdHJzcTJpaTB0azM0ZG0yYWxnNGhicTgifQ.jO1HLoCY0hE27lpd7kPTGA";
 
 MapboxGL.setAccessToken(access_token);
-
 
 function onSortOptions(a, b) {
 	if (a.label < b.label) {
@@ -87,12 +90,42 @@ const html = `
 
 export default class MapMain extends Component {
 	state = {
-		contextTop: height - 130
+		contextTop: height - 130,
+		lng: -122.672605,
+		lat: 45.625663,
+		currentCount: 16
 	};
 
-	componentDidMount() {
 
-	}
+	findCoordinates = () => {
+		navigator.geolocation.getCurrentPosition(
+		  position => {
+			const lng = position.coords.longitude;
+			const lat = position.coords.latitude;
+			this.setState({ lat:lat, lng:lng });
+		  },
+		  error => Alert.alert(error.message),
+		  { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+		);
+	  };
+
+	componentDidMount(){
+		var intervalId = setInterval(this.timer, 1000);
+		// store intervalId in the state so it can be accessed later:
+		this.setState({intervalId: intervalId});
+	 };
+	 
+	 componentWillUnmount() {
+		// use intervalId from the state to clear the interval
+		clearInterval(this.state.intervalId);
+	 };
+	 
+	 timer = () => {
+		// setState method is used to update the state
+
+		this.setState({ currentCount: this.state.currentCount -1 });
+		this.findCoordinates();
+	 };
 
 	contextOpen = false;
 
@@ -113,6 +146,7 @@ export default class MapMain extends Component {
 					source={{ html: html }}
 					ref={ref => this.webview = ref}
 				/>
+				<GeoFence lng={this.state.lng} lat={this.state.lat} timer={this.state.currentCount}/>
 			</View>
 		)
 	}

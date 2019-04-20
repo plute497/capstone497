@@ -9,8 +9,8 @@ import {
 	Dimensions,
 	TouchableOpacity,
 	Platform,
-	WebView,
- 	Alert
+	 Alert,
+	 WebView
 } from 'react-native';
 import MapboxGL from '@mapbox/react-native-mapbox-gl';
 
@@ -63,8 +63,8 @@ export default class MapMain extends Component {
 
 	state = {
 		contextTop: height - 130,
-		lng: -122.672605,
-		lat: 45.625663
+		lng: 0,
+		lat: 0
 		//currentCount: 16
 	};
 
@@ -74,6 +74,7 @@ export default class MapMain extends Component {
 			const lng = position.coords.longitude;
 			const lat = position.coords.latitude;
 			this.setState({ lat:lat, lng:lng });
+			console.log(position);
 		  },
 		  error => Alert.alert(error.message),
 		  { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -81,7 +82,7 @@ export default class MapMain extends Component {
 	  };
 
 	componentDidMount(){
-		var intervalId = setInterval(this.timer, 1000);
+		const intervalId = setInterval(this.findCoordinates, 1000);
 		// store intervalId in the state so it can be accessed later:
 		this.setState({intervalId: intervalId});
 	 };
@@ -91,13 +92,13 @@ export default class MapMain extends Component {
 		clearInterval(this.state.intervalId);
 	 };
 	 
-	 timer = () => {
+	/* timer = () => {
 		// setState method is used to update the state
 
 		//we don't need current count, just set the timer to a bigger interval, I think
 		//this.setState({ currentCount: this.state.currentCount -1 });
 		this.findCoordinates();
-	 };
+	 };*/
 
 	contextOpen = false;
 
@@ -110,6 +111,8 @@ export default class MapMain extends Component {
 	}
 
 	render() {
+		console.log(this.state.lat)
+		console.log(this.state.lng)
 		return (
 			<View style={{ flex: 1 }}>
 				<WebView

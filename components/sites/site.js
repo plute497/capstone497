@@ -5,6 +5,7 @@ import {
     Text,
     Animated,
     StyleSheet,
+    TouchableOpacity,
     Image,
     Dimensions
 } from 'react-native';
@@ -24,6 +25,9 @@ import BackProvidence from '../images/sites/providence.png';
 import BackSchofield from '../images/sites/schofield.png';
 import BackSlocum from '../images/sites/slocum.png';
 import BackSmith from '../images/sites/smith.png';
+import BG from '../images/gradient-bg.png';
+
+import ArtsTitle from '../images/sites/arts-title.png';
 
 import { locations } from '../locations/locations';
 
@@ -178,9 +182,12 @@ export default class Site extends Component {
             }
         }
 
+        const longDesc = () => {
+            return location.longDescription && location.longDescription.replace(/ +(?= )/g,'').replace(/\s/g, " ").trim();
+        }
+
         return (
             <View style={{flex: 1, backgroundColor: Colors.lightGray}}>
-                
                 <Animated.View
                     style={{
                         position: 'absolute', 
@@ -231,20 +238,7 @@ export default class Site extends Component {
                         right: 0, 
                         bottom: 0, 
                         backgroundColor: Colors.white}}>
-                        <Text 
-                            adjustsFontSizeToFit 
-                            minimumFontScale={0.1} 
-                            numberOfLines={1} 
-                            style={{fontSize: 400, marginTop: -45, color: getColor(params.name), lineHeight: 0, fontFamily: 'Lato-Black', textTransform: 'uppercase'}}>
-                            {getLine1()}
-                        </Text>
-                        <Text 
-                            adjustsFontSizeToFit 
-                            minimumFontScale={0.1} 
-                            numberOfLines={1} 
-                            style={{margin: 0, fontSize: 400,  color: getColor(params.name), marginTop: -65, fontFamily: 'Lato-Light', textTransform: 'uppercase'}}>
-                            {getLine2()}
-                        </Text>
+                        <Image style={{width: '100%', height: '17%'}} resizeMode={'contain'} source={ArtsTitle} />
                         <View style={{
                             padding: 15
                         }}>
@@ -264,10 +258,10 @@ export default class Site extends Component {
                             </View>
 
                             <View style={{
-                                    alignSelf: 'flex-end', 
-                                    borderBottomColor: getColor(params.name), 
-                                    borderBottomWidth: 2, 
-                                    color: getColor(params.name)
+                                alignSelf: 'flex-end', 
+                                borderBottomColor: getColor(params.name), 
+                                borderBottomWidth: 2, 
+                                color: getColor(params.name)
                             }}>
                                 <Text style={{
                                     fontSize: 100, 
@@ -277,9 +271,18 @@ export default class Site extends Component {
                                 </Text>
                             </View>
 
-                            <Text>{location.longDescription}</Text>
+                            <Text
+                                numberOfLines={13}
+                                style={{
+                                textAlign: 'justify',
+                                marginTop: 15,
+                                fontSize: 18
+                            }}>{longDesc()}</Text>
                         </View>
-                        
+                        <TouchableOpacity style={{position: 'absolute', bottom: 30, left: 0, right: 0, height: 50, alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.5)'}}>
+                            <Text style={{color: getColor(params.name), fontSize: 18, fontFamily: 'Lato-Bold'}}>Read More</Text>
+                            <Text style={{color: getColor(params.name), fontSize: 18}}>{"\u25BC"}</Text>
+                        </TouchableOpacity>
                     </View>
                 </Animated.View>
 
@@ -298,18 +301,19 @@ export default class Site extends Component {
                         <Video 
                             onEnd={this.videoEnded}
                             source={getVideo(params.name)}
-                            rate={2}
+                            rate={1}
                             style={{
                                 position: 'absolute', 
                                 top: 0, 
                                 left: 0, 
                                 right: 0, 
                                 bottom: 0, 
-                                backgroundColor: Colors.white}} 
+                                backgroundColor: Colors.white
+                            }} 
                         />
-
                     </Animated.View>
                 ) : null}
+                
             </View>
         )
     }

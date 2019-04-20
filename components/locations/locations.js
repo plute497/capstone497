@@ -7,7 +7,7 @@ export const locations = [
         descriptions: [
             ['Architect', 'Dennis Nichols and William Kaufman'],
             ['Style', 'Beaux-Arts'],
-            ['Prominent People', 'Andrew Carnegie, Eva Santee, L.M Hidden, Edgar Swan']
+            ['Prominent People', 'Day Hilborn']
         ],
         longDescription: `
             The Arts Building, designed by Day Walter Hilborn, 

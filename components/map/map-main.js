@@ -111,16 +111,10 @@ export default class MapMain extends Component {
 	render() {
 		return (
 			<View style={{ flex: 1 }}>
-				<MapboxGL.MapView
-							showUserLocation={true}
-							zoomLevel={17}
-							logoEnabled={false}
-							centerCoordinate={[this.state.lng, this.state.lat]}
-							userTrackingMode={MapboxGL.UserTrackingModes.Follow}
-							styleURL={"mapbox://styles/card-b/cjtrt57f8310m1fms7zq61bt5"}
-							style={{ flex: 1 }}
-						>
-				</MapboxGL.MapView>
+				<WebView
+        			source={{uri: 'https://github.com/facebook/react-native'}}
+        			style={{marginTop: 20}}
+      			/>
 				<GeoFence lat={this.state.lat} lng={this.state.lng} />
 			</View>
 		)

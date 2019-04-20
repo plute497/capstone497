@@ -122,7 +122,7 @@ export default class GeoFence extends Component {
 	}
 
 	render() {
-		console.log(this.props.timer)
+		// console.log(this.props.timer)
 		//not calling checkfences in the renderer, which would make it call every single re-render, which conceivably could be every single frame
 		return (
 			<View style={{ flex: 0, alignItems: 'center', justifyContent: 'center' }}>

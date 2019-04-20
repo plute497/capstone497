@@ -21,9 +21,9 @@ export default class LocationDrawer extends Component {
 	}
 
 	test = () => {
-		console.log("HELLO");
+		//console.log("HELLO");
 		this.state.locName = this.props.locName;
-		console.log(this.state.locName);
+		//console.log(this.state.locName);
 	}
 
 	render() {

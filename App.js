@@ -9,10 +9,11 @@ import React, { Component } from 'react';
  * Anything we want to use, like buttons, text, input fields, everything in the 
  * render function of our class will NEED to be imported
  */
-import { StyleSheet, View, TouchableOpacity, Text, AsyncStorage, SafeAreaView } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text, AsyncStorage, SafeAreaView, Modal } from 'react-native';
 import Header from './components/header/header-main';
 import { NavigationActions } from 'react-navigation';
 import Colors from './components/colors';
+import Onboarding from './components/onboarding/onboarding';
 
 const jwtDecode = require('jwt-decode');
 
@@ -55,12 +56,22 @@ export default class App extends Component {
         token: "",
         user: {
             unset: true
-        }
+        },
+        onboarded: true
     };
 
     //build in react method, calls right when this component wakes up, which is right on app open
     componentDidMount() {
         this.checkSignedIn();
+        this.checkOnboarded();
+    }
+
+    checkOnboarded = async () => {
+        let onboarded = await AsyncStorage.getItem('onboarded');
+
+        if(!onboarded) {
+            this.setState({onboarded: false});
+        }
     }
 
     setToken = (token) => {
@@ -83,6 +94,11 @@ export default class App extends Component {
         AsyncStorage.removeItem('token');
         this.setState({user: {unset: true}, token: ""});
     }
+
+    setOnboarded = () => {
+        this.setState({onboarded: true});
+        AsyncStorage.setItem('onboarded', 'true');
+    }
     
     render() {
         return (
@@ -98,6 +114,15 @@ export default class App extends Component {
                         }}
                         style={{ flex: 1 }} />
                 </View>
+
+                <Modal
+                    animationType={"slide"}
+                    transparent={false}
+                    visible={!this.state.onboarded}
+                    onRequestClose={() => {}}>
+                    <Onboarding close={this.setOnboarded} />    
+                </Modal>
+                
             </View>
         );
     }

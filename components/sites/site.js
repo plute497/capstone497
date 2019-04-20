@@ -123,6 +123,18 @@ export default class Site extends Component {
         this.setState({location: location});
     }
 
+    renderStats = () => {
+        console.log(this.state.location);
+        return this.state.location.descriptions && this.state.location.descriptions.map(line => {
+            return (
+                <Text key={line[0]}>
+                    <Text style={{fontFamily: 'Lato-Light', textTransform: 'capitalize', marginRight: 15, fontSize: 18}}>{line[0]}</Text>
+                    <Text style={{fontFamily: 'Lato-Regular', fontSize: 20, marginLeft: 15}}>{line[1]}</Text>
+                </Text>
+            )
+        })
+    }
+
     render() {
         const { location } = this.state;
 
@@ -217,8 +229,57 @@ export default class Site extends Component {
                         top: 0, 
                         left: 0, 
                         right: 0, 
-                        bottom: 0, backgroundColor: Colors.white, alignItems: 'center', justifyContent: 'center'}}>
-                        <Text></Text>
+                        bottom: 0, 
+                        backgroundColor: Colors.white}}>
+                        <Text 
+                            adjustsFontSizeToFit 
+                            minimumFontScale={0.1} 
+                            numberOfLines={1} 
+                            style={{fontSize: 400, marginTop: -45, color: getColor(params.name), lineHeight: 0, fontFamily: 'Lato-Black', textTransform: 'uppercase'}}>
+                            {getLine1()}
+                        </Text>
+                        <Text 
+                            adjustsFontSizeToFit 
+                            minimumFontScale={0.1} 
+                            numberOfLines={1} 
+                            style={{margin: 0, fontSize: 400,  color: getColor(params.name), marginTop: -65, fontFamily: 'Lato-Light', textTransform: 'uppercase'}}>
+                            {getLine2()}
+                        </Text>
+                        <View style={{
+                            padding: 15
+                        }}>
+                            {this.state.location.descriptions && this.state.location.descriptions.map(line => {
+                                return (
+                                    <Text key={line[0]}>
+                                        <Text style={{fontFamily: 'Lato-Light', textTransform: 'uppercase', marginRight: 15, fontSize: 16}}>{line[0]} </Text>
+                                        <Text style={{fontFamily: 'Lato-Regular', fontSize: 20, marginLeft: 15}}>   {line[1]}</Text>
+                                    </Text>
+                                )
+                            })}
+
+                            <View style={{flexDirection: 'row', marginTop: 15}}>
+                                <View style={{height: 2, alignSelf: 'center', flex: 1, borderTopWidth: 3, borderTopColor: getColor(params.name)}}></View>
+                                <View style={{width: 15}}></View>
+                                <Text style={{fontSize: 22, fontFamily: 'Lato-Light', textTransform: 'uppercase'}}>Constructed In</Text>
+                            </View>
+
+                            <View style={{
+                                    alignSelf: 'flex-end', 
+                                    borderBottomColor: getColor(params.name), 
+                                    borderBottomWidth: 2, 
+                                    color: getColor(params.name)
+                            }}>
+                                <Text style={{
+                                    fontSize: 100, 
+                                    color: getColor(params.name), 
+                                    fontFamily: 'Lato-Black'}}>
+                                    {location.year}
+                                </Text>
+                            </View>
+
+                            <Text>{location.longDescription}</Text>
+                        </View>
+                        
                     </View>
                 </Animated.View>
 

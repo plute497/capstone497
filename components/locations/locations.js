@@ -12,7 +12,11 @@ export const locations = [
         longDescription: `
             The Arts Building, designed by Day Walter Hilborn, 
             represents one of the earliest and largest works of one of Clark County's 
-            most significant architects. It is noted by State ...`,
+            most significant architects. It is noted by State Argitectural Historian
+            Michael Houser that "No singler person in the history of southwest Washington
+            has ever had a greater impact on the ... built environment than architect
+            Day Hilborn." He designed this structure in the Beaux Arts style of the
+            training he received from Washington State University.`,
         year: '1909'
     },
     {

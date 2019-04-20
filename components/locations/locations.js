@@ -9,13 +9,36 @@ export const locations = [
             ['Style', 'Beaux-Arts'],
             ['Prominent People', 'Andrew Carnegie, Eva Santee, L.M Hidden, Edgar Swan']
         ],
+        longDescription: `
+            The Arts Building, designed by Day Walter Hilborn, 
+            represents one of the earliest and largest works of one of Clark County's 
+            most significant architects. It is noted by State ...`,
         year: '1909'
     },
     {
         name: 'cchm',
         niceName: "Clark County Historical Museum",
         lat: 45.633279,
-        lng: -122.671241
+        lng: -122.671241,
+        descriptions: [
+            ['Title', 'Text'],
+            ['Title', 'Text'],
+            ['Title', 'Text']
+        ],
+        longDescription: `
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Quisque sed sollicitudin metus. Quisque ut massa massa. Duis enim lectus, 
+            ultrices eget ex congue, aliquet auctor est. In bibendum nulla et ipsum faucibus, 
+            ut ultricies metus sagittis. Fusce dictum scelerisque odio vitae pellentesque. 
+            Sed tempus libero sed maximus finibus. Proin a sollicitudin augue. 
+            Donec magna felis, interdum a quam ac, mollis venenatis magna. Ut sed cursus urna. 
+            Aenean turpis diam, luctus in eleifend at, pharetra a ante. 
+            Phasellus sollicitudin arcu neque, sit amet tincidunt metus gravida quis. 
+            Vestibulum posuere tellus non orci hendrerit, quis vestibulum lorem tincidunt. 
+            Integer purus lacus, porttitor eu tristique vitae, pharetra sed mi. 
+            Pellentesque imperdiet non magna nec elementum. Sed volutpat venenatis magna 
+            in tincidunt. Nullam finibus et mi at malesuada.`,
+        year: '1909'
     },
     {
         name: 'elks',

@@ -123,7 +123,7 @@ export default class MapMain extends Component {
 	contextOpen = false;
 
 	openContext = () => {
-		this.props.navigation.navigate("MapLocation");
+		this.props.navigation.navigate("MapLocation", {name: 'elks'});
 	}
 
 	openDrawer = () => {
@@ -133,7 +133,7 @@ export default class MapMain extends Component {
 	render() {
 		return (
 			<View style={{ flex: 1 }}>
-				<Button style={{position: 'absolute', bottom: 150}} onPress={() => this.props.navigation.navigate("Site")} title={"Go"} />
+				<Button style={{position: 'absolute', bottom: 150}} onPress={() => this.props.navigation.navigate("Site", {name: 'heritage'})} title={"Go"} />
 
 				<WebView
 					style={{ flex: 1 }}

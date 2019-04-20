@@ -41,6 +41,12 @@ const html = `
 			bearing: -20
 		});
 
+		let moving = false;
+
+		map.on('moveend', () => {
+			moving = false;
+		})
+
 		var options = {
 			enableHighAccuracy: false,
 			timeout: 5000,
@@ -58,8 +64,9 @@ const html = `
 			let { lat, long } = JSON.parse(data.data);
 
 			try {
-				map.flyTo({ center: [long, lat] });
-
+				if(!moving) {
+					map.flyTo({ center: [long, lat] });
+				}
 			} catch (e) {
 				console.log(e);
 			}
@@ -83,9 +90,13 @@ export default class MapMain extends Component {
 		  position => {
 			const lng = position.coords.longitude;
 			const lat = position.coords.latitude;
-			this.setState({ lat:lat, lng:lng });
+			this.setState({ lat:lat, lng:lng }, () => {
+				this.webview.postMessage(JSON.stringify({lat: lat, long: lng}));
+			});
 		  },
-		  error => Alert.alert(error.message),
+		  error => (e) => {
+			  console.log(e);
+		  },
 		  { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
 		);
 	  };

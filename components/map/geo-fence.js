@@ -88,6 +88,10 @@ export default class GeoFence extends Component {
         }*/
 	];
 
+	componentDidUpdate(oldProps) {
+		console.log(oldProps);
+	}
+
 	componentDidMount() {
 		//setInterval will call checkFences every 4000ms, or every 4 seconds, we can set that number to whatever we think is appropriate
 		var intervalId = setInterval(() => {

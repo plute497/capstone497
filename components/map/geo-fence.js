@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import {
 	View,
-	Text
+	Text,
+	StyleSheet
 } from 'react-native';
 
 import LocationDrawer from './location-drawer';
 
 export default class GeoFence extends Component {
 	state = {
-		foundLoc: null // create a found location state variable, which react will monitor
+		foundLoc: false
+// create a found location state variable, which react will monitor
 	}
 
 	locations = [
@@ -88,24 +90,26 @@ export default class GeoFence extends Component {
 
 	componentDidMount() {
 		//setInterval will call checkFences every 4000ms, or every 4 seconds, we can set that number to whatever we think is appropriate
-		setInterval(() => {
+		var intervalId = setInterval(() => {
 			this.checkFences();
 		}, 4000);
+
+		this.setState({intervalId: intervalId});
 	}
+
+	componentWillUnmount() {
+		// use intervalId from the state to clear the interval
+		clearInterval(this.state.intervalId);
+	 };
 
 	check_a_point = (a, b, x, y, r) => {
 		var dist_points = (a - x) * (a - x) + (b - y) * (b - y);
 		r *= r;
-
-		if (dist_points < r) {
-			return true;
-		}
-
-		return false;
+		return((dist_points < r) ? true : false);
 	}
 
 	checkFences = () => {
-		const foundLoc = this.locations.find(thisLocation => {
+		let foundLoc = this.locations.find(thisLocation => {
 			if (this.check_a_point(this.props.lng, this.props.lat, thisLocation.lng, thisLocation.lat, 0.00001)) {
 				return thisLocation;
 			} else {
@@ -122,14 +126,10 @@ export default class GeoFence extends Component {
 	}
 
 	render() {
-		console.log(this.props.timer)
-		//not calling checkfences in the renderer, which would make it call every single re-render, which conceivably could be every single frame
-		return (
-			<View style={{ flex: 0, alignItems: 'center', justifyContent: 'center' }}>
-				<LocationDrawer
-					location={this.state.foundLoc}
-				/>
-			</View>
-		)
+		//if we have found a location, return the locationdrawer render
+		if (this.state.foundLoc) 
+			return (<LocationDrawer	location={this.state.foundLoc}/>);
+		else
+			return (null);
 	}
 }

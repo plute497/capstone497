@@ -8,15 +8,16 @@ import {
 	ScrollView,
 	Dimensions,
 	TouchableOpacity,
-	WebView,
 	Platform,
  	Alert
 } from 'react-native';
-
 import MapboxGL from '@mapbox/react-native-mapbox-gl';
-// import Header from '../header/header-main';
+
+import Header from '../header/header-main';
 import GeoFence from './geo-fence';
-// import LocationDrawer from './location-drawer';
+
+import LocationDrawer from './location-drawer';
+
 
 // import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
@@ -25,6 +26,20 @@ UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationE
 const { height, width } = Dimensions.get('window');
 
 const access_token = "sk.eyJ1IjoiY2FyZC1iIiwiYSI6ImNqdHJzcTJpaTB0azM0ZG0yYWxnNGhicTgifQ.jO1HLoCY0hE27lpd7kPTGA";
+
+//other access token?
+//sk.eyJ1IjoiY2FyZC1iIiwiYSI6ImNqdHJzcTJpaTB0azM0ZG0yYWxnNGhicTgifQ.jO1HLoCY0hE27lpd7kPTGA
+
+
+
+//public access token
+//pk.eyJ1IjoiY2FyZC1iIiwiYSI6ImNqdG45bmVvYjA4Ymc0YW1xenR5YjE4dDgifQ.BSraC2WHncupQX8aWt_2dA
+
+//historic routes map
+//mapbox://styles/card-b/cju1tmxi71ojf1fo0ongxvlqq
+//reg map
+//mapbox://styles/card-b/cjukim3np5vm41ftqmnp4tpuc
+
 
 MapboxGL.setAccessToken(access_token);
 
@@ -40,64 +55,17 @@ function onSortOptions(a, b) {
 	return 0;
 }
 
-const html = `
-<!DOCTYPE html>
-
-<head>
-	<script src='https://static-assets.mapbox.com/gl-pricing/dist/mapbox-gl.js'></script>
-	<link href='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-
-<body>
-	<div id='map' style='position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px;'></div>
-	<script>
-		mapboxgl.accessToken = 'pk.eyJ1IjoiY2FyZC1iIiwiYSI6ImNqdG45bmVvYjA4Ymc0YW1xenR5YjE4dDgifQ.BSraC2WHncupQX8aWt_2dA';
-		const map = new mapboxgl.Map({
-			container: 'map',
-			style: 'mapbox://styles/card-b/cju1tmxi71ojf1fo0ongxvlqq',
-			center: [-122.671605, 45.627714],
-			zoom: 15.5,
-			pitch: 40,
-			bearing: -20
-		});
-
-		var options = {
-			enableHighAccuracy: false,
-			timeout: 5000,
-			maximumAge: 0
-		};
-
-		map.addControl(new mapboxgl.GeolocateControl({
-			positionOptions: {
-				enableHighAccuracy: true
-			},
-			trackUserLocation: true
-		}));
-
-		document.addEventListener('message', function (data) {
-			let { lat, long } = JSON.parse(data.data);
-
-			try {
-				map.flyTo({ center: [long, lat] });
-
-			} catch (e) {
-				console.log(e);
-			}
-		});
-
-	</script>
-</body>
-`;
-
 export default class MapMain extends Component {
+	static navigationOptions = {
+		drawerLabel: 'Map'
+	};
+
 	state = {
 		contextTop: height - 130,
 		lng: -122.672605,
-		lat: 45.625663,
-		currentCount: 16
+		lat: 45.625663
+		//currentCount: 16
 	};
-
 
 	findCoordinates = () => {
 		navigator.geolocation.getCurrentPosition(
@@ -125,7 +93,8 @@ export default class MapMain extends Component {
 	 timer = () => {
 		// setState method is used to update the state
 
-		this.setState({ currentCount: this.state.currentCount -1 });
+		//we don't need current count, just set the timer to a bigger interval, I think
+		//this.setState({ currentCount: this.state.currentCount -1 });
 		this.findCoordinates();
 	 };
 
@@ -142,13 +111,17 @@ export default class MapMain extends Component {
 	render() {
 		return (
 			<View style={{ flex: 1 }}>
-				<WebView
-					style={{ flex: 1 }}
-					geolocationEnabled={true}
-					source={{ html: html }}
-					ref={ref => this.webview = ref}
-				/>
-				<GeoFence lng={this.state.lng} lat={this.state.lat} timer={this.state.currentCount}/>
+				<MapboxGL.MapView
+							showUserLocation={true}
+							zoomLevel={17}
+							logoEnabled={false}
+							centerCoordinate={[this.state.lng, this.state.lat]}
+							userTrackingMode={MapboxGL.UserTrackingModes.Follow}
+							styleURL={"mapbox://styles/card-b/cjtrt57f8310m1fms7zq61bt5"}
+							style={{ flex: 1 }}
+						>
+				</MapboxGL.MapView>
+				<GeoFence lat={this.state.lat} lng={this.state.lng} />
 			</View>
 		)
 	}

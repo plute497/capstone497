@@ -9,6 +9,7 @@ import {
 	Dimensions,
 	TouchableOpacity,
 	Platform,
+	WebView,
  	Alert
 } from 'react-native';
 import MapboxGL from '@mapbox/react-native-mapbox-gl';

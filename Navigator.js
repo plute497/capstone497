@@ -54,6 +54,7 @@ import SignUp from './components/profile/sign-up';
 import SignUpIn from './components/profile/sign-up-in';
 import SignUpSuccess from './components/profile/sign-up-success';
 import SubmitStory from './components/profile/submit-story';
+import Site from './components/sites/site';
 
 const listenerFunctions = [];
 const onOpenDrawer = (func) => {
@@ -247,8 +248,11 @@ const Main = createStackNavigator({
                     color: Colors.white
                 },
                 headerTitleStyle: {
-                    color: Colors.white
+                    color: Colors.white,
+                    fontFamily: 'Lato-Black'
                 },
+                headerBackTitle: null,
+                headerTruncatedBackTitle: null,
                 headerLeft: (
                     <TouchableOpacity onPress={() => onOpenDrawer()}>
                         <Image style={{height: 27, width: 27, marginLeft: 12, tintColor: Colors.white}} resizeMode={'contain'} source={shouldShowX ? closeIcon : menuIcon} />
@@ -303,6 +307,13 @@ const Main = createStackNavigator({
         screen: SignUpSuccess,
         navigationOptions: {
             drawerLabel: null
+        }
+    },
+    Site: {
+        screen: Site,
+        navigationOptions: {
+            headerBackTitle: null,
+            headerTruncatedBackTitle: null
         }
     }
 }, {

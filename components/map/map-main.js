@@ -133,6 +133,8 @@ export default class MapMain extends Component {
 	render() {
 		return (
 			<View style={{ flex: 1 }}>
+				<Button style={{position: 'absolute', bottom: 150}} onPress={() => this.props.navigation.navigate("Site")} title={"Go"} />
+
 				<WebView
 					style={{ flex: 1 }}
 					geolocationEnabled={true}

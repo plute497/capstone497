@@ -8,37 +8,16 @@ import {
 	ScrollView,
 	Dimensions,
 	TouchableOpacity,
-	WebView,
 	Platform,
- 	Alert
+	 Alert,
+	 WebView
 } from 'react-native';
 
-import MapboxGL from '@mapbox/react-native-mapbox-gl';
-// import Header from '../header/header-main';
 import GeoFence from './geo-fence';
-// import LocationDrawer from './location-drawer';
-
-// import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
 const { height, width } = Dimensions.get('window');
-
-const access_token = "sk.eyJ1IjoiY2FyZC1iIiwiYSI6ImNqdHJzcTJpaTB0azM0ZG0yYWxnNGhicTgifQ.jO1HLoCY0hE27lpd7kPTGA";
-
-MapboxGL.setAccessToken(access_token);
-
-function onSortOptions(a, b) {
-	if (a.label < b.label) {
-		return -1;
-	}
-
-	if (a.label > b.label) {
-		return 1;
-	}
-
-	return 0;
-}
 
 const html = `
 <!DOCTYPE html>
@@ -112,7 +91,7 @@ export default class MapMain extends Component {
 	  };
 
 	componentDidMount(){
-		var intervalId = setInterval(this.timer, 1000);
+		const intervalId = setInterval(this.findCoordinates, 1000);
 		// store intervalId in the state so it can be accessed later:
 		this.setState({intervalId: intervalId});
 	 };
@@ -122,12 +101,13 @@ export default class MapMain extends Component {
 		clearInterval(this.state.intervalId);
 	 };
 	 
-	 timer = () => {
+	/* timer = () => {
 		// setState method is used to update the state
 
-		this.setState({ currentCount: this.state.currentCount -1 });
+		//we don't need current count, just set the timer to a bigger interval, I think
+		//this.setState({ currentCount: this.state.currentCount -1 });
 		this.findCoordinates();
-	 };
+	 };*/
 
 	contextOpen = false;
 

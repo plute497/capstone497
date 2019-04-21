@@ -105,7 +105,20 @@ const dummyCards = [
         description: "Dummy Description",
         thumbnail: "https://dummyimage.com/640x4:3/f0f",
         type: 'video',
-        location: "https://s3-us-west-2.amazonaws.com/columbia-pacific/front-page.mp4"
+        location: "https://s3-us-west-2.amazonaws.com/columbia-pacific/front-page.mp4",
+        content: `
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Quisque sed sollicitudin metus. Quisque ut massa massa. Duis enim lectus, 
+            ultrices eget ex congue, aliquet auctor est. In bibendum nulla et ipsum faucibus, 
+            ut ultricies metus sagittis. Fusce dictum scelerisque odio vitae pellentesque. 
+            Sed tempus libero sed maximus finibus. Proin a sollicitudin augue. 
+            Donec magna felis, interdum a quam ac, mollis venenatis magna. Ut sed cursus urna. 
+            Aenean turpis diam, luctus in eleifend at, pharetra a ante. 
+            Phasellus sollicitudin arcu neque, sit amet tincidunt metus gravida quis. 
+            Vestibulum posuere tellus non orci hendrerit, quis vestibulum lorem tincidunt. 
+            Integer purus lacus, porttitor eu tristique vitae, pharetra sed mi. 
+            Pellentesque imperdiet non magna nec elementum. Sed volutpat venenatis magna 
+            in tincidunt. Nullam finibus et mi at malesuada.`
     },
     {
         title: "Dummy Card 2",
@@ -131,7 +144,20 @@ const dummyCards = [
         description: "Dummy Description",
         thumbnail: "https://dummyimage.com/640x4:3/f0f",
         type: 'video',
-        location: "https://s3-us-west-2.amazonaws.com/columbia-pacific/front-page.mp4"
+        location: "https://s3-us-west-2.amazonaws.com/columbia-pacific/front-page.mp4",
+        content: `
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Quisque sed sollicitudin metus. Quisque ut massa massa. Duis enim lectus, 
+            ultrices eget ex congue, aliquet auctor est. In bibendum nulla et ipsum faucibus, 
+            ut ultricies metus sagittis. Fusce dictum scelerisque odio vitae pellentesque. 
+            Sed tempus libero sed maximus finibus. Proin a sollicitudin augue. 
+            Donec magna felis, interdum a quam ac, mollis venenatis magna. Ut sed cursus urna. 
+            Aenean turpis diam, luctus in eleifend at, pharetra a ante. 
+            Phasellus sollicitudin arcu neque, sit amet tincidunt metus gravida quis. 
+            Vestibulum posuere tellus non orci hendrerit, quis vestibulum lorem tincidunt. 
+            Integer purus lacus, porttitor eu tristique vitae, pharetra sed mi. 
+            Pellentesque imperdiet non magna nec elementum. Sed volutpat venenatis magna 
+            in tincidunt. Nullam finibus et mi at malesuada.`
     }
 ];
 
@@ -180,6 +206,53 @@ export default class Site extends Component {
                 </Text>
             )
         })
+    }
+
+    boldLine = (text) => {
+        let parts = text.split("");
+
+        return (
+            <View style={{height: 75, justifyContent: 'space-between', flexDirection: 'row', padding: 0}}>
+                {parts.map((letter, i) => {
+                    return <Text key={letter + i} adjustsFontSizeToFit={true} minimumFontScale={0.1} style={{marginTop: -15, marginBottom: -15, textTransform: 'uppercase', fontSize: 100, color: getColor(this.props.navigation.state.params.name), fontFamily: 'Lato-Black'}}>{letter}</Text>
+                })}
+            </View>
+        )
+    };
+
+    liteLine = (text) => {
+        let parts = text.split("");
+
+        return (
+            <View style={{height: 75, justifyContent: 'space-between', flexDirection: 'row'}}>
+                {parts.map((letter, i) => {
+                    return <Text key={letter + i} adjustsFontSizeToFit={true} minimumFontScale={0.1} style={{marginTop: -15, marginBottom: -15, textTransform: 'uppercase', fontSize: 100, color: getColor(this.props.navigation.state.params.name), fontFamily: 'Lato-Light'}}>{letter}</Text>
+                })}
+            </View>
+        )
+    };
+
+    handleTitle = (text) => {
+        let nameParts = text.split(" ");
+        let line1;
+        let line2;
+        if(nameParts.length === 2) {
+            line1 = this.boldLine(nameParts[0]);
+        } else {
+            line1 = this.boldLine(nameParts[0] + " " + nameParts[1]);
+        }
+
+        if(nameParts.length === 2) {
+            line2 = this.liteLine(nameParts[1]);
+        } else if(nameParts.length === 3) {
+            line2 = this.liteLine(nameParts[2]);
+        } else {
+            line2 = this.liteLine(nameParts[2] + " " + nameParts[3]);
+        }
+
+        return (
+            <View>{line1}{line2}</View>
+        )
     }
 
     render() {
@@ -246,20 +319,7 @@ export default class Site extends Component {
                             source={getImage(params.name)}
                         />
                         <View style={{position: 'absolute', top: 0, left: 0, right: 0, width: '100%'}}>
-                            <Text 
-                                adjustsFontSizeToFit 
-                                minimumFontScale={0.1} 
-                                numberOfLines={1} 
-                                style={{fontSize: 400, marginTop: -45, color: getColor(params.name), lineHeight: 0, fontFamily: 'Lato-Black', textTransform: 'uppercase'}}>
-                                {getLine1()}
-                            </Text>
-                            <Text 
-                                adjustsFontSizeToFit 
-                                minimumFontScale={0.1} 
-                                numberOfLines={1} 
-                                style={{margin: 0, fontSize: 400,  color: getColor(params.name), marginTop: -65, fontFamily: 'Lato-Light', textTransform: 'uppercase'}}>
-                                {getLine2()}
-                            </Text>
+                            {this.handleTitle(location.niceName)}
                         </View>
                         
                 </Animated.View>
@@ -280,7 +340,7 @@ export default class Site extends Component {
                         right: 0, 
                         bottom: 0, 
                         backgroundColor: Colors.white}}>
-                        <Image style={{width: '100%', height: '17%'}} resizeMode={'contain'} source={ArtsTitle} />
+                        {this.handleTitle(location.niceName)}
                         <View style={{
                             padding: 15
                         }}>

@@ -62,12 +62,14 @@ const getColor = (name) => {
 
 export default class SiteContent extends PureComponent {
     handleContent = (item) => {
+        let { params } = this.props.navigation.state;
+
         if(item.type === "video") {
-            this.props.navigation.navigate("VideoView", item);
+            this.props.navigation.navigate("VideoView", {...item, name: params.name});
         }
 
         if(item.type === "story") {
-            this.props.navigation.navigate("StoryView", item);
+            this.props.navigation.navigate("StoryView", {...item, name: params.name});
         }
     }
 

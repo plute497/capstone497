@@ -16,7 +16,7 @@ export default function Chip(props) {
                    <Image resizeMode={'cover'} style={styles.image} source={{uri: props.thumbnail}} />
                 </View>
                 <View style={styles.dataWrapper}>
-                    <Text style={styles.title}>{props.title}</Text>
+                    <Text style={[styles.title, {color: props.color}]}>{props.title}</Text>
                     <Text style={styles.description} numberOfLines={3}>{props.description}</Text>
                 </View>
             </View>
@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
         maxHeight: 120
     },
     imageWrapper: {
-        minHeight: 300,
         width: 120,
         height: 120,
         overflow: 'hidden',
@@ -61,9 +60,9 @@ const styles = StyleSheet.create({
         marginTop: 15, 
         marginBottom: 10,
         color: Colors.blue,
-        fontWeight: 'bold'
+        fontFamily: 'Lato-Black'
     },
     description: {
-
+        fontFamily: 'Lato-Light'
     }
 })

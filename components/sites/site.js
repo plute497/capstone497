@@ -30,6 +30,7 @@ import BG from '../images/gradient-bg.png';
 import ArtsTitle from '../images/sites/arts-title.png';
 
 import { locations } from '../locations/locations';
+import Chip from '../ui-components/chip';
 
 const SplashArts = require('../videos/splash-arts-small.mp4');
 const SplashCchm = require('../videos/splash-cchm-small.mp4');
@@ -45,6 +46,7 @@ const SplashSlocum = require('../videos/splash-slocum-small.mp4');
 const SplashSmith = require('../videos/splash-smith-small.mp4');
 
 const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 const getVideo = (name) => {
     switch(name) {
@@ -97,6 +99,43 @@ const getColor = (name) => {
     }
 }
 
+const dummyCards = [
+    {
+        title: "Dummy Card 1",
+        description: "Dummy Description",
+        thumbnail: "https://dummyimage.com/640x4:3/f0f",
+        type: 'video',
+        location: "https://s3-us-west-2.amazonaws.com/columbia-pacific/front-page.mp4"
+    },
+    {
+        title: "Dummy Card 2",
+        description: "Dummy Description",
+        thumbnail: "https://dummyimage.com/640x4:3/f0f",
+        type: 'story',
+        content: `
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Quisque sed sollicitudin metus. Quisque ut massa massa. Duis enim lectus, 
+            ultrices eget ex congue, aliquet auctor est. In bibendum nulla et ipsum faucibus, 
+            ut ultricies metus sagittis. Fusce dictum scelerisque odio vitae pellentesque. 
+            Sed tempus libero sed maximus finibus. Proin a sollicitudin augue. 
+            Donec magna felis, interdum a quam ac, mollis venenatis magna. Ut sed cursus urna. 
+            Aenean turpis diam, luctus in eleifend at, pharetra a ante. 
+            Phasellus sollicitudin arcu neque, sit amet tincidunt metus gravida quis. 
+            Vestibulum posuere tellus non orci hendrerit, quis vestibulum lorem tincidunt. 
+            Integer purus lacus, porttitor eu tristique vitae, pharetra sed mi. 
+            Pellentesque imperdiet non magna nec elementum. Sed volutpat venenatis magna 
+            in tincidunt. Nullam finibus et mi at malesuada.`
+    },
+    {
+        title: "Dummy Card 3",
+        description: "Dummy Description",
+        thumbnail: "https://dummyimage.com/640x4:3/f0f",
+        type: 'video',
+        location: "https://s3-us-west-2.amazonaws.com/columbia-pacific/front-page.mp4"
+    }
+];
+
+
 export default class Site extends Component {
     state = {
         showVideo: true,
@@ -120,6 +159,10 @@ export default class Site extends Component {
         ]).start(() => {
             this.setState({showVideo: false});
         });
+    }
+
+    readMore = () => {
+        this.props.navigation.navigate("SiteContent", {...this.state.location, content: dummyCards });
     }
 
     componentDidMount() {
@@ -159,8 +202,6 @@ export default class Site extends Component {
 
         const { showVideo } = this.state;
 
-        console.log(this.props.navigation.state);
-
         const { params } = this.props.navigation.state;
         const nameParts = location.niceName.split(" ");
 
@@ -188,6 +229,7 @@ export default class Site extends Component {
 
         return (
             <View style={{flex: 1, backgroundColor: Colors.lightGray}}>
+                
                 <Animated.View
                     style={{
                         position: 'absolute', 
@@ -276,10 +318,11 @@ export default class Site extends Component {
                                 style={{
                                 textAlign: 'justify',
                                 marginTop: 15,
+                                fontFamily: "Lato-Light",
                                 fontSize: 18
                             }}>{longDesc()}</Text>
                         </View>
-                        <TouchableOpacity style={{position: 'absolute', bottom: 30, left: 0, right: 0, height: 50, alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.5)'}}>
+                        <TouchableOpacity onPress={this.readMore} style={{position: 'absolute', bottom: 30, left: 0, right: 0, height: 50, alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.5)'}}>
                             <Text style={{color: getColor(params.name), fontSize: 18, fontFamily: 'Lato-Bold'}}>Read More</Text>
                             <Text style={{color: getColor(params.name), fontSize: 18}}>{"\u25BC"}</Text>
                         </TouchableOpacity>
@@ -301,7 +344,7 @@ export default class Site extends Component {
                         <Video 
                             onEnd={this.videoEnded}
                             source={getVideo(params.name)}
-                            rate={1}
+                            rate={2}
                             style={{
                                 position: 'absolute', 
                                 top: 0, 

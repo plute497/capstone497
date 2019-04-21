@@ -55,6 +55,7 @@ import SignUpIn from './components/profile/sign-up-in';
 import SignUpSuccess from './components/profile/sign-up-success';
 import SubmitStory from './components/profile/submit-story';
 import Site from './components/sites/site';
+import SiteContent from './components/sites/site-content';
 
 const listenerFunctions = [];
 const onOpenDrawer = (func) => {
@@ -269,15 +270,19 @@ const Main = createStackNavigator({
     },
     VideoView: {
         screen: VideoView,
-        navigationOptions: {
-            header: null
-        },
+        navigationOptions: (props) => ({
+            title: props.navigation.state.params.niceName,
+            headerBackTitle: props.navigation.state.params.niceName,
+            headerTruncatedBackTitle: null
+        })
     },
     AudioView: {
         screen: AudioView,
-        navigationOptions: {
-            header: null
-        },
+        navigationOptions: (props) => ({
+            title: props.navigation.state.params.niceName,
+            headerBackTitle: props.navigation.state.params.niceName,
+            headerTruncatedBackTitle: null
+        })
     },
     ArView: {
         screen: ArView,
@@ -287,9 +292,12 @@ const Main = createStackNavigator({
     },
     StoryView: {
         screen: StoryView,
-        navigationOptions: {
+        navigationOptions: (props) => ({
+            title: props.navigation.state.params.niceName,
+            headerBackTitle: props.navigation.state.params.niceName,
+            headerTruncatedBackTitle: null,
             drawerLabel: () => null
-        },
+        })
     },
     SignUp: {
         screen: SignUp,
@@ -315,6 +323,14 @@ const Main = createStackNavigator({
             headerBackTitle: null,
             headerTruncatedBackTitle: null
         }
+    },
+    SiteContent: {
+        screen: SiteContent,
+        navigationOptions: (props) => ({
+            title: props.navigation.state.params.niceName,
+            headerBackTitle: props.navigation.state.params.niceName,
+            headerTruncatedBackTitle: null
+        })
     }
 }, {
     mode: 'modal'

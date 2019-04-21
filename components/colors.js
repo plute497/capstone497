@@ -7,5 +7,6 @@ export default Colors = {
     red: '#c54c41',
     white: '#ffffff',
     black: '#000000',
-    lightGray: '#dddddd'
+    lightGray: '#dddddd',
+    lighterGray: '#f5f5f5'
 };

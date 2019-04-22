@@ -4,7 +4,8 @@ import { Modal,
 	TouchableHighlight, 
 	View,
 	StyleSheet,
-	Alert
+	Alert,
+	Button
 } from 'react-native';
 
 const styles = StyleSheet.create ({
@@ -53,14 +54,15 @@ export default class LocationDrawer extends Component {
 			return (
 				<View
 					visible={this.state.drawerVisible}
+					style={styles.pullDrawer}
 				>
-					<TouchableHighlight 
-						style={styles.pullDrawer}
+					<Button
+						title = {this.props.location.name}
+					 	color="#841584"
 						onPress={() => {
 							this.setModalVisible(!this.state.modalVisible);
-					}}>
-						<Text style={styles.pullText}>{this.props.location.name}</Text>
-					</TouchableHighlight>
+						}}
+					/>
 				</View>
 			)
 		} else {

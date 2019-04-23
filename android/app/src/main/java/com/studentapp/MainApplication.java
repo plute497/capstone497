@@ -32,7 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
               new RCTMGLPackage(),
             new ReactVideoPackage(),
             new RNGestureHandlerPackage()
-//              new ReactViroPackage(ReactViroPackage.ViroPlatform.valueOf(BuildConfig.VR_PLATFORM))
+              //new ReactViroPackage(ReactViroPackage.ViroPlatform.valueOf(BuildConfig.VR_PLATFORM))
       );
     }
 

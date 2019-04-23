@@ -10,3 +10,20 @@ export default Colors = {
     lightGray: '#dddddd',
     lighterGray: '#f5f5f5'
 };
+
+export const getColor = (name) => {
+    switch(name) {
+        case 'arts': return Colors.blue;
+        case 'cchm': return Colors.yellow;
+        case 'elks': return Colors.yellow; 
+        case 'esther': return Colors.green; 
+        case 'evergreen': return Colors.green; 
+        case 'heritage': return Colors.green; 
+        case 'hidden': return Colors.red; 
+        case 'kiggins': return Colors.red; 
+        case 'providence': return Colors.red; 
+        case 'schofield': return Colors.blue; 
+        case 'slocum': return Colors.blue; 
+        case 'smith': return Colors.yellow; 
+    }
+}

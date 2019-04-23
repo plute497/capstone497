@@ -6,12 +6,13 @@ import {
     Animated,
     StyleSheet,
     TouchableOpacity,
+    Easing,
     Image,
     Dimensions
 } from 'react-native';
 
 import Video from 'react-native-video';
-import Colors from '../colors';
+import Colors, { getColor } from '../colors';
 
 import BackArts from '../images/sites/arts.png';
 import BackCchm from '../images/sites/cchm.png';
@@ -79,23 +80,6 @@ const getImage = (name) => {
         case 'schofield': return BackSchofield; 
         case 'slocum': return BackSlocum; 
         case 'smith': return BackSmith; 
-    }
-}
-
-const getColor = (name) => {
-    switch(name) {
-        case 'arts': return Colors.blue;
-        case 'cchm': return Colors.yellow;
-        case 'elks': return Colors.yellow; 
-        case 'esther': return Colors.green; 
-        case 'evergreen': return Colors.green; 
-        case 'heritage': return Colors.green; 
-        case 'hidden': return Colors.red; 
-        case 'kiggins': return Colors.red; 
-        case 'providence': return Colors.red; 
-        case 'schofield': return Colors.blue; 
-        case 'slocum': return Colors.blue; 
-        case 'smith': return Colors.yellow; 
     }
 }
 
@@ -173,11 +157,12 @@ export default class Site extends Component {
     videoRotation = new Animated.Value(0);
     mainScale = new Animated.Value(0);
     opacity = new Animated.Value(1);
+    slowPan = new Animated.Value(0);
 
     videoEnded = () => {
         Animated.sequence([
             Animated.timing(this.opacity, {toValue: 0, duration: 1000}),
-            Animated.delay(3000),
+            Animated.timing(this.slowPan, {toValue: 1, duration: 3000, easing: Easing.linear}),
             Animated.parallel([
                 Animated.timing(this.videoRotation, {toValue: 1, duration: 1000}),
                 Animated.timing(this.mainScale, {toValue: 1, duration: 1000}),
@@ -214,7 +199,7 @@ export default class Site extends Component {
         return (
             <View style={{height: 75, justifyContent: 'space-between', flexDirection: 'row', padding: 0}}>
                 {parts.map((letter, i) => {
-                    return <Text key={letter + i} adjustsFontSizeToFit={true} minimumFontScale={0.1} style={{marginTop: -15, marginBottom: -15, textTransform: 'uppercase', fontSize: 100, color: getColor(this.props.navigation.state.params.name), fontFamily: 'Lato-Black'}}>{letter}</Text>
+                    return <Text key={letter + i} adjustsFontSizeToFit={true} minimumFontScale={0.1} style={{marginTop: -15, marginBottom: -15, textTransform: 'uppercase', fontSize: 50, color: getColor(this.props.navigation.state.params.name), fontFamily: 'Lato-Black'}}>{letter}</Text>
                 })}
             </View>
         )
@@ -224,9 +209,9 @@ export default class Site extends Component {
         let parts = text.split("");
 
         return (
-            <View style={{height: 75, justifyContent: 'space-between', flexDirection: 'row'}}>
+            <View style={{height: 75, justifyContent: 'space-between', flexDirection: 'row', width: '100%'}}>
                 {parts.map((letter, i) => {
-                    return <Text key={letter + i} adjustsFontSizeToFit={true} minimumFontScale={0.1} style={{marginTop: -15, marginBottom: -15, textTransform: 'uppercase', fontSize: 100, color: getColor(this.props.navigation.state.params.name), fontFamily: 'Lato-Light'}}>{letter}</Text>
+                    return <Text key={letter + i} adjustsFontSizeToFit={true} minimumFontScale={0.1} style={{marginTop: -15, marginBottom: -15, textTransform: 'uppercase', fontSize: 50, color: getColor(this.props.navigation.state.params.name), fontFamily: 'Lato-Light'}}>{letter}</Text>
                 })}
             </View>
         )
@@ -267,6 +252,11 @@ export default class Site extends Component {
             inputRange: [0, 1],
             outputRange: ['180deg', '360deg']
         });
+
+        const slowPan = this.slowPan.interpolate({
+            inputRange: [0,1],
+            outputRange: [-5, 5]
+        })
 
         const scale = this.mainScale.interpolate({
             inputRange: [0, 0.5, 1],
@@ -311,10 +301,11 @@ export default class Site extends Component {
                         right: 0, 
                         bottom: 0,
                         backfaceVisibility: 'hidden',
+                        backgroundColor: Colors.white,
                         transform: [{perspective: 500}, {rotateY: vidRotation}, {scale: scale}]
                     }}>
-                        <Image
-                            style={{position: 'absolute', bottom: 0, left: 0, right: 0, width: '100%', top: 0, height: '100%'}}
+                        <Animated.Image
+                            style={{position: 'absolute', bottom: 0, left: -10, right: -10, width: '120%', top: 0, height: '100%', transform: [{translateX: slowPan}]}}
                             resizeMode={'cover'}
                             source={getImage(params.name)}
                         />
@@ -340,13 +331,13 @@ export default class Site extends Component {
                         right: 0, 
                         bottom: 0, 
                         backgroundColor: Colors.white}}>
-                        {this.handleTitle(location.niceName)}
+                        {this.handleTitle("This is the name")}
                         <View style={{
                             padding: 15
                         }}>
-                            {this.state.location.descriptions && this.state.location.descriptions.map(line => {
+                            {this.state.location.descriptions && this.state.location.descriptions.map((line, i) => {
                                 return (
-                                    <Text key={line[0]}>
+                                    <Text key={i + line[0]}>
                                         <Text style={{fontFamily: 'Lato-Light', textTransform: 'uppercase', marginRight: 15, fontSize: 16}}>{line[0]} </Text>
                                         <Text style={{fontFamily: 'Lato-Regular', fontSize: 20, marginLeft: 15}}>   {line[1]}</Text>
                                     </Text>
@@ -404,7 +395,7 @@ export default class Site extends Component {
                         <Video 
                             onEnd={this.videoEnded}
                             source={getVideo(params.name)}
-                            rate={2}
+                            rate={1}
                             style={{
                                 position: 'absolute', 
                                 top: 0, 

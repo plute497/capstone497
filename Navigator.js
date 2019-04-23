@@ -19,14 +19,14 @@ import {
  * this is a third-party package that is set up to set this up for us
  */
 import { createBottomTabNavigator, createStackNavigator, createAppContainer, createDrawerNavigator, DrawerItems } from 'react-navigation';
-import Colors from './components/colors';
+import Colors, { getColor } from './components/colors';
 import menuIcon from './components/images/menu.png';
 import closeIcon from './components/images/close.png';
 
 import historicRoutesLogo from './components/images/historicRoutesLogo.png';
-import arIcon from './components/images/ar.png';
-import busIcon from './components/images/bus.png';
-import clockIcon from './components/images/clock.png';
+import arIcon from './components/images/AR-white.png';
+import busIcon from './components/images/bus-white.png';
+import clockIcon from './components/images/clock-white.png';
 import handsetIcon from './components/images/handset.png';
 import quillIcon from './components/images/quill.png';
 import radioIcon from './components/images/radio.png';
@@ -56,6 +56,7 @@ import SignUpSuccess from './components/profile/sign-up-success';
 import SubmitStory from './components/profile/submit-story';
 import Site from './components/sites/site';
 import SiteContent from './components/sites/site-content';
+import LocationsList from './components/locations/locations-list';
 
 const listenerFunctions = [];
 const onOpenDrawer = (func) => {
@@ -84,14 +85,14 @@ class DrawerContent extends Component {
             <View style={{
                 flex: 1
             }}>
-                <View style={{
+                {/* <View style={{
                     backgroundColor: Colors.white,
                     height: 140,
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
                     <Image style={{flex: 1, width: '100%'}} source={historicRoutesLogo} resizeMode={'contain'} />
-                </View>
+                </View> */}
 
                 <DrawerItems {...this.props} />
             </View>
@@ -129,19 +130,14 @@ class DrawerContent extends Component {
  */
 const generateIcon = (icon, tint) => {
     function getStyle() {
-        if(tint) {
-            return {
-                height: 20,
-                width: 20,
-                tintColor: Colors.black
-            }
-        } else {
-            return {
-                height: 20,
-                width: 20
-            }
+        return {
+            height: 40,
+            width: 40,
+            borderRadius: 6,
+            backgroundColor: tint
         }
     }
+
     return (
         <Image
             source={icon}
@@ -156,80 +152,82 @@ const MainNav = createDrawerNavigator({
         screen: MapMain,
         navigationOptions: {
             title: "Let's Go",
-            drawerIcon: generateIcon(busIcon)
-        }
-    },
-    Video: {
-        screen: VideoMain,
-        navigationOptions: {
-            title: "Videos",
-            drawerIcon: generateIcon(tvIcon, true)
+            drawerIcon: generateIcon(busIcon, Colors.blue)
         }
     },
     Ar: {
         screen: ArMain,
         navigationOptions: {
             title: "Then & Now",
-            drawerIcon: generateIcon(arIcon)
+            drawerIcon: generateIcon(arIcon, Colors.green)
         }
     },
-    Story: {
-        screen: StoryMain,
+    LocationsList: {
+        screen: LocationsList,
         navigationOptions: {
-            title: "Nowadays",
-            drawerIcon: generateIcon(handsetIcon)
+            title: "Back in the Day",
+            drawerIcon: generateIcon(clockIcon, Colors.red)
         }
     },
-    Audio: {
-        screen: AudioMain,
-        navigationOptions: {
-            title: "Audio",
-            drawerIcon: generateIcon(radioIcon, true)
-        }
-    },
-    SignUpIn: {
-        screen: SignUpIn,
-        navigationOptions: (props) => {
-            //check if user is signed in
-            if(props.screenProps.user.unset) {
-                return {
-                    title: "Sign Up/In",
-                    drawerIcon: generateIcon(loginIcon, true)
-                }
-            } else {
-                return {
-                    drawerLabel: () => null
-                }
-            }
-        }
-    },
-    SubmitStory: {
-        screen: SubmitStory,
-        navigationOptions: {
-            title: "Folktells",
-            drawerIcon: generateIcon(quillIcon)
-        }
-    },
-    SignOut: {
-        screen: SignOut,
-        navigationOptions: (props) => {
-            //check if user is signed in
-            if(props.screenProps.user.unset) {
-                return {
-                    drawerLabel: () => null
-                }
-            } else {
-                return {
-                    title: "Sign Out",
-                    drawerIcon: generateIcon(logoutIcon, true)
-                }
-            }
-        }
-    }
+    // Story: {
+    //     screen: StoryMain,
+    //     navigationOptions: {
+    //         title: "Nowadays",
+    //         drawerIcon: generateIcon(handsetIcon)
+    //     }
+    // },
+    // SignUpIn: {
+    //     screen: SignUpIn,
+    //     navigationOptions: (props) => {
+    //         //check if user is signed in
+    //         return {drawerLabel: () => null}
+    //         // if(props.screenProps.user.unset) {
+    //         //     return {
+    //         //         title: "Sign Up/In",
+    //         //         drawerIcon: generateIcon(loginIcon, true)
+    //         //     }
+    //         // } else {
+    //         //     return {
+    //         //         drawerLabel: () => null
+    //         //     }
+    //         // }
+    //     }
+    // },
+    // SubmitStory: {
+    //     screen: SubmitStory,
+    //     navigationOptions: {
+    //         title: "Folktells",
+    //         drawerIcon: generateIcon(quillIcon)
+    //     }
+    // },
+    // SignOut: {
+    //     screen: SignOut,
+    //     navigationOptions: (props) => {
+    //         //check if user is signed in
+    //         if(props.screenProps.user.unset) {
+    //             return {
+    //                 drawerLabel: () => null
+    //             }
+    //         } else {
+    //             return {
+    //                 title: "Sign Out",
+    //                 drawerIcon: generateIcon(logoutIcon, true)
+    //             }
+    //         }
+    //     }
+    // }
 }, {
     drawerType: 'slide',
     drawerLockMode: 'unlocked',
-    contentComponent: DrawerContent
+    contentComponent: DrawerContent,
+    contentOptions: {
+        itemStyle: {
+            height: 75
+        },
+        labelStyle: {
+            fontFamily: 'Lato-Regular'
+        }
+    }
 });
 
 const Main = createStackNavigator({
@@ -243,7 +241,11 @@ const Main = createStackNavigator({
             return {
                 title: "Historic Routes",
                 headerStyle: {
-                    backgroundColor: Colors.blue
+                    backgroundColor: Colors.blue,
+                    shadowOffset: { width: 0, height: 2},
+                    shadowOpacity: 0.1,
+                    shadowRadius: 2,
+                    borderBottomWidth: 0,
                 },
                 headerTintColor: {
                     color: Colors.white
@@ -273,7 +275,16 @@ const Main = createStackNavigator({
         navigationOptions: (props) => ({
             title: props.navigation.state.params.niceName,
             headerBackTitle: props.navigation.state.params.niceName,
-            headerTruncatedBackTitle: null
+            headerTruncatedBackTitle: null,
+            headerTintColor: Colors.white,
+            headerStyle: {
+                backgroundColor: getColor(props.navigation.state.params.name),
+                shadowOffset: { width: 0, height: 2},
+                shadowOpacity: 0.1,
+                shadowRadius: 2,
+                borderBottomWidth: 0
+            },
+            drawerLabel: () => null
         })
     },
     AudioView: {
@@ -281,7 +292,8 @@ const Main = createStackNavigator({
         navigationOptions: (props) => ({
             title: props.navigation.state.params.niceName,
             headerBackTitle: props.navigation.state.params.niceName,
-            headerTruncatedBackTitle: null
+            headerTruncatedBackTitle: null,
+            drawerLabel: () => null
         })
     },
     ArView: {
@@ -296,6 +308,14 @@ const Main = createStackNavigator({
             title: props.navigation.state.params.niceName,
             headerBackTitle: props.navigation.state.params.niceName,
             headerTruncatedBackTitle: null,
+            headerTintColor: Colors.white,
+            headerStyle: {
+                backgroundColor: getColor(props.navigation.state.params.name),
+                shadowOffset: { width: 0, height: 2},
+                shadowOpacity: 0.1,
+                shadowRadius: 2,
+                borderBottomWidth: 0
+            },
             drawerLabel: () => null
         })
     },
@@ -319,17 +339,33 @@ const Main = createStackNavigator({
     },
     Site: {
         screen: Site,
-        navigationOptions: {
+        navigationOptions: (props) => ({
             headerBackTitle: null,
-            headerTruncatedBackTitle: null
-        }
+            headerTruncatedBackTitle: null,
+            headerTintColor: Colors.white,
+            headerStyle: {
+                backgroundColor: getColor(props.navigation.state.params.name),
+                shadowOffset: { width: 0, height: 2},
+                shadowOpacity: 0.1,
+                shadowRadius: 2,
+                borderBottomWidth: 0
+            }
+        })
     },
     SiteContent: {
         screen: SiteContent,
         navigationOptions: (props) => ({
             title: props.navigation.state.params.niceName,
             headerBackTitle: props.navigation.state.params.niceName,
-            headerTruncatedBackTitle: null
+            headerTruncatedBackTitle: null,
+            headerTintColor: Colors.white,
+            headerStyle: {
+                backgroundColor: getColor(props.navigation.state.params.name),
+                shadowOffset: { width: 0, height: 2},
+                shadowOpacity: 0.1,
+                shadowRadius: 2,
+                borderBottomWidth: 0
+            }
         })
     }
 }, {

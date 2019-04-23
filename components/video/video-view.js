@@ -56,6 +56,24 @@ export default class VideoView extends Component {
             location: navigation.getParam('location'),
             loaded: true
         }, () => console.log(this.state.thumbnail));
+
+        Dimensions.addEventListener('change', this.handleOrientation);
+    }
+
+    componentWillUnmount() {
+        Dimensions.removeEventListener('change', this.handleOrientation);
+    }
+
+    handleOrientation = (e) => {
+        if(e.window.width > e.window.height) {
+            if(this.video) {
+                this.video.presentFullscreenPlayer();
+            }
+        } else {
+            if(this.video) {
+                this.video.presentFullscreenPlayer();
+            }
+        }
     }
 
     togglePaused = () => {

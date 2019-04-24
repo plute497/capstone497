@@ -21,7 +21,6 @@ export default class GeoFence extends Component {
 
 	componentDidUpdate(oldProps) {
 		// console.log(oldProps);
-		console.log(oldProps.lat, oldProps.lng);
 	}
 
 	componentDidMount() {
@@ -46,15 +45,12 @@ export default class GeoFence extends Component {
 
 	checkFences = () => {
 		let foundLoc = locations.find(thisLocation => {
-			console.log(thisLocation.name, 'lng', this.props.lng, 'lat', this.props.lat, thisLocation.lng, thisLocation.lat);
 			if (this.check_a_point(this.props.lng, this.props.lat, thisLocation.lng, thisLocation.lat, 0.0006)) {
 				return thisLocation;
 			} else {
 				return false;
 			}
 		});
-
-		console.log(foundLoc);
 
 		//if we have found a location, we set the state, which will update the location prop on LocationDrawer below
 		if (foundLoc) {

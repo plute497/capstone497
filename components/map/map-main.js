@@ -149,7 +149,7 @@ export default class MapMain extends Component {
 	}
 
 	navigationChange = (e) => {
-		if (e.url !== 'about:blank') {
+		if (e.url !== 'about:blank' && !e.url.includes('react-js-navigation')) {
 			this.webview.stopLoading();
 			Linking.canOpenURL(e.url).then(supported => {
 				if (supported) {

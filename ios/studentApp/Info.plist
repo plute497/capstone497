@@ -39,6 +39,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Use for AR</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Needed to view map location</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Needed to view map location</string>
 	<key>NSLocationUsageDescription</key>

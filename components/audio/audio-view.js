@@ -5,7 +5,9 @@ import {
     Image,
     Dimensions,
     TouchableOpacity,
-    ScrollView
+    ScrollView,
+    Animated,
+    Easing
 } from 'react-native';
 
 import {
@@ -14,32 +16,55 @@ import {
     MediaStates
 } from 'react-native-audio-toolkit';
 
-const width = Dimensions.get('window').width;
+import AudioImageCchm from '../sounds/images/cchm.jpg';
+import AudioImageElks from '../sounds/images/elks.jpg';
+import AudioImageEvergreen from '../sounds/images/evergreen.jpg';
+import AudioImageHeritage from '../sounds/images/heritage.jpg';
+import AudioImageProvidence from '../sounds/images/providence.jpg';
+import AudioImageSchofield from '../sounds/images/schofield.jpg';
+import AudioImageSmith from '../sounds/images/smith.jpg';
+
+const getAudioImage = (name) => {
+    switch(name) {
+        case 'cchm': return AudioImageCchm;
+        case 'elks': return AudioImageElks; 
+        case 'evergreen': return AudioImageEvergreen; 
+        case 'heritage': return AudioImageHeritage; 
+        case 'providence': return AudioImageProvidence; 
+        case 'schofield': return AudioImageSchofield; 
+        case 'smith': return AudioImageSmith; 
+    }
+}
+
+const {width, height} = Dimensions.get('window');
+
+const getAudio = (name) => {
+    return "https://s3-us-west-2.amazonaws.com/cmdc-cchm/" + name + ".mp3";
+}
 
 export default class AudioView extends Component {
     state = {
-        thumbnail: null,
-        title: "",
-        description: "",
-        location: "",
-        loaded: false
+        // loaded: false
     }
 
     playing = false;
 
-    componentDidMount() {
-        let { navigation } = this.props;
+    animatedHeight = new Animated.Value(height);
+    animatedPosition = new Animated.Value(-10);
 
-        this.setState({
-            thumbnail: navigation.getParam('thumbnail'),
-            title: navigation.getParam('title'),
-            description: navigation.getParam('description'),
-            location: navigation.getParam('location'),
-            loaded: true
-        }, () => {
-            //creates the audio player using the mp3's url
-            this.audioPlayer = new Player(this.state.location);
-        });
+    componentDidMount() {
+        let { params } = this.props.navigation.state;
+
+        try {
+            this.audioPlayer = new Player(getAudio(params.name)).play();
+        } catch(e) {
+            console.log(e);
+        }
+
+        Animated.sequence([
+            Animated.timing(this.animatedPosition, { toValue: 0, duration: 3000, easing: Easing.linear }),
+            Animated.timing(this.animatedHeight, { toValue: width, duration: 500 })
+        ]).start();
     }
 
     toggleAudio = () => {
@@ -70,7 +95,6 @@ export default class AudioView extends Component {
                     this.playing = false;
                 });
             }
-            
         } 
     }
 
@@ -82,22 +106,15 @@ export default class AudioView extends Component {
     }
 
     render() {
-        return this.state.loaded ? (
-            <View style={{flex: 1, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center'}}>
-                <View style={{backgroundColor: '#000000', height: 200, width: width}}>
-                    <TouchableOpacity style={{position: 'absolute', top: 0, left: 0}} onPress={() => this.props.navigation.goBack()} style={{padding: 15}}>
-                        <Text style={{color: '#fff'}}>▼</Text>
-                    </TouchableOpacity>
+        let { params } = this.props.navigation.state;
 
-                    <TouchableOpacity onPress={this.toggleAudio} style={{backgroundColor: 'white', padding: 15}}>
-                        <Text>Play Audio</Text>
-                    </TouchableOpacity>
-                </View>
-                <ScrollView contentContainerStyle={{padding: 15}}>
-                    <Text style={{fontSize: 24, marginBottom: 15}}>{this.state.title}</Text>
-                    <Text style={{marginTop: 15}}>{this.state.description}</Text>
+        return (
+            <View style={{flex: 1}}>
+                <ScrollView style={{margin: 0}} contentContainerStyle={{paddingBottom: 50}}>
+                    <Animated.Image style={{position: 'absolute', top: 0, left: -10, right: -10, width: width + 20, height: this.animatedHeight, transform: [{translateX: this.animatedPosition}]}} resizeMode={'cover'} source={getAudioImage(params.name)} />
+                    <Animated.Text style={{fontFamily: 'Lato-Regular', lineHeight: 20, fontSize: 16, padding: 15, marginTop: this.animatedHeight, width: width - 15}}>{params.text}</Animated.Text>
                 </ScrollView>
             </View>
-        ) : <View></View>
+        );
     }
 }

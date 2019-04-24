@@ -13,11 +13,11 @@ export default function Chip(props) {
         <TouchableOpacity onPress={() => props.onPress(props.item)}>
             <View style={styles.wrapper}>
                 <View style={styles.imageWrapper}>
-                   <Image resizeMode={'cover'} style={styles.image} source={{uri: props.thumbnail}} />
+                   <Image resizeMode={'cover'} style={styles.image} source={props.uri ? {uri: props.uri} : props.thumbnail} />
                 </View>
                 <View style={styles.dataWrapper}>
                     <Text style={[styles.title, {color: props.color}]}>{props.title}</Text>
-                    <Text style={styles.description} numberOfLines={3}>{props.description}</Text>
+                    <Text style={styles.description} numberOfLines={2}>{props.description}</Text>
                 </View>
             </View>
         </TouchableOpacity>

@@ -26,11 +26,23 @@ import BackProvidence from '../images/sites/providence.png';
 import BackSchofield from '../images/sites/schofield.png';
 import BackSlocum from '../images/sites/slocum.png';
 import BackSmith from '../images/sites/smith.png';
-import BG from '../images/gradient-bg.png';
+
+import HeaderArts from '../images/sites/headers/arts.png';
+import HeaderCchm from '../images/sites/headers/cchm.png';
+import HeaderElks from '../images/sites/headers/elks.png';
+import HeaderEstherShort from '../images/sites/headers/esthershort.png';
+import HeaderEvergreen from '../images/sites/headers/evergreen.png';
+import HeaderHeritage from '../images/sites/headers/heritage.png';
+import HeaderHidden from '../images/sites/headers/hidden.png';
+import HeaderKiggins from '../images/sites/headers/kiggins.png';
+import HeaderProvidence from '../images/sites/headers/providence.png';
+import HeaderSchofield from '../images/sites/headers/schofield.png';
+// import HeaderSlocum from '../images/sites/headers/slocum.png';
+import HeaderSmith from '../images/sites/headers/smith.png';
 
 import ArtsTitle from '../images/sites/arts-title.png';
 
-import { locations } from '../locations/locations';
+import { locations, audioStories } from '../locations/locations';
 import Chip from '../ui-components/chip';
 
 const SplashArts = require('../videos/splash-arts-small.mp4');
@@ -66,7 +78,7 @@ const getVideo = (name) => {
     }
 }
 
-const getImage = (name) => {
+const getBackground = (name) => {
     switch(name) {
         case 'arts': return BackArts;
         case 'cchm': return BackCchm;
@@ -83,68 +95,26 @@ const getImage = (name) => {
     }
 }
 
-const dummyCards = [
-    {
-        title: "Dummy Card 1",
-        description: "Dummy Description",
-        thumbnail: "https://dummyimage.com/640x4:3/f0f",
-        type: 'video',
-        location: "https://s3-us-west-2.amazonaws.com/columbia-pacific/front-page.mp4",
-        content: `
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-            Quisque sed sollicitudin metus. Quisque ut massa massa. Duis enim lectus, 
-            ultrices eget ex congue, aliquet auctor est. In bibendum nulla et ipsum faucibus, 
-            ut ultricies metus sagittis. Fusce dictum scelerisque odio vitae pellentesque. 
-            Sed tempus libero sed maximus finibus. Proin a sollicitudin augue. 
-            Donec magna felis, interdum a quam ac, mollis venenatis magna. Ut sed cursus urna. 
-            Aenean turpis diam, luctus in eleifend at, pharetra a ante. 
-            Phasellus sollicitudin arcu neque, sit amet tincidunt metus gravida quis. 
-            Vestibulum posuere tellus non orci hendrerit, quis vestibulum lorem tincidunt. 
-            Integer purus lacus, porttitor eu tristique vitae, pharetra sed mi. 
-            Pellentesque imperdiet non magna nec elementum. Sed volutpat venenatis magna 
-            in tincidunt. Nullam finibus et mi at malesuada.`
-    },
-    {
-        title: "Dummy Card 2",
-        description: "Dummy Description",
-        thumbnail: "https://dummyimage.com/640x4:3/f0f",
-        type: 'story',
-        content: `
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-            Quisque sed sollicitudin metus. Quisque ut massa massa. Duis enim lectus, 
-            ultrices eget ex congue, aliquet auctor est. In bibendum nulla et ipsum faucibus, 
-            ut ultricies metus sagittis. Fusce dictum scelerisque odio vitae pellentesque. 
-            Sed tempus libero sed maximus finibus. Proin a sollicitudin augue. 
-            Donec magna felis, interdum a quam ac, mollis venenatis magna. Ut sed cursus urna. 
-            Aenean turpis diam, luctus in eleifend at, pharetra a ante. 
-            Phasellus sollicitudin arcu neque, sit amet tincidunt metus gravida quis. 
-            Vestibulum posuere tellus non orci hendrerit, quis vestibulum lorem tincidunt. 
-            Integer purus lacus, porttitor eu tristique vitae, pharetra sed mi. 
-            Pellentesque imperdiet non magna nec elementum. Sed volutpat venenatis magna 
-            in tincidunt. Nullam finibus et mi at malesuada.`
-    },
-    {
-        title: "Dummy Card 3",
-        description: "Dummy Description",
-        thumbnail: "https://dummyimage.com/640x4:3/f0f",
-        type: 'video',
-        location: "https://s3-us-west-2.amazonaws.com/columbia-pacific/front-page.mp4",
-        content: `
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-            Quisque sed sollicitudin metus. Quisque ut massa massa. Duis enim lectus, 
-            ultrices eget ex congue, aliquet auctor est. In bibendum nulla et ipsum faucibus, 
-            ut ultricies metus sagittis. Fusce dictum scelerisque odio vitae pellentesque. 
-            Sed tempus libero sed maximus finibus. Proin a sollicitudin augue. 
-            Donec magna felis, interdum a quam ac, mollis venenatis magna. Ut sed cursus urna. 
-            Aenean turpis diam, luctus in eleifend at, pharetra a ante. 
-            Phasellus sollicitudin arcu neque, sit amet tincidunt metus gravida quis. 
-            Vestibulum posuere tellus non orci hendrerit, quis vestibulum lorem tincidunt. 
-            Integer purus lacus, porttitor eu tristique vitae, pharetra sed mi. 
-            Pellentesque imperdiet non magna nec elementum. Sed volutpat venenatis magna 
-            in tincidunt. Nullam finibus et mi at malesuada.`
+const getHeader = (name) => {
+    switch(name) {
+        case 'arts': return HeaderArts;
+        case 'cchm': return HeaderCchm;
+        case 'elks': return HeaderElks; 
+        case 'esther': return HeaderEstherShort; 
+        case 'evergreen': return HeaderEvergreen; 
+        case 'heritage': return HeaderHeritage; 
+        case 'hidden': return HeaderHidden; 
+        case 'kiggins': return HeaderKiggins; 
+        case 'providence': return HeaderProvidence; 
+        case 'schofield': return HeaderSchofield; 
+        // case 'slocum': return HeaderSlocum; 
+        case 'smith': return HeaderSmith; 
     }
-];
+}
 
+const getAudioStory = (name) => {
+    return audioStories[name];
+}
 
 export default class Site extends Component {
     state = {
@@ -173,11 +143,17 @@ export default class Site extends Component {
     }
 
     readMore = () => {
-        this.props.navigation.navigate("SiteContent", {...this.state.location, content: dummyCards });
+        this.props.navigation.navigate("SiteContent", {...this.state.location });
     }
 
     componentDidMount() {
         let location = locations.find(loc => loc.name === this.props.navigation.state.params.name);
+        location.content = location.content.map(item => {
+            if(item.type === 'audio') {
+                item.text = audioStories[location.name];
+            }
+            return item
+        });
         this.setState({location: location});
     }
 
@@ -307,10 +283,10 @@ export default class Site extends Component {
                         <Animated.Image
                             style={{position: 'absolute', bottom: 0, left: -10, right: -10, width: '120%', top: 0, height: '100%', transform: [{translateX: slowPan}]}}
                             resizeMode={'cover'}
-                            source={getImage(params.name)}
+                            source={getBackground(params.name)}
                         />
                         <View style={{position: 'absolute', top: 0, left: 0, right: 0, width: '100%'}}>
-                            {this.handleTitle(location.niceName)}
+                        <Image source={getHeader(params.name)} style={{height: 120, width: '100%', flex: 0, tintColor: getColor(params.name)}} resizeMode={'contain'} />
                         </View>
                         
                 </Animated.View>
@@ -331,9 +307,10 @@ export default class Site extends Component {
                         right: 0, 
                         bottom: 0, 
                         backgroundColor: Colors.white}}>
-                        {this.handleTitle("This is the name")}
+                        <Image source={getHeader(params.name)} style={{height: 120, width: '100%', flex: 0, tintColor: getColor(params.name)}} resizeMode={'contain'} />
                         <View style={{
-                            padding: 15
+                            padding: 15,
+                            
                         }}>
                             {this.state.location.descriptions && this.state.location.descriptions.map((line, i) => {
                                 return (

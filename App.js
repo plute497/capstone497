@@ -18,10 +18,10 @@ import Onboarding from './components/onboarding/onboarding';
 const jwtDecode = require('jwt-decode');
 
 const navigate = (route) => {
-    return NavigationActions.navigate({
-        routeName: route,
-    });
-} 
+	return NavigationActions.navigate({
+		routeName: route,
+	});
+}
 
 /**
  * This is a component I wrote, it's in the same directory, (hence the './' part),
@@ -51,81 +51,79 @@ const navigate = (route) => {
 import { Navigator } from './Navigator';
 
 export default class App extends Component {
-    state = {
-        navigationSet: false,
-        token: "",
-        user: {
-            unset: true
-        },
-        onboarded: true
-    };
+	state = {
+		navigationSet: false,
+		token: "",
+		user: {
+			unset: true
+		},
+		onboarded: true
+	};
 
-    //build in react method, calls right when this component wakes up, which is right on app open
-    componentDidMount() {
-        this.checkSignedIn();
-        this.checkOnboarded();
-    }
+	//build in react method, calls right when this component wakes up, which is right on app open
+	componentDidMount() {
+		this.checkSignedIn();
+		// alert(this.state.onboarded);
+		//this.checkOnboarded();
+	}
 
-    checkOnboarded = async () => {
-        let onboarded = await AsyncStorage.getItem('onboarded');
+	checkOnboarded = async () => {
+		let onboarded = await AsyncStorage.getItem('onboarded');
 
-        if(!onboarded) {
-            this.setState({onboarded: false});
-        }
-    }
+		if (!onboarded) {
+			this.setState({ onboarded: false });
+		} else {
+			this.setState({ onboarded: true });
+		}
+	}
 
-    setToken = (token) => {
-        let user = jwtDecode(token);
+	setToken = (token) => {
+		let user = jwtDecode(token);
 
-        AsyncStorage.setItem('token', token);
+		AsyncStorage.setItem('token', token);
 
-        this.setState({token: token, user: user});
-    }
+		this.setState({ token: token, user: user });
+	}
 
-    checkSignedIn = async () => {
-        let token = await AsyncStorage.getItem('token');
-        console.log("token", token);
-        if(token) {
-            this.setToken(token);
-        }
-    }
+	checkSignedIn = async () => {
+		let token = await AsyncStorage.getItem('token');
+		console.log("token", token);
+		if (token) {
+			this.setToken(token);
+		}
+	}
 
-    signOut = () => {
-        AsyncStorage.removeItem('token');
-        this.setState({user: {unset: true}, token: ""});
-    }
+	signOut = () => {
+		AsyncStorage.removeItem('token');
+		this.setState({ user: { unset: true }, token: "" });
+	}
 
-    setOnboarded = () => {
-        this.setState({onboarded: true});
-        AsyncStorage.setItem('onboarded', 'true');
-    }
-    
-    render() {
-        return (
-            <View style={styles.container}>
-                <View style={{ height: '100%', flex: 1, width: '100%' }}>
-                    <Navigator 
-                        ref={ref => this.navigator = ref} 
-                        screenProps={{
-                            setToken: this.setToken,
-                            signOut: this.signOut,
-                            user: this.state.user,
-                            token: this.state.token
-                        }}
-                        style={{ flex: 1 }} />
-                </View>
+	setOnboarded = () => {
+		this.setState({ onboarded: true });
+		AsyncStorage.setItem('onboarded', 'true');
+	}
 
-                <Modal
-                    animationType={"slide"}
-                    transparent={false}
-                    visible={!this.state.onboarded}
-                    onRequestClose={() => {}}>
-                    <Onboarding close={this.setOnboarded} />    
-                </Modal>
-                
-            </View>
-        );
-    }
+	render() {
+		return (
+			<View style={styles.container}>
+				<View style={{ height: '100%', flex: 1, width: '100%' }}>
+					<Navigator
+						ref={ref => this.navigator = ref}
+						screenProps={{
+							setToken: this.setToken,
+							signOut: this.signOut,
+							user: this.state.user,
+							token: this.state.token,
+							onboarded: this.state.onboarded
+						}}
+						style={{ flex: 1 }} />
+				</View>
+
+				{!this.state.onboarded ? <Onboarding close={this.setOnboarded} /> : null}
+
+			</View>
+		);
+	}
 }
 
 /**
@@ -135,10 +133,10 @@ export default class App extends Component {
  * so get a handle on that: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
  */
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        backgroundColor: '#eeffee',
-    }
+	container: {
+		flex: 1,
+		justifyContent: 'flex-start',
+		alignItems: 'flex-start',
+		backgroundColor: '#eeffee',
+	}
 });

@@ -81,7 +81,7 @@ const html = `
 					window.postMessage(JSON.stringify(map.getBounds()))
 				}
 			} catch (e) {
-				console.log(e);
+				//console.log(e);
 			}
 		});
 
@@ -107,14 +107,14 @@ export default class MapMain extends Component {
 				const lng = position.coords.longitude;
 				const lat = position.coords.latitude;
 				this.setState({ lat: lat, lng: lng }, () => {
-					console.log(lat, lng, this.geoFence);
+					//console.log(lat, lng, this.geoFence);
 					this.geoFence && this.geoFence.checkFences();
-					this.webview.postMessage(JSON.stringify({ command: "move", lat: lat, long: lng }));
+					this.webview && this.webview.postMessage(JSON.stringify({ command: "move", lat: lat, long: lng }));
 				});
 			},
 			error => (e) => {
-				console.log("could not find position");
-				console.log(e);
+				//console.log("could not find position");
+				//console.log(e);
 			},
 			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
 		);
@@ -165,36 +165,38 @@ export default class MapMain extends Component {
 
 	mapMoved = (e) => {
 		clearInterval(this.intervalId);
-		this.setState({mapMoved: true});
+		this.setState({ mapMoved: true });
 	}
 
 	relocate = () => {
 		this.findCoordinates();
 		this.intervalId = setInterval(this.findCoordinates, 3000);
-		this.setState({mapMoved: false});
+		this.setState({ mapMoved: false });
 	}
 
 	onMessage = (e) => {
 		try {
 			let data = JSON.parse(e.nativeEvent.data);
-			if(data.lat)
-				this.setState({lat: data.lat, lng: data.lng}, () => {
+			if (data.lat) {
+				this.setState({ lat: data.lat, lng: data.lng }, () => {
 					this.geoFence && this.geoFence.checkFences();
 				});
-			// console.log(JSON.parse(e.nativeEvent.data));
-		} catch(err) {
-			console.log(err);
+			}
+
+			// //console.log(JSON.parse(e.nativeEvent.data));
+		} catch (err) {
+			//console.log(err);
 		}
 	}
 
 	getBounds = () => {
-		this.webview.postMessage(JSON.stringify({command: "bounds"}));
+		this.webview.postMessage(JSON.stringify({ command: "bounds" }));
 	}
 
 	render() {
-		return (
+		return this.props.screenProps.onboarded ? (
 			<View style={{ flex: 1 }}
-				onStartShouldSetResponder={e => console.log('setResponder', e.nativeEvent)}
+				//onStartShouldSetResponder={e => //console.log('setResponder', e.nativeEvent)}
 				onMoveShouldSetResponder={this.mapMoved}>
 				<WebView
 					style={{ flex: 1 }}
@@ -205,30 +207,30 @@ export default class MapMain extends Component {
 					ref={ref => this.webview = ref}
 				/>
 				{this.state.mapMoved ? (
-					<TouchableOpacity 
+					<TouchableOpacity
 						style={{
-							position: 'absolute', 
-							top: 15, 
-							right: 15, 
-							height: 40, 
-							width: 40, 
+							position: 'absolute',
+							top: 15,
+							right: 15,
+							height: 40,
+							width: 40,
 							backgroundColor: Colors.white,
 							alignItems: 'center',
 							justifyContent: 'center',
 							borderRadius: 25,
-							shadowOffset: { width: 0, height: 3},
+							shadowOffset: { width: 0, height: 3 },
 							shadowOpacity: 0.2,
 							shadowRadius: 3,
-						}} 
+						}}
 						hitSlop={{
-							top: 15, 
-							left: 15, 
-							right: 15, 
+							top: 15,
+							left: 15,
+							right: 15,
 							bottom: 15
 						}}
 						onPress={this.relocate}>
-						<Image 
-							source={crosshairs} 
+						<Image
+							source={crosshairs}
 							style={{
 								height: 20,
 								width: 20,
@@ -236,9 +238,9 @@ export default class MapMain extends Component {
 							}}
 							resizeMode={"contain"} />
 					</TouchableOpacity>
-					) : null}
+				) : null}
 				<GeoFence ref={ref => this.geoFence = ref} goToLocation={this.goToLocation} lng={this.state.lng} lat={this.state.lat} timer={this.state.currentCount} />
 			</View>
-		)
+		) : null;
 	}
 }

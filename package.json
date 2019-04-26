@@ -17,6 +17,7 @@
     "react-native-gesture-handler": "^1.0.12",
     "react-native-maps": "^0.23.0",
     "react-native-video": "^4.4.0",
+    "react-native-webview": "^5.7.1",
     "react-navigation": "^3.0.9",
     "react-viro": "^2.13.0"
   },

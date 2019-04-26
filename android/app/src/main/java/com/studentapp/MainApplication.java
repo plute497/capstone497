@@ -12,6 +12,7 @@ import com.facebook.soloader.SoLoader;
 //import com.viromedia.bridge.ReactViroPackage;
 import com.futurice.rctaudiotoolkit.AudioPackage;
 import com.mapbox.rctmgl.RCTMGLPackage;
+import com.reactnativecommunity.webview.RNCWebViewPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,10 +29,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-              new AudioPackage(),
-              new RCTMGLPackage(),
-            new ReactVideoPackage(),
-            new RNGestureHandlerPackage()
+          new AudioPackage(),
+          new RCTMGLPackage(),
+          new ReactVideoPackage(),
+          new RNGestureHandlerPackage(),
+          new RNCWebViewPackage()
               //new ReactViroPackage(ReactViroPackage.ViroPlatform.valueOf(BuildConfig.VR_PLATFORM))
       );
     }

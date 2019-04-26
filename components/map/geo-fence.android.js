@@ -4,19 +4,21 @@ import {
 	Text,
 	StyleSheet,
 	Animated,
+	Dimensions,
 	TouchableOpacity
 } from 'react-native';
 
 import { locations } from '../locations/locations';
 import Colors from '../colors';
+const { height, width } = Dimensions.get('window');
 
 export default class GeoFence extends Component {
 	state = {
 		foundLoc: false
-// create a found location state variable, which react will monitor
+		// create a found location state variable, which react will monitor
 	}
 
-	bottom = new Animated.Value(0);
+	bottom = new Animated.Value(1);
 	opacity = new Animated.Value(0);
 
 	componentDidUpdate(oldProps) {
@@ -35,12 +37,23 @@ export default class GeoFence extends Component {
 	componentWillUnmount() {
 		// use intervalId from the state to clear the interval
 		// clearInterval(this.state.intervalId);
-	 };
+	};
 
 	check_a_point = (a, b, x, y, r) => {
 		var dist_points = (a - x) * (a - x) + (b - y) * (b - y);
 		r *= r;
-		return((dist_points < r) ? true : false);
+		return ((dist_points < r) ? true : false);
+	}
+
+	check_a_point2 = (a, b, x, y, r) => {
+		var dist_points = (a - x) * (a - x) + (b - y) * (b - y);
+		r *= r;
+		return ((dist_points < r) ? dist_points : false);
+	}
+
+	checkFencesAlt = () => {
+		let found = [];
+
 	}
 
 	checkFences = () => {
@@ -64,15 +77,15 @@ export default class GeoFence extends Component {
 	showButton = () => {
 		Animated.parallel([
 			Animated.timing(this.opacity, { toValue: 1, duration: 500 }),
-			Animated.timing(this.bottom, { toValue: 150, duration: 500 })
+			Animated.timing(this.bottom, { toValue: 100, duration: 500 })
 		]).start();
 	}
 
 	hideButton = () => {
 		Animated.parallel([
 			Animated.timing(this.opacity, { toValue: 0, duration: 500 }),
-			Animated.timing(this.bottom, { toValue: 0, duration: 500 })
-		]).start(() => this.setState({foundLoc: null}));
+			Animated.timing(this.bottom, { toValue: 1, duration: 500 })
+		]).start(() => this.setState({ foundLoc: null }));
 	}
 
 	goToLocation = () => {
@@ -82,24 +95,29 @@ export default class GeoFence extends Component {
 	render() {
 		//if we have found a location, return the locationdrawer render
 		return (
-			<Animated.View style={{position: 'absolute', bottom: this.bottom, left: 0, right: 0, opacity: this.opacity}}>
+			<Animated.View style={{
+				position: 'absolute', bottom: this.bottom, left: 0, right: 0, height: 100, zIndex: 10, width: '100%', backgroundColor: 'red'
+			}}>
 				{this.state.foundLoc ? (
-					<TouchableOpacity 
-						onPress={this.goToLocation} 
+					<TouchableOpacity
+						onPress={this.goToLocation}
 						style={{
-							position: 'absolute', 
-							left: 30, 
-							right: 30, 
-							backgroundColor: Colors.orange, 
-							alignItems: 'center', 
-							justifyContent: 'center', 
-							height: 60, 
+							position: 'absolute',
+							left: 30,
+							right: 30,
+							backgroundColor: Colors.orange,
+							alignItems: 'center',
+							justifyContent: 'center',
+							height: 60,
 							borderRadius: 6,
-							shadowOffset: { width: 0, height: 3},
+							shadowOffset: { width: 0, height: 3 },
 							shadowOpacity: 0.2,
 							shadowRadius: 3,
-							}}>
-						<Text style={{color: Colors.white, fontFamily: 'Lato-Black', fontSize: 18}}>{this.state.foundLoc.niceName}</Text>
+							elevation: 3,
+							width: width - 60,
+							zIndex: 11
+						}}>
+						<Text style={{ color: Colors.white, fontFamily: 'Lato-Black', fontSize: 18 }}>{this.state.foundLoc.niceName}</Text>
 					</TouchableOpacity>
 				) : null}
 			</Animated.View>

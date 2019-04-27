@@ -33,25 +33,51 @@ export default class GeoFence extends Component {
 		//called when this component leaves
 	};
 
+	/**
+	 * @param {Number} a device longitude
+	 * @param {Number} b device latitude
+	 * @param {Number} x longitude point to check
+	 * @param {Number} y latitude point to check
+	 * @param {Number} r radius of circle 
+	 */
 	check_a_point = (a, b, x, y, r) => {
 		var dist_points = (a - x) * (a - x) + (b - y) * (b - y);
 		r *= r;
 		return ((dist_points < r) ? true : false);
 	}
 
-	check_a_point2 = (a, b, x, y, r) => {
+	/**
+	 * @param {Number} a device longitude
+	 * @param {Number} b device latitude
+	 * @param {Number} x longitude point to check
+	 * @param {Number} y latitude point to check
+	 */
+	distance = (a, b, x, y) => {
 		var dist_points = (a - x) * (a - x) + (b - y) * (b - y);
-		r *= r;
-		return ((dist_points < r) ? dist_points : false);
+		return dist_points;
 	}
 
-	checkFencesAlt = () => {
-		let found = [];
-		//TODO reorder the locations by closest to farthest
+	reorderedLocations = () => {
+		//create a new array from the locations list
+		let locs = [...locations];
+
+		//sort the locations by distance from user
+		locs = locs.sort((a, b) => {
+			//looks at two locations and gets distance for both
+			let distA = this.distance(this.props.lng, this.props.lat, a.lng, a.lat);
+			let distB = this.distance(this.props.lng, this.props.lat, b.lng, b.lat);
+
+			//returns number of how far the two items are
+			return distA - distB;
+		});
+
+		//return the sorted array
+		return locs;
 	}
 
 	checkFences = () => {
-		let foundLoc = locations.find(thisLocation => {
+		//gets locations sorted by distance, then returns the closest one inside the radius
+		let foundLoc = this.reorderedLocations().find(thisLocation => {
 			if (this.check_a_point(this.props.lng, this.props.lat, thisLocation.lng, thisLocation.lat, 0.0006)) {
 				return thisLocation;
 			} else {

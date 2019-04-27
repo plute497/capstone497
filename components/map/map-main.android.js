@@ -112,14 +112,13 @@ export default class MapMain extends Component {
 				const lng = position.coords.longitude;
 				const lat = position.coords.latitude;
 				this.setState({ lat: lat, lng: lng }, () => {
-					//console.log(lat, lng, this.geoFence);
 					this.geoFence && this.geoFence.checkFences();
 					this.webview && this.webview.postMessage(JSON.stringify({ command: "move", lat: lat, long: lng }));
 				});
 			},
 			error => (e) => {
-				//console.log("could not find position");
-				//console.log(e);
+				Alert.alert("Geolocation Error", "We were unable to detect your location.");
+				clearInterval(this.intervalId);
 			},
 			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
 		);
@@ -138,14 +137,6 @@ export default class MapMain extends Component {
 		// use intervalId from the state to clear the interval
 		clearInterval(this.intervalId);
 	};
-
-	/* timer = () => {
-		// setState method is used to update the state
-
-		//we don't need current count, just set the timer to a bigger interval, I think
-		//this.setState({ currentCount: this.state.currentCount -1 });
-		this.findCoordinates();
-	 };*/
 
 	contextOpen = false;
 
@@ -191,12 +182,8 @@ export default class MapMain extends Component {
 					this.geoFence && this.geoFence.checkFences();
 				});
 			}
-
-			console.log(data);
-
-			// //console.log(JSON.parse(e.nativeEvent.data));
 		} catch (err) {
-			//console.log(err);
+			console.log(err);
 		}
 	}
 
@@ -207,15 +194,12 @@ export default class MapMain extends Component {
 	render() {
 		return this.props.screenProps.onboarded ? (
 			<View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 1 }}
-			//onStartShouldSetResponder={e => //console.log('setResponder', e.nativeEvent)}
-			//	onMoveShouldSetResponder={this.mapMoved}
-			>
+				onMoveShouldSetResponder={this.mapMoved}>
 
 				<WebView
 					style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
 					geolocationEnabled={true}
 					source={{ html: this.state.html }}
-					//source={{ uri: this.state.url }}
 					onMessage={this.onMessage}
 					onNavigationStateChange={this.navigationChange}
 					startInLoadingState={true}

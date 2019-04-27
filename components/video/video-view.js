@@ -8,7 +8,9 @@ import {
     ScrollView,
     Modal,
     Animated,
-    StyleSheet
+    StyleSheet,
+    StatusBar,
+    Platform
 } from 'react-native';
 
 import Video from 'react-native-video';
@@ -29,35 +31,83 @@ import BackSmith from '../images/sites/smith.png';
 import PlayButton from '../images/play.png';
 import PauseButton from '../images/pause.png';
 import ReplayButton from '../images/replay.png';
+import HeaderArts from '../images/sites/headers/arts.png';
+import HeaderCchm from '../images/sites/headers/cchm.png';
+import HeaderElks from '../images/sites/headers/elks.png';
+import HeaderEstherShort from '../images/sites/headers/esthershort.png';
+import HeaderEvergreen from '../images/sites/headers/evergreen.png';
+import HeaderHeritage from '../images/sites/headers/heritage.png';
+import HeaderHidden from '../images/sites/headers/hidden.png';
+import HeaderKiggins from '../images/sites/headers/kiggins.png';
+import HeaderProvidence from '../images/sites/headers/providence.png';
+import HeaderSchofield from '../images/sites/headers/schofield.png';
+// import HeaderSlocum from '../images/sites/headers/slocum.png';
+import HeaderSmith from '../images/sites/headers/smith.png';
+
+const getBackground = (name) => {
+	switch (name) {
+		case 'arts': return BackArts;
+		case 'cchm': return BackCchm;
+		case 'elks': return BackElks;
+		case 'esther': return BackEstherShort;
+		case 'evergreen': return BackEvergreen;
+		case 'heritage': return BackHeritage;
+		case 'hidden': return BackHidden;
+		case 'kiggins': return BackKiggins;
+		case 'providence': return BackProvidence;
+		case 'schofield': return BackSchofield;
+		case 'slocum': return BackSlocum;
+		case 'smith': return BackSmith;
+	}
+}
+
+const getHeader = (name) => {
+	switch (name) {
+		case 'arts': return HeaderArts;
+		case 'cchm': return HeaderCchm;
+		case 'elks': return HeaderElks;
+		case 'esther': return HeaderEstherShort;
+		case 'evergreen': return HeaderEvergreen;
+		case 'heritage': return HeaderHeritage;
+		case 'hidden': return HeaderHidden;
+		case 'kiggins': return HeaderKiggins;
+		case 'providence': return HeaderProvidence;
+		case 'schofield': return HeaderSchofield;
+		// case 'slocum': return HeaderSlocum; 
+		case 'smith': return HeaderSmith;
+	}
+}
+
+const evergreenVideo = 'https://s3-us-west-2.amazonaws.com/cmdc-cchm/videos/evergreen-video.mp4';
+const hiddenVideo = 'https://s3-us-west-2.amazonaws.com/cmdc-cchm/videos/hidden-video.mp4';
+const slocumVideo = 'https://s3-us-west-2.amazonaws.com/cmdc-cchm/videos/slocum-video.mp4';
+const kigginsVideo = 'https://s3-us-west-2.amazonaws.com/cmdc-cchm/videos/kiggins-video.mp4';
+
+const getVideoPath = (name) => {
+    switch(name) {
+        case "evergreen": return evergreenVideo;
+        case "hidden": return hiddenVideo;
+        case "slocum": return slocumVideo;
+        case "kiggins": return kigginsVideo;
+    }
+}
 
 const width = Dimensions.get('window').width;
 
 export default class VideoView extends Component {
     state = {
-        thumbnail: null,
-        title: "",
-        description: "",
-        location: "",
         showExtra: false,
         loaded: false,
         paused: true,
+        fullscreen: false,
         ended: false
     }
 
     fade = new Animated.Value(1);
 
     componentDidMount() {
-        let { navigation } = this.props;
-
-        this.setState({
-            thumbnail: navigation.getParam('thumbnail'),
-            title: navigation.getParam('title'),
-            description: navigation.getParam('description'),
-            location: navigation.getParam('location'),
-            loaded: true
-        }, () => console.log(this.state.thumbnail));
-
         Dimensions.addEventListener('change', this.handleOrientation);
+        this.setState({loaded: true});
     }
 
     componentWillUnmount() {
@@ -65,15 +115,34 @@ export default class VideoView extends Component {
     }
 
     handleOrientation = (e) => {
-        if(e.window.width > e.window.height) {
-            if(this.video) {
-                this.video.presentFullscreenPlayer();
+        if(Platform.OS === "android") {
+            if(e.window.width > e.window.height) {
+                if(this.video) {
+                    this.props.navigation.setParams({hidden: true});
+                    this.setState({fullscreen: true});
+                    this.video.presentFullscreenPlayer();
+                    StatusBar.setHidden(true, 'slide');
+                }
+            } else {
+                if(this.video) {
+                    this.props.navigation.setParams({hidden: false});
+                    this.setState({fullscreen: false});
+                    this.video.dismissFullscreenPlayer();
+                    StatusBar.setHidden(false, 'slide');
+                }
             }
         } else {
-            if(this.video) {
-                this.video.presentFullscreenPlayer();
+            if(e.window.width > e.window.height) {
+                if(this.video) {
+                    this.video.presentFullscreenPlayer();
+                }
+            } else {
+                if(this.video) {
+                    this.video.dismissFullscreenPlayer();
+                }
             }
         }
+        
     }
 
     togglePaused = () => {
@@ -185,9 +254,16 @@ export default class VideoView extends Component {
 
         return this.state.loaded ? (
             <View style={{flex: 1, backgroundColor: Colors.white}}>
-               <View style={{backgroundColor: Colors.black, overflow: 'hidden', flex: 0, height: width * (9/16)}}>
+                {!this.state.fullscreen && (
+                    <View style={{height: 120, width: '100%', elevation: 10}}>
+                        <Image source={getBackground(params.name)} resizeMode={'cover'} style={{position: 'absolute', height: '100%', width: '100%'}} />
+                        <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, opacity: 0.5, backgroundColor: getColor(params.name)}}></View>
+                        <Image source={getHeader(params.name)} resizeMode={'contain'} style={{position: 'absolute', height: '100%', width: '100%'}} />
+                    </View>
+                )}
+               <View style={{backgroundColor: Colors.black, elevation: 5, overflow: 'hidden', flex: this.state.fullscreen ? 1 : 0, height: this.state.fullscreen ? '100%' : width * (9/16)}}>
                     <Video 
-                        source={{uri: this.state.location}}
+                        source={{uri: getVideoPath(params.name)}}
                         ref={ref => this.video = ref}
                         paused={this.state.paused}
                         style={{
@@ -195,7 +271,8 @@ export default class VideoView extends Component {
                             top: 0,
                             left: 0,
                             right: 0,
-                            bottom: 0
+                            bottom: 0,
+                            backgroundColor: Colors.black
                         }}
                         onEnd={this.ended}
 
@@ -219,28 +296,28 @@ export default class VideoView extends Component {
                             </TouchableOpacity>
                         </Animated.View>
                 </View>
-                <View style={{height: 120, backgroundColor: Colors.blue, width: '100%'}}>
-                    {this.handleTitle(params.title)}
-                </View>
-                <View style={{flex: 1, padding: 15}}>
-                    <Text style={{fontFamily: 'Lato-Light', fontSize: 25, textAlign: 'center', marginBottom: 15, textTransform: 'uppercase'}}>{this.state.title}</Text>
-                    <View style={{flex: 0, flexDirection: 'row', marginBottom: 15, height: imageSize}}>
-                        <View style={{paddingRight: 15, width: width - imageSize - 30}}>
-                            <Text numberOfLines={5} style={{ fontSize: 18, fontFamily: 'Lato-Light'}}>{cleanText(params.content)}</Text>
-                            <TouchableOpacity onPress={this.openModal} style={{height: 50, alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.5)', flexDirection: 'row', alignSelf: 'center'}}>
-                                <Text style={{color: getColor(params.name), fontSize: 18, fontFamily: 'Lato-Bold'}}>Read More</Text>
-                                <Text style={{color: getColor(params.name), fontSize: 18}}>{"\u25BC"}</Text>
-                            </TouchableOpacity>
+                {!this.state.fullscreen && (
+                    <View style={{flex: 1, padding: 15}}>
+                        <Text style={{fontFamily: 'Lato-Light', fontSize: 25, textAlign: 'center', marginBottom: 15, textTransform: 'uppercase'}}>Title</Text>
+                        <View style={{flex: 0, flexDirection: 'row', marginBottom: 15, height: imageSize}}>
+                            <View style={{paddingRight: 15, width: width - imageSize - 30}}>
+                                <Text numberOfLines={5} style={{ fontSize: 18, fontFamily: 'Lato-Light'}}>{cleanText(params.content)}</Text>
+                                {/* <TouchableOpacity onPress={this.openModal} style={{height: 50, alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.5)', flexDirection: 'row', alignSelf: 'center'}}>
+                                    <Text style={{color: getColor(params.name), fontSize: 18, fontFamily: 'Lato-Bold'}}>Read More</Text>
+                                    <Text style={{color: getColor(params.name), fontSize: 18}}>{"\u25BC"}</Text>
+                                </TouchableOpacity> */}
+                            </View>
+                            
+                            {/* <View style={{backgroundColor: Colors.orange, width: imageSize, height: imageSize}}></View> */}
                         </View>
                         
-                        <View style={{backgroundColor: Colors.orange, width: imageSize, height: imageSize}}></View>
                     </View>
-                    
-                </View>
+                )}
+                
                 <Modal
                     animationType={'slide'}
                     transparent={true}
-                    visible={this.state.showExtra}
+                    visible={this.state.showExtra && !this.state.fullscreen}
                     onRequestClose={() => {}}>
                     <View style={{
                         position: 'absolute',

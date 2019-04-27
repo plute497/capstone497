@@ -40,6 +40,7 @@ import AudioSchofield from '../sounds/schofield.mp3';
 import AudioSmith from '../sounds/smith.mp3';
 
 import Chip from '../ui-components/chip';
+import Card from '../ui-components/card';
 
 const getImage = (name) => {
 	switch (name) {
@@ -123,10 +124,23 @@ export default class SiteContent extends PureComponent {
 		let { params } = this.props.navigation.state;
 		if (item.type === "audio") {
 			return (
-				<Chip
+				<Card
 					onPress={this.handleContent.bind(this, item)}
 					thumbnail={getAudioImage(params.name)}
 					title={params.niceName + " Audio"}
+					color={getColor(params.name)}
+					description={item.text}
+					key={params.name + '_' + i}
+				/>
+			)
+		}
+
+		if(item.type === "video") {
+			return (
+				<Card
+					onPress={this.handleContent.bind(this, item)}
+					thumbnail={getAudioImage(params.name)}
+					title={params.niceName + " Video"}
 					color={getColor(params.name)}
 					description={item.text}
 					key={params.name + '_' + i}

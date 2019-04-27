@@ -15,6 +15,7 @@
     "react-native": "0.57.8",
     "react-native-audio-toolkit": "^1.0.6",
     "react-native-gesture-handler": "^1.0.12",
+    "react-native-iphone-x-helper": "^1.2.0",
     "react-native-maps": "^0.23.0",
     "react-native-video": "^4.4.0",
     "react-native-webview": "^5.7.1",

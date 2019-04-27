@@ -11,7 +11,7 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 //import com.viromedia.bridge.ReactViroPackage;
 import com.futurice.rctaudiotoolkit.AudioPackage;
-import com.mapbox.rctmgl.RCTMGLPackage;
+//import com.mapbox.rctmgl.RCTMGLPackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
 
 import java.util.Arrays;
@@ -30,7 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
           new AudioPackage(),
-          new RCTMGLPackage(),
+          //new RCTMGLPackage(),
           new ReactVideoPackage(),
           new RNGestureHandlerPackage(),
           new RNCWebViewPackage()

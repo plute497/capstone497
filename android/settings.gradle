@@ -1,6 +1,6 @@
 rootProject.name = 'studentApp'
-include ':react-native-maps'
-project(':react-native-maps').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-maps/lib/android')
+//include ':react-native-maps'
+//project(':react-native-maps').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-maps/lib/android')
 include ':react-native-video'
 project(':react-native-video').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-video/android-exoplayer')
 include ':app'
@@ -16,7 +16,7 @@ include ':gvr_common'
 project(':gvr_common').projectDir = new File(rootProject.projectDir, '../node_modules/react-viro/android/gvr_common')
 include ':viro_renderer'
 project(':viro_renderer').projectDir = new File(rootProject.projectDir, '../node_modules/react-viro/android/viro_renderer')
-include ':mapbox-react-native-mapbox-gl'
-project(':mapbox-react-native-mapbox-gl').projectDir = new File(rootProject.projectDir, '../node_modules/@mapbox/react-native-mapbox-gl/android/rctmgl')
+//include ':mapbox-react-native-mapbox-gl'
+//project(':mapbox-react-native-mapbox-gl').projectDir = new File(rootProject.projectDir, '../node_modules/@mapbox/react-native-mapbox-gl/android/rctmgl')
 include ':react-native-webview'
 project(':react-native-webview').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-webview/android')

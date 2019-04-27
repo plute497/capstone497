@@ -172,15 +172,15 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-maps')
+//    compile project(':react-native-maps')
     compile project(':react-native-audio-toolkit')
     compile project(':react-native-video')
     compile project(':react-native-gesture-handler')
-    compile (project(':mapbox-react-native-mapbox-gl')) {
-        compile ('com.squareup.okhttp3:okhttp:3.6.0') {
-            force = true
-        }
-    }
+//    compile (project(':mapbox-react-native-mapbox-gl')) {
+//        compile ('com.squareup.okhttp3:okhttp:3.6.0') {
+//            force = true
+//        }
+//    }
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(':react-native-webview')
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"

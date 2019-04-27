@@ -6,6 +6,7 @@ export default Colors = {
     orange: '#eb4337',
     red: '#c54c41',
     white: '#ffffff',
+    transWhite: 'rgba(255, 255, 255, 0.8)',
     black: '#000000',
     lightGray: '#dddddd',
     lighterGray: '#f5f5f5'

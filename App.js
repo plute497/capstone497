@@ -57,23 +57,26 @@ export default class App extends Component {
 		user: {
 			unset: true
 		},
-		onboarded: true
+		onboarded: true,
+		checked: false
 	};
 
 	//build in react method, calls right when this component wakes up, which is right on app open
 	componentDidMount() {
+		//should check whether the user is signed in and whether or not they have gone through onboarding
 		this.checkSignedIn();
-		// alert(this.state.onboarded);
-		//this.checkOnboarded();
+		this.checkOnboarded();
 	}
 
+	//this async function will wait for the AsyncStorage promise to resolve before moving onto the next line
+	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
 	checkOnboarded = async () => {
 		let onboarded = await AsyncStorage.getItem('onboarded');
 
 		if (!onboarded) {
-			this.setState({ onboarded: false });
+			this.setState({ onboarded: false, checked: true });
 		} else {
-			this.setState({ onboarded: true });
+			this.setState({ onboarded: true, checked: true });
 		}
 	}
 
@@ -87,7 +90,6 @@ export default class App extends Component {
 
 	checkSignedIn = async () => {
 		let token = await AsyncStorage.getItem('token');
-		console.log("token", token);
 		if (token) {
 			this.setToken(token);
 		}
@@ -114,11 +116,13 @@ export default class App extends Component {
 							signOut: this.signOut,
 							user: this.state.user,
 							token: this.state.token,
-							onboarded: this.state.onboarded
+							onboarded: this.state.onboarded && this.state.checked
 						}}
 						style={{ flex: 1 }} />
 				</View>
 
+				{/* This will only show if the onboarded state is set to false - look up JS ternary operators if you don't understand this: `myCondition ? 'myCondition is true' : 'myCondition is false'` */}
+				{/* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator */}
 				{!this.state.onboarded ? <Onboarding close={this.setOnboarded} /> : null}
 
 			</View>

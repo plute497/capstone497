@@ -35,18 +35,21 @@ const styles = StyleSheet.create({
         shadowRadius: 3,
         marginBottom: 30,
         flexDirection: 'row',
-        maxHeight: 120
+        minHeight: 120,
+        maxHeight: 150
     },
     imageWrapper: {
         width: 120,
-        height: 120,
+        minHeight: 120,
+        maxHeight: 150,
         overflow: 'hidden',
         borderTopLeftRadius: 6,
         borderBottomLeftRadius: 6
     },
     image: {
         width: 120,
-        height: 120,
+        minHeight: 120,
+        maxHeight: 150,
         borderTopLeftRadius: 6,
         borderBottomLeftRadius: 6
     },

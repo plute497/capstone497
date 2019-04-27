@@ -99,7 +99,7 @@ export default class MapMain extends Component {
 		mapMoved: false,
 		currentCount: 16,
 		url: 'about:blank',
-		html: '<html><head></head><body><h1>Loading</h1></body></html>'
+		html: '<html><head></head><body style="display: flex; justify-content: center; height: 100%; width: 100%; margin: 0; padding; 0"><h1 style="align-self: center">Loading...</h1></body></html>'
 	};
 
 	moved = false;
@@ -169,7 +169,6 @@ export default class MapMain extends Component {
 	}
 
 	goToLocation = (name) => {
-		alert("going to location");
 		this.props.navigation.navigate("Site", { name: name });
 	}
 

@@ -272,20 +272,31 @@ const Main = createStackNavigator({
 	},
 	VideoView: {
 		screen: VideoView,
-		navigationOptions: (props) => ({
-			title: props.navigation.state.params.niceName,
-			headerBackTitle: props.navigation.state.params.niceName,
-			headerTruncatedBackTitle: null,
-			headerTintColor: Colors.white,
-			headerStyle: {
-				backgroundColor: getColor(props.navigation.state.params.name),
-				shadowOffset: { width: 0, height: 2 },
-				shadowOpacity: 0.1,
-				shadowRadius: 2,
-				borderBottomWidth: 0
-			},
-			drawerLabel: () => null
-		})
+		navigationOptions: (props) => {
+			console.log(props.navigation.state);
+			if(props.navigation.state.params.hidden) {
+				console.log("should hide");
+				return {
+					header: null
+				}
+			} else {
+				console.log("should not hide");
+				return {
+					title: props.navigation.state.params.niceName,
+					headerBackTitle: props.navigation.state.params.niceName,
+					headerTruncatedBackTitle: null,
+					headerTintColor: Colors.white,
+					headerStyle: {
+						backgroundColor: getColor(props.navigation.state.params.name),
+						shadowOffset: { width: 0, height: 2 },
+						shadowOpacity: 0.1,
+						shadowRadius: 2,
+						borderBottomWidth: 0
+					},
+					drawerLabel: () => null
+				}
+			}
+		}
 	},
 	AudioView: {
 		screen: AudioView,

@@ -8,7 +8,8 @@ import {
 	TouchableOpacity,
 	Easing,
 	Image,
-	Dimensions
+	Dimensions,
+	ScrollView
 } from 'react-native';
 
 import Video from 'react-native-video';
@@ -39,6 +40,7 @@ import HeaderProvidence from '../images/sites/headers/providence.png';
 import HeaderSchofield from '../images/sites/headers/schofield.png';
 // import HeaderSlocum from '../images/sites/headers/slocum.png';
 import HeaderSmith from '../images/sites/headers/smith.png';
+import { isIphoneX } from 'react-native-iphone-x-helper';
 
 import ArtsTitle from '../images/sites/arts-title.png';
 
@@ -128,12 +130,14 @@ export default class Site extends Component {
 	mainScale = new Animated.Value(0);
 	opacity = new Animated.Value(1);
 	slowPan = new Animated.Value(0);
+	planeOpacity = new Animated.Value(0);
 
 	videoEnded = () => {
 		Animated.sequence([
 			Animated.timing(this.opacity, { toValue: 0, duration: 1000 }),
 			Animated.timing(this.slowPan, { toValue: 1, duration: 3000, easing: Easing.linear }),
 			Animated.parallel([
+				Animated.timing(this.planeOpacity, { toValue: 1, duration: 1000 }),
 				Animated.timing(this.videoRotation, { toValue: 1, duration: 1000 }),
 				Animated.timing(this.mainScale, { toValue: 1, duration: 1000 }),
 			])
@@ -229,10 +233,20 @@ export default class Site extends Component {
 			outputRange: ['180deg', '360deg']
 		});
 
+		const firstPlaneOpacity = this.planeOpacity.interpolate({
+			inputRange: [0, 0.25, 0.75, 1],
+			outputRange: [1, 1, 0, 0]
+		});
+
+		const secondPlaneOpacity = this.planeOpacity.interpolate({
+			inputRange: [0, 0.25, 0.75, 1],
+			outputRange: [0, 0, 1, 1]
+		});
+
 		const slowPan = this.slowPan.interpolate({
 			inputRange: [0, 1],
 			outputRange: [-5, 5]
-		})
+		});
 
 		const scale = this.mainScale.interpolate({
 			inputRange: [0, 0.5, 1],
@@ -278,6 +292,7 @@ export default class Site extends Component {
 						bottom: 0,
 						backfaceVisibility: 'hidden',
 						backgroundColor: Colors.white,
+						opacity: firstPlaneOpacity,
 						transform: [{ perspective: 500 }, { rotateY: vidRotation }, { scale: scale }]
 					}}>
 					<Animated.Image
@@ -297,11 +312,12 @@ export default class Site extends Component {
 						left: 0,
 						right: 0,
 						bottom: 0,
+						opacity: secondPlaneOpacity,
 						backgroundColor: Colors.white,
 						transform: [{ perspective: 500 }, { rotateY: otherRotation }, { scale: scale }],
 						backfaceVisibility: 'hidden'
 					}}>
-					<View style={{
+					<ScrollView style={{
 						position: 'absolute',
 						top: 0,
 						left: 0,
@@ -345,19 +361,18 @@ export default class Site extends Component {
 							</View>
 
 							<Text
-								numberOfLines={13}
 								style={{
 									textAlign: 'justify',
 									marginTop: 15,
 									fontFamily: "Lato-Light",
 									fontSize: 18
-								}}>{longDesc()}</Text>
+								}}>{location.longDescription}</Text>
 						</View>
-						<TouchableOpacity onPress={this.readMore} style={{ position: 'absolute', bottom: 30, left: 0, right: 0, height: 50, alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.5)' }}>
+						<TouchableOpacity onPress={this.readMore} style={{ flex: 0, height: 50, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', marginBottom: 30 }}>
 							<Text style={{ color: getColor(params.name), fontSize: 18, fontFamily: 'Lato-Bold' }}>Read More</Text>
 							<Text style={{ color: getColor(params.name), fontSize: 18 }}>{"\u25BC"}</Text>
 						</TouchableOpacity>
-					</View>
+					</ScrollView>
 				</Animated.View>
 
 				{showVideo ? (

@@ -4,7 +4,8 @@ import {
     TouchableOpacity,
     StyleSheet,
     Text,
-    Image
+    Image,
+    ActivityIndicator
 } from 'react-native';
 import Colors from '../colors';
 
@@ -12,11 +13,16 @@ export default function Card(props) {
     return (
         <TouchableOpacity onPress={() => props.onPress(props.item)}>
             <View style={styles.wrapper}>
-                <View style={styles.imageWrapper}>
-                   <Image style={styles.image} source={{uri: props.thumbnail}} />
+                <View style={[styles.imageWrapper, {backgroundColor: props.color}]}>
+                    <ActivityIndicator
+                        size="small"
+                        animating={true}
+                        color={Colors.white}
+                        style={{alignSelf: 'center'}} />
+                    <Image resizeMode={'cover'} style={[styles.image]} source={props.uri ? {uri: props.uri} : props.thumbnail} />
                 </View>
                 <View style={styles.dataWrapper}>
-                    <Text style={styles.title}>{props.title}</Text>
+                    <Text style={[styles.title, {color: props.color}]}>{props.title}</Text>
                     <Text style={styles.description} numberOfLines={3}>{props.description}</Text>
                 </View>
             </View>
@@ -37,14 +43,20 @@ const styles = StyleSheet.create({
     },
     imageWrapper: {
         minHeight: 300,
+        maxHeight: 400,
         width: '100%',
         overflow: 'hidden',
         borderTopLeftRadius: 6,
-        borderTopRightRadius: 6
+        borderTopRightRadius: 6,
+        justifyContent: 'center'
+    },
+    loading: {
+        ...StyleSheet.absoluteFillObject
     },
     image: {
-        flex: 1,
+        ...StyleSheet.absoluteFillObject,
         width: '100%',
+        height: '100%'
     },
     dataWrapper: {
         paddingHorizontal: 15,

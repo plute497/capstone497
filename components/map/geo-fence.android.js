@@ -18,25 +18,19 @@ export default class GeoFence extends Component {
 		// create a found location state variable, which react will monitor
 	}
 
-	bottom = new Animated.Value(1);
+	bottom = new Animated.Value(-99);
 	opacity = new Animated.Value(0);
 
 	componentDidUpdate(oldProps) {
-		// console.log(oldProps);
+		//called when this component's props change
 	}
 
 	componentDidMount() {
-		//setInterval will call checkFences every 4000ms, or every 4 seconds, we can set that number to whatever we think is appropriate
-		// var intervalId = setInterval(() => {
-		// 	this.checkFences();
-		// }, 4000);
-
-		// this.setState({intervalId: intervalId});
+		//called when this component first starts
 	}
 
 	componentWillUnmount() {
-		// use intervalId from the state to clear the interval
-		// clearInterval(this.state.intervalId);
+		//called when this component leaves
 	};
 
 	check_a_point = (a, b, x, y, r) => {
@@ -53,7 +47,7 @@ export default class GeoFence extends Component {
 
 	checkFencesAlt = () => {
 		let found = [];
-
+		//TODO reorder the locations by closest to farthest
 	}
 
 	checkFences = () => {
@@ -77,14 +71,14 @@ export default class GeoFence extends Component {
 	showButton = () => {
 		Animated.parallel([
 			Animated.timing(this.opacity, { toValue: 1, duration: 500 }),
-			Animated.timing(this.bottom, { toValue: 100, duration: 500 })
+			Animated.timing(this.bottom, { toValue: 0, duration: 500 })
 		]).start();
 	}
 
 	hideButton = () => {
 		Animated.parallel([
 			Animated.timing(this.opacity, { toValue: 0, duration: 500 }),
-			Animated.timing(this.bottom, { toValue: 1, duration: 500 })
+			Animated.timing(this.bottom, { toValue: -99, duration: 500 })
 		]).start(() => this.setState({ foundLoc: null }));
 	}
 
@@ -96,7 +90,7 @@ export default class GeoFence extends Component {
 		//if we have found a location, return the locationdrawer render
 		return (
 			<Animated.View style={{
-				position: 'absolute', bottom: this.bottom, left: 0, right: 0, height: 100, zIndex: 10, width: '100%', backgroundColor: 'red'
+				position: 'absolute', bottom: this.bottom, left: 0, right: 0, height: 100, zIndex: 10, width: '100%'
 			}}>
 				{this.state.foundLoc ? (
 					<TouchableOpacity

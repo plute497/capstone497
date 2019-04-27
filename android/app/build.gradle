@@ -123,15 +123,15 @@ android {
 
     productFlavors {
         ar {
-            resValue 'string', 'app_name', 'ViroSample-ar'
+            resValue 'string', 'app_name', 'Historic Routes'
             buildConfigField 'String', 'VR_PLATFORM', '"GVR"'
         }
         gvr {
-            resValue 'string', 'app_name', 'ViroSample-gvr'
+            resValue 'string', 'app_name', 'Historic Routes'
             buildConfigField 'String', 'VR_PLATFORM', '"GVR"'
         }
         ovr {
-            resValue 'string', 'app_name', 'ViroSample-ovr'
+            resValue 'string', 'app_name', 'Historic Routes'
             applicationIdSuffix '.ovr'
             buildConfigField 'String', 'VR_PLATFORM', '"OVR_MOBILE"'
         }

@@ -9,7 +9,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-//import com.viromedia.bridge.ReactViroPackage;
+import com.viromedia.bridge.ReactViroPackage;
 import com.futurice.rctaudiotoolkit.AudioPackage;
 //import com.mapbox.rctmgl.RCTMGLPackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
@@ -33,8 +33,8 @@ public class MainApplication extends Application implements ReactApplication {
           //new RCTMGLPackage(),
           new ReactVideoPackage(),
           new RNGestureHandlerPackage(),
-          new RNCWebViewPackage()
-              //new ReactViroPackage(ReactViroPackage.ViroPlatform.valueOf(BuildConfig.VR_PLATFORM))
+          new RNCWebViewPackage(),
+          new ReactViroPackage(ReactViroPackage.ViroPlatform.valueOf(BuildConfig.VR_PLATFORM))
       );
     }
 

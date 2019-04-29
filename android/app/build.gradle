@@ -112,12 +112,12 @@ android {
 
     signingConfigs {
         release {
-//            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
-//                storeFile file(MYAPP_RELEASE_STORE_FILE)
-//                storePassword MYAPP_RELEASE_STORE_PASSWORD
-//                keyAlias MYAPP_RELEASE_KEY_ALIAS
-//                keyPassword MYAPP_RELEASE_KEY_PASSWORD
-//            }
+            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+                storeFile file(MYAPP_RELEASE_STORE_FILE)
+                storePassword MYAPP_RELEASE_STORE_PASSWORD
+                keyAlias MYAPP_RELEASE_KEY_ALIAS
+                keyPassword MYAPP_RELEASE_KEY_PASSWORD
+            }
         }
     }
 
@@ -149,7 +149,7 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            //signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
         }
     }
     // applicationVariants are e.g. debug, release
@@ -190,12 +190,11 @@ dependencies {
     compile project(path: ':viro_renderer')
     compile project(path: ':react_viro')
     compile 'com.google.android.exoplayer:exoplayer:2.9.3'
-    compile 'com.google.protobuf.nano:protobuf-javanano:3.0.0-alpha-7'
-    compile 'com.amazonaws:aws-android-sdk-core:2.2.+'
-    compile 'com.amazonaws:aws-android-sdk-ddb:2.2.+'
-    compile 'com.amazonaws:aws-android-sdk-ddb-mapper:2.2.+'
-    compile 'com.amazonaws:aws-android-sdk-cognito:2.2.+'
-    compile 'com.amazonaws:aws-android-sdk-cognitoidentityprovider:2.2.+'
+    implementation 'com.amazonaws:aws-android-sdk-core:2.7.7'
+    implementation 'com.amazonaws:aws-android-sdk-ddb:2.7.7'
+    implementation 'com.amazonaws:aws-android-sdk-ddb-mapper:2.7.7'
+    implementation 'com.amazonaws:aws-android-sdk-cognito:2.7.7'
+    implementation 'com.amazonaws:aws-android-sdk-cognitoidentityprovider:2.7.7'
 //    compile "com.android.support:support-media-compat:${rootProject.ext.supportLibVersion}" {
 //        force = true;
 //    }

@@ -5,9 +5,12 @@ import {
     StyleSheet,
     Text,
     Image,
-    ActivityIndicator
+    ActivityIndicator,
+    Dimensions
 } from 'react-native';
 import Colors from '../colors';
+
+const { width } = Dimensions.get('window');
 
 export default function Card(props) {
     return (
@@ -42,8 +45,7 @@ const styles = StyleSheet.create({
         marginBottom: 30
     },
     imageWrapper: {
-        minHeight: 300,
-        maxHeight: 400,
+        height: (width - 30) * (9/16),
         width: '100%',
         overflow: 'hidden',
         borderTopLeftRadius: 6,

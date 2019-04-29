@@ -38,7 +38,7 @@ import HeaderHidden from '../images/sites/headers/hidden.png';
 import HeaderKiggins from '../images/sites/headers/kiggins.png';
 import HeaderProvidence from '../images/sites/headers/providence.png';
 import HeaderSchofield from '../images/sites/headers/schofield.png';
-// import HeaderSlocum from '../images/sites/headers/slocum.png';
+import HeaderSlocum from '../images/sites/headers/slocum.png';
 import HeaderSmith from '../images/sites/headers/smith.png';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 
@@ -109,7 +109,7 @@ const getHeader = (name) => {
 		case 'kiggins': return HeaderKiggins;
 		case 'providence': return HeaderProvidence;
 		case 'schofield': return HeaderSchofield;
-		// case 'slocum': return HeaderSlocum; 
+		case 'slocum': return HeaderSlocum; 
 		case 'smith': return HeaderSmith;
 	}
 }

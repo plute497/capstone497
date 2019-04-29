@@ -8,10 +8,13 @@ import {
 	ScrollView,
 	Animated,
 	Easing,
-	FlatList
+	FlatList,
+	ActivityIndicator
 } from "react-native";
 
 import Colors from "../colors";
+import { Player, Recorder, MediaStates } from "react-native-audio-toolkit";
+
 
 const { width, height } = Dimensions.get("window");
 
@@ -24,9 +27,16 @@ export default class StoryView extends Component {
 
 	animatedHeight = new Animated.Value(height);
 	animatedPosition = new Animated.Value(-10);
+	audioPlayer = null;
 
 	componentDidMount() {
 		let { params } = this.props.navigation.state;
+
+		console.log(params.location);
+		if(params.location) {
+			this.audioPlayer = new Player(params.location).play();
+			console.log(this.audioPlayer);
+		}
 
 		this.setState({ loaded: true }, () => {
 			Animated.sequence([
@@ -57,8 +67,14 @@ export default class StoryView extends Component {
 				style={{
 					height: "100%",
 					width: width,
-					backgroundColor: Colors.black
+					backgroundColor: Colors.black,
+					justifyContent: 'center',
+					alignItems: 'center'
 				}}>
+				<ActivityIndicator
+					size="small"
+					color={Colors.white}
+					animating={true} />
 				<Image style={{ flex: 1 }} resizeMode={"contain"} />
 			</View>;
 		});
@@ -71,10 +87,16 @@ export default class StoryView extends Component {
 				style={{
 					height: "100%",
 					width: width,
-					backgroundColor: Colors.black
+					backgroundColor: Colors.black,
+					justifyContent: 'center',
+					alignItems: 'center'
 				}}>
+				<ActivityIndicator
+					size="small"
+					color={Colors.lightGray}
+					animating={true} />
 				<Image
-					style={{ flex: 1 }}
+					style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%' }}
 					onError={e => console.log(e)}
 					source={{ uri: item }}
 					resizeMode={"contain"}

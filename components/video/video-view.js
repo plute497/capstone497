@@ -263,7 +263,7 @@ export default class VideoView extends Component {
                 )}
                <View style={{backgroundColor: Colors.black, elevation: 5, overflow: 'hidden', flex: this.state.fullscreen ? 1 : 0, height: this.state.fullscreen ? '100%' : width * (9/16)}}>
                     <Video 
-                        source={{uri: getVideoPath(params.name)}}
+                        source={{uri: params.location ? params.location : getVideoPath(params.name)}}
                         ref={ref => this.video = ref}
                         paused={this.state.paused}
                         style={{

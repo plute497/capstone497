@@ -174,8 +174,8 @@ export default class SiteContent extends PureComponent {
 			return (
 				<Card
 					onPress={this.handleContent.bind(this, item)}
-					thumbnail={getAudioImage(params.name)}
-					title={params.niceName + " Video"}
+					uri={item.thumbnail}
+					title={item.title}
 					color={getColor(params.name)}
 					description={item.text}
 					key={params.name + "_" + i}
@@ -187,7 +187,7 @@ export default class SiteContent extends PureComponent {
 			return (
 				<Card
 					onPress={this.handleContent.bind(this, item)}
-					thumbnail={item.thumbnail}
+					uri={item.thumbnail}
 					title={params.niceName + " Story"}
 					color={getColor(params.name)}
 					description={item.text}

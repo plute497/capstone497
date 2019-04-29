@@ -1,3 +1,5 @@
+const cdn = "https://s3-us-west-2.amazonaws.com/cmdc-cchm";
+
 const heritageImages = [
 	"https://s3-us-west-2.amazonaws.com/cmdc-cchm/images/heritage/cchm00247.jpg",
 	"https://s3-us-west-2.amazonaws.com/cmdc-cchm/images/heritage/cchm00782.jpg",
@@ -103,7 +105,7 @@ In the subsequent years, the museum's exhibits and collection expanded to includ
 The museum continues to be operated by the Clark County Historical Society and maintains a collection of artifacts from prehistoric times all the through the present.
         `,
 		year: "1909",
-		content: [{ type: "audio" }]
+		content: [{ type: "audio", linkToAr: true }]
 	},
 	{
 		name: "elks",
@@ -144,6 +146,7 @@ In the Winter of 1845, Amos and Esther Short arrived in the area that would beco
 			{
 				type: "story",
 				images: estherImages,
+				location: cdn + "/esther.mp3",
 				thumbnail:
 					"https://s3-us-west-2.amazonaws.com/cmdc-cchm/images/esther/historic/1.jpg"
 			}
@@ -162,7 +165,17 @@ In the Winter of 1845, Amos and Esther Short arrived in the area that would beco
 		longDescription: `
 The Evergreen Hotel, opened in March of 1928, signaled Clark County's early aspirations to build an urban economy in coordination with its continuing agricultural industries. Throughout American history, Hotels have often been viewed as symbols of economic growth and urbanization. This seems to be exactly what the leadership in 1920s Vancouver had in mind. The building's construction garnered so much support from a grassroots solicitation drive that it collected $6000 above the necessary fund to erect this hotel. Supported by over four-hundred prominent Vancouver citizens and championed by the chamber of commerce, the Evergreen Hotel symbolized the city's growing economic power and urbanization. It clearly represented a transition out of this early urban phase and provided a key location for business and commerce that was situated on what was at the time Vancouver's main arterial roads. Additionally, it allowed a place for distinguished figures to visit and dine. During his time at the Vancouver Barrack future United States Secretary of State and Secretary of Defense, George C. Marshall dined here. This was also before he advocated for the economic recovery plan for post-war Europe that would eventually bare his name. By the late 1950s and early 1960s much of the focus on Vancouver's economic growth shifted from the downtown core. In the mid to late 1960s efforts for 'urban renewal' were taking hold across the nation. Vancouver was swept up in this effort, but the it did little to rejuvenate the heart of the city. As a result, the hotel fell into disrepair and was slated for condemnation in 1977. However, the community rallied and the building was spared from the wrecking ball. It was placed on the National Register of Historic Place in 1979. After sitting empty for several more years, private developers rehabilitated the building and turned it into a senior living center in 1987, which it has remained to this day.`,
 		year: "1928",
-		content: [{ type: "audio" }, { type: "video" }]
+		content: [
+			{ type: "audio" },
+			{
+				type: "video",
+				title: "Evergreen Video",
+				location:
+					"https://s3-us-west-2.amazonaws.com/cmdc-cchm/videos/evergreen-video.mp4",
+				thumbnail:
+					"https://s3-us-west-2.amazonaws.com/cmdc-cchm/videos/evergreen-thumbnail.jpg"
+			}
+		]
 	},
 	{
 		name: "heritage",
@@ -181,7 +194,7 @@ Jesse M Langsdorf, bank president and driving force behind the construction of t
     
 The bank thrived until 1933 when it failed as a result of the Depression. In 1934, the location served as the Clark County National Bank and remained so for sixteen years. In the 1950s the building began to lose most of its tenants to new constructions, with the exception of the loyal Everal Carson, Attorney at Law. Carson remained in the building for over 51 years, from 1932 to 1983. Ownership of the building changed throughout the 1980s while attempts were made to raise funds for restoration. In 1987, the funds to the restore the building were obtained, and it was brought back to its original glory. Renamed the 'Heritage Building,' a dedication ceremony was held in 1988. In attendance was Mayor Bruce Hagensen as well as an actor playing the role of President Taft, the commander in chief at the time of the building construction. Today, the Heritage Building remains a symbol of Vancouver's first leap into a modern era of architecture and construction.`,
 		year: "1912",
-		content: [{ type: "audio" }, { type: "story", images: heritageImages }]
+		content: [{ type: "audio" }, { type: "story", images: heritageImages, thumbnail: heritageImages[1], location: cdn + "/heritage-story.mp3" }]
 	},
 	{
 		name: "hidden",
@@ -201,7 +214,24 @@ While Lowell M Hidden was launching a brick business and shaping Vancouver, His 
 The family continued to manufacture bricks well into the late 20th Century. However, by the 1980s they only produced bricks occasionally. From a count of roughly a million bricks a year to about 100,00 annually the Hidden family's brick operation slowed and as Robert Hidden noted 'it is a lot of hard work, and we don't make much money on it. We do it because we like it.' The final incarnation of the Hidden's brickmaking operation still stands near the intersection of 4th Plain Road and Kauffman Road. However, Robert saw the value Vancouver's history and his family's legacy and purchased Providence Academy in 1969 to spare it from the wrecking ball. The Hidden family to this day continues to advocate for preservation of the history they were instrumental in creating.
 `,
 		year: "1885",
-		content: [{ type: "video" }]
+		content: [
+			{
+				type: "video",
+				title: "The Birth of Penguin Nation",
+				location:
+					"https://s3-us-west-2.amazonaws.com/cmdc-cchm/videos/hidden-video.mp4",
+				thumbnail:
+					"https://s3-us-west-2.amazonaws.com/cmdc-cchm/videos/hidden-thumbnail.jpg"
+			},
+			{
+				type: "video",
+				title: "The Origins of Clark College",
+				location:
+					"https://s3-us-west-2.amazonaws.com/cmdc-cchm/videos/hidden2-video.mp4",
+				thumbnail:
+					"https://s3-us-west-2.amazonaws.com/cmdc-cchm/videos/hidden2-thumbnail.jpg"
+			}
+		]
 	},
 	{
 		name: "kiggins",
@@ -224,7 +254,16 @@ In 1910, Kiggins launched his first entertainment venue, the Grand Theater opera
 
 All venues constructed or owned by Kiggins have been demolished or repurposed, with the exception of the Kiggins. Renovated and placed on the National Register of Historic Places, the Kiggins Theatre experienced a renaissance, regaining the glow of that spring evening in 1936 when motion pictures first graced its screen.`,
 		year: "1935",
-		content: [{ type: "video" }]
+		content: [
+			{
+				type: "video",
+				title: "Popcorn Betty",
+				location:
+					"https://s3-us-west-2.amazonaws.com/cmdc-cchm/videos/kiggins-video.mp4",
+				thumbnail:
+					"https://s3-us-west-2.amazonaws.com/cmdc-cchm/videos/kiggins-thumbnail.jpg"
+			}
+		]
 	},
 
 	{
@@ -264,7 +303,7 @@ This block, known as the Schofield Block, stands as a testament to the works of 
 After his parents passing, Edward R. Schofield took up the Schofield family legacy and was an incredibly industrious civic leader in early 20th Century Vancouver. On February 7, 1907 Edward married Mary Elizabeth Conboie. Between 1906 and 1907, the Beaux Arts style building located directly north was built by the Schofields. Edward would go on to become a member of the Vancouver City Council and eventually Mayor. Mary also led an industrious life as an active business woman and gaining the honor of being the first women bank director in the State of Washington. The wives and husbands of two generations of Schofields left an indelible mark on the early commercial development of Vancouver.`,
 		//year: 'circa 1880/1906',
 		year: "1880",
-		content: [{ type: "audio" }]
+		content: [{ type: "audio", linkToAr: true }]
 	},
 
 	{
@@ -280,7 +319,16 @@ After his parents passing, Edward R. Schofield took up the Schofield family lega
 		longDescription: `
 In the mid-19th Century, many ventured west with the dream of claiming flourishing economic and social opportunities in young urban centers, such as Vancouver. The Slocum House, built by Charles W. Slocum in 1877, stands as an iconic symbol of this movement and its underlying narrative. The story begins with when at the young age of twenty-two, an ambitious Charles W. Slocum left Massachusetts to journey west via South American. Slocum braved the perilous journey across the thin slice of land, known as a the Isthmus of Panama, that separated the Atlantic and Pacific Oceans. Once he reached the Pacific side, Slocum boarded the Golden Gate, a steamer bound for the Pacific coast of North America. After stops in San Francisco and Portland, Slocum found work as a carpenter at Vancouver Barracks in 1857. He only remained in this humble position for a few years. By 1860, Slocum aspiring to build his own fortune in this budding western town opened a general store in Vancouver, Washington with partner James Crawford. Soon after, Slocum secured contracts to supply the US Army. His business quickly expanded as he opened additional stores in Walla Walla, Washington and in Lewiston and Boise City, Idaho. With the lack of railroads driving east from Vancouver into the interior of what would become Washington State, Slocum used 30 10-mule teams to deliver his goods across the region. In 1869, Slocum sold all of his holdings expect for the original Vancouver store. As a result of Charles business the Slocum's amassed enough wealth to build a home in the style of a family home located back east. This elegant home took form in 1877 and on New Year's Day the 1878, Charles and Laura, opened their new home to Vancouver's high society. The Slocum's remained in the house for some time, but eventually the couple moved out of the home. Charles passed away in 1912. When Laura died two years later, most of their property went to nieces and nephews. The house was saved and moved to Esther Short Park during Vancouver's urban renewal in 1966 and opened as a theatre in 1972. The opening production was Esther Short or a Heroic Pioneer Mother, written and directed by Hermine Decker Duthie. This home stands proudly as the last survivor of a neighborhood razed long ago, offering a glimpse into the early Vancouver elite. `,
 		year: "1877",
-		content: [{ type: "video" }]
+		content: [
+			{
+				type: "video",
+				title: "Slocum Hauntings",
+				location:
+					"https://s3-us-west-2.amazonaws.com/cmdc-cchm/videos/slocum-video.mp4",
+				thumbnail:
+					"https://s3-us-west-2.amazonaws.com/cmdc-cchm/videos/slocum-thumbnail.jpg"
+			}
+		]
 	},
 	{
 		name: "smith",
@@ -295,7 +343,7 @@ In the mid-19th Century, many ventured west with the dream of claiming flourishi
 		longDescription: `
 Designed by architect Keith Bradbury & Henry Grebrook, the Smith Tower was built in 1966 and was one of the first buildings on the west coast to employ new architectural and construction techniques. Constructed using the 'Lift Slab' technique, the concrete floors were cast on top of each other and then raised around the central stairwell. Due to the circular shape of the building, this is often colloquially referred to as 'the pancake building method.' At the time the building was the second ever to be constructed using this method as well as the largest. The project was well supported by local labor groups and the primary focus was to provide decent and affordable homes for trade union retirees. With a height of 158 ft, the Smith Tower is currently the second tallest building in Vancouver.`,
 		year: "1966",
-		content: [{ type: "audio" }]
+		content: [{ type: "audio", linkToAr: true }]
 	}
 ];
 

@@ -70,7 +70,7 @@ export default class LocationsList extends Component {
 					contentContainerStyle={{ paddingBottom: 60, paddingLeft: 15, paddingRight: 15, paddingTop: 15 }}
 					renderItem={({ item, index }) => {
 						return (
-							<TouchableOpacity onPress={() => this.navigate(item)} key={index} style={{ flexDirection: 'row', height: 100, borderBottomColor: Colors.lightGray, borderBottomWidth: StyleSheet.hairlineWidth }}>
+							<TouchableOpacity onPress={() => this.navigate(item)} key={index} style={{ flexDirection: 'row', minHeight: 100, borderBottomColor: Colors.lightGray, borderBottomWidth: StyleSheet.hairlineWidth }}>
 								<View style={{ height: 85, width: 85, marginTop: 7.5, borderRadius: 6 }}>
 									<Image source={getImage(item.name)} style={{ height: 85, width: 85, borderRadius: 6, position: 'absolute' }} resizeMode={'cover'} />
 									<View style={[StyleSheet.absoluteFillObject, { backgroundColor: getColor(item.name), opacity: 0.6, borderRadius: 6 }]}></View>

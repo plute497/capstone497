@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
+import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from "react-native";
 
 import {
 	ViroARScene,
@@ -13,23 +13,32 @@ import {
 	Viro3DObject,
 	ViroBox,
 	ViroARPlane,
-	ViroDirectionalLight
+	ViroDirectionalLight,
+	ViroLightingEnvironment,
+	Viro360Image
 } from "react-viro";
 
-const cowModel = require("../../res/cowObj.obj");
-const cowFBX = require("../../res/cowAnimationWalkidle.vrx");
-const cowTexture = require("../../res/cowAnimationWalkidle.fbm/Final Texture.png");
-const cowMaterial = require("../../res/cowMat.mtl");
+import CloseIcon from '../images/close.png';
+import Colors from '../colors';
 
+const cowFBX = require("../../res/cowAnimationWalkidle.vrx");
+// const cowTexture = require("../../assets/res/cow-text.png");
 const bookModel = require("../../res/CCHMbookmobile.obj");
-const bookMaterial = require("../../res/CCHMbookmobile.mtl");
-const bookFBX = require('../../res/CCHMbookmobile.vrx');
+const bookMaterial = require("../../assets/res/CCHMbookmobile.mtl");
+
+const concreteMoldModel = require('../../res/Concrete_Mold.obj');
+const concreteSlabModel = require('../../res/Concrete_Slab.obj');
+const smithTowerModel = require('../../res/Smith_Tower.obj');
+
+const concreteMoldMateral = require('../../res/Concrete_Mold.mtl');
+const concreteSlabMaterial = require('../../res/Concrete_Slab.mtl');
+const smithTowerMaterial = require('../../res/Smith_Tower.mtl');
 
 let api = "3D8F23E6-792C-4F66-B078-94EDB6E33A32";
 
 export default class ArView extends Component {
 	state = {
-		text: "initializing ar"
+		show: true
 	};
 
 	componentDidMount() {
@@ -50,16 +59,60 @@ export default class ArView extends Component {
 		}
 	}
 
+	close = () => {
+		this.setState({show: false}, () => {
+			setTimeout(() => {
+				this.props.navigation.goBack();
+			}, 200);
+		});
+	}
+
 	render() {
-		return (
-			<ViroARSceneNavigator
-				initialScene={{
-					scene: EmptyScene
-				}}
-				shadowsEnabled
-				ref={ref => this.scene = ref}
-				apiKey={api}
-			/>
+		return this.state.show ? (
+			<View style={{flex: 1}}>
+				<ViroARSceneNavigator
+					initialScene={{
+						scene: EmptyScene
+					}}
+					shadowsEnabled
+					ref={ref => this.scene = ref}
+					apiKey={api}
+				/>
+				<TouchableOpacity
+						style={{
+							position: 'absolute',
+							top: 30,
+							left: 15,
+							height: 40,
+							width: 40,
+							backgroundColor: Colors.blue,
+							alignItems: 'center',
+							justifyContent: 'center',
+							borderRadius: 25,
+							shadowOffset: { width: 0, height: 3 },
+							shadowOpacity: 0.2,
+							shadowRadius: 3,
+						}}
+						hitSlop={{
+							top: 15,
+							left: 15,
+							right: 15,
+							bottom: 15
+						}}
+						onPress={this.close}>
+						<Image
+							source={CloseIcon}
+							style={{
+								height: 20,
+								width: 20,
+								tintColor: Colors.white
+							}}
+							resizeMode={"contain"} />
+					</TouchableOpacity>
+			</View>
+			
+		) : (
+			<View style={{flex: 1, backgroundColor: '#fff'}}></View>
 		);
 	}
 }
@@ -80,54 +133,66 @@ export class SmithScene extends Component {
 		text: "Loading"
 	};
 
-	_onInitialized = (state, reason) => {
-		console.log("initialized");
-		console.log(state, reason);
-		if (state == ViroConstants.TRACKING_NORMAL) {
-			this.setState({
-				text: "Hello World!"
-			});
-		} else if (state == ViroConstants.TRACKING_NONE) {
-			// Handle loss of tracking
-		}
-	};
-
-	componentDidMount() {
-		this.checkBox();
+	onDragTower = ([x, y, z]) => {
+		// this.tower.setNativeProps({
+		// 	position: [0, y, -1]
+		// });
 	}
-
-	checkBox = () => {};
 
 	render() {
 		return (
 			<ViroARScene
 				style={{ flex: 1 }}
-				displayPointCloud={true}
-				onTrackingUpdated={this._onInitialized}>
-				<ViroDirectionalLight color="#ffffff" direction={[0, -1, 0]} />
-				<ViroAmbientLight color="#ffffff" intensity={100} />
+				displayPointCloud={true}>
+				{/* <ViroDirectionalLight color="#ffffff" direction={[-1, -1, -1]} /> */}
+				<ViroAmbientLight color="#ffffff" intensity={50} />
+
+				<ViroOmniLight
+					intensity={300}
+					position={[-2, 3, 2]}
+					color={"#FFFFFF"}
+					attenuationStartDistance={20}
+					attenuationEndDistance={30} />
+				<ViroOmniLight
+					intensity={300}
+					position={[2, 2, -2]}
+					color={"#FFFFFF"}
+					attenuationStartDistance={20}
+					attenuationEndDistance={30} />
 				<Viro3DObject
-					source={bookModel}
-					ref={ref => (this.object = ref)}
-					materials={["car1", "car2", "car3", "car4", "car5"]}
-					resources={[bookMaterial]}
-					position={[0, -10, -30]}
-					rotation={[0, -150, 0]}
-					scale={[1, 1, 1]}
-					dragType={"FixedDistance"}
+					source={concreteMoldModel}
+					ref={ref => (this.mold = ref)}
+					materials={["mold"]}
+					onDrag={this.onDragTower}
+					resources={[concreteMoldMateral]}
+					position={[0, -0.5, -1]}
+					rotation={[0, 0, 0]}
+					scale={[0.01, 0.01, 0.01]}
 					type={"OBJ"}
 				/>
-				{/* <Viro3DObject
-					source={cowFBX}
-					ref={ref => (this.object = ref)}
-					materials={"cow"}
-					resources={[cowMaterial, cowTexture]}
-					position={[-10, -10, -50]}
-					rotation={[0, 45, 0]}
-					scale={[10, 10, 10]}
-					animation={{ name: "rigAction", run: true, loop: true }}
-					type={"VRX"}
-				/> */}
+				<Viro3DObject
+					source={concreteSlabModel}
+					ref={ref => (this.slab = ref)}
+					materials={["concrete"]}
+					onDrag={this.onDragTower}
+					resources={[concreteMoldMateral]}
+					position={[0, -0.5, -1]}
+					rotation={[0, 0, 0]}
+					scale={[0.009, 0.009, 0.009]}
+					type={"OBJ"}
+				/>
+				<Viro3DObject
+					source={smithTowerModel}
+					onDrag={this.onDragTower}
+					ref={ref => (this.tower = ref)}
+					materials={["smithWindows", "smithBody", "concrete", "car6"]}
+					resources={[smithTowerMaterial]}
+					position={[0, -0.25, -1]}
+					rotation={[0, 0, 0]}
+					scale={[0.01, 0.01, 0.01]}
+					type={"OBJ"}
+				/>
+
 			</ViroARScene>
 		);
 	}
@@ -156,9 +221,9 @@ export class BookScene extends Component {
 					ref={ref => (this.object = ref)}
 					materials={["car1", "car2", "car3", "car4", "car5", "car6", "car7", "car8", "car9", "car10", "car11", "car12"]}
 					resources={[bookMaterial]}
-					position={[0, -5, -20]}
+					position={[0, -1.5, -5]}
 					rotation={[0, -150, 0]}
-					scale={[1, 1, 1]}
+					scale={[0.25, 0.25, 0.25]}
 					dragType={"FixedDistance"}
 					type={"OBJ"}
 					onDrag={this.onDrag}
@@ -198,11 +263,10 @@ export class CowScene extends Component {
 					<Viro3DObject
 						source={cowFBX}
 						ref={ref => (this.object = ref)}
-						//materials={"cow"}
-						resources={[require("../../res/Final Texture.png")]}
-						position={[0, -10, -20]}
+						resources={[{uri: 'https://s3-us-west-2.amazonaws.com/cmdc-cchm/ar/cow-texture.png'}]}
+						position={[0, -1, -5]}
 						rotation={[0, 25, 0]}
-						scale={[0.1, 0.1, 0.1]}
+						scale={[0.0175, 0.0175, 0.0175]}
 						animation={{ name: "idle", run: true, loop: true }}
 						type={"VRX"}
 					/>	
@@ -213,16 +277,6 @@ export class CowScene extends Component {
 }
 
 ViroMaterials.createMaterials({
-	grid: {
-		shininess: 2.0,
-		lightingModel: "Lambert",
-		diffuseColor: "#ff00ff"
-	},
-	cow: {
-		shininess: 1.0,
-		lightingModel: "Lambert",
-		diffuseTexture: cowTexture
-	},
 	car1: {
 		shininess: 2.0,
 		lightingModel: "Phong",
@@ -234,7 +288,7 @@ ViroMaterials.createMaterials({
 		diffuseColor: "#555555"
 	},
 	car3: {
-		shininess: 2.0,
+		shininess: 10.0,
 		lightingModel: "Phong",
 		diffuseColor: "#ffffff"//body
 	},
@@ -282,6 +336,33 @@ ViroMaterials.createMaterials({
 		shininess: 2.0,
 		lightingModel: "Phong",
 		diffuseColor: "#333333"
+	},
+	smithWindows: {
+		roughness: 0.0,
+		metalness: 0.5,
+		lightingModel: "PBR",
+		diffuseColor: "#FFFFFF"
+	  },
+	  smithBody: {
+		roughness: 0.9,
+		metalness: 0.2,
+		lightingModel: "PBR",
+		diffuseColor: "#555555",
+		roughnessTexture: require('../../res/ConcreteTexture.jpg')
+	  },
+	concrete: {
+		shininess: 1.0,
+		roughness: 1.0,
+		lightingModel: "PBR",
+		wrapS: "Repeat",
+		wrapT: "Repeat",
+		diffuseColor: "#555555",
+		roughnessTexture: require('../../res/ConcreteTexture.jpg')
+	},
+	mold: {
+		shininess: 1.5,
+		lightingModel: "Lambert",
+		diffuseColor: "#ccbb99"
 	}
 });
 

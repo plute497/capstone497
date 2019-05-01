@@ -96,6 +96,8 @@ const getColor = name => {
 
 const getAudioImage = name => {
 	switch (name) {
+		case "arts":
+			return BackArts;
 		case "cchm":
 			return AudioImageCchm;
 		case "elks":
@@ -171,6 +173,7 @@ export default class SiteContent extends PureComponent {
 		}
 
 		if (item.type === "video") {
+
 			return (
 				<Card
 					onPress={this.handleContent.bind(this, item)}

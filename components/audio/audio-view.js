@@ -13,6 +13,7 @@ import {
 
 import { Player, Recorder, MediaStates } from "react-native-audio-toolkit";
 
+import AudioImageArts from '../images/sites/arts.png';
 import AudioImageCchm from "../sounds/images/cchm.jpg";
 import AudioImageElks from "../sounds/images/elks.jpg";
 import AudioImageEvergreen from "../sounds/images/evergreen.jpg";
@@ -24,6 +25,8 @@ import { locations } from "../locations/locations";
 
 const getAudioImage = name => {
 	switch (name) {
+        case "arts": 
+            return AudioImageArts;
 		case "cchm":
 			return AudioImageCchm;
 		case "elks":
@@ -66,17 +69,19 @@ export default class AudioView extends Component {
 			console.log(e);
 		}
 
-		Animated.sequence([
-			Animated.timing(this.animatedPosition, {
-				toValue: 0,
-				duration: 3000,
-				easing: Easing.linear
-			}),
-			Animated.timing(this.animatedHeight, {
-				toValue: width,
-				duration: 500
-			})
-		]).start();
+        if(params.name !== "arts") {
+            Animated.sequence([
+                Animated.timing(this.animatedPosition, {
+                    toValue: 0,
+                    duration: 3000,
+                    easing: Easing.linear
+                }),
+                Animated.timing(this.animatedHeight, {
+                    toValue: width,
+                    duration: 500
+                })
+            ]).start();
+        }
 	}
 
 	toggleAudio = () => {

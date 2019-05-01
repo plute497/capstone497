@@ -126,7 +126,7 @@ The Elks club was home to many distinguished and charitable members of the commu
 
 Though no longer in this building, the Vancouver Elks 823 continue to perform charitable work in Vancouver. Their current activities include raising funds for Washington Elks Children's Therapy Program, the donation of 225 food boxes yearly for families, and over $10,000 in support for over 500 Clark County veterans still holding true to the four tenants of the national organization founded in the wake of the Civil War.`,
 		year: "1911",
-		content: [{ type: "audio" }]
+		content: [{ type: "audio", linkToVideo: true }, { type: "video", title: "Saved by the Pin", thumbnail: cdn + "/videos/elks-thumbnail.jpg", location: cdn + "/videos/elks-video.mp4" }]
 	},
 	{
 		name: "esther",
@@ -282,7 +282,7 @@ The House of Providence, commonly known as 'The Academy', is one of the most sig
 
 In 1856, Mother Joseph led a group of four missionary sisters from Montreal to the Washington Territory. The sisters came with the intention of caring for the poor and sick, establishing a school, and bringing their faith to the community. Upon their arrival it was discovered that no preparations had been made to accommodate them. If they were dismayed there was no indication of this, and they quickly set to work. Soon they opened the boarding school that would eventually become Providence Academy, and two years after their arrival established St.Joseph Hospital, the first permanent hospital in the Pacific Northwest. In addition to her work in Vancouver, Mother Joseph was charged with the mission of overseeing the financing and construction of all the sisters' buildings in the region. Subsequently, she would endure a number arduous journeys throughout the Pacific Northwest over two decades to raise the necessary funds to build and maintain educational and healthcare institutions. The grandest of these efforts being Providence Academy. On January 19, 1902, Mother Joseph of the Sacred Heart passed away. In her last words she said 'My dear sisters, allow me to recommend to you the care of the poor in our houses, as well as those without. Take good care of them; have no fear of them; assist them and receive them. Then you will have no regrets. Do not say: ah! This does not concern me, let other see them. My sisters, whatever concerns the poor is always our affair.' The school would go on for another 64 years after her passing. Its final class completed their courses in 1966. However, her incredible spirit and legacy inspired those in the community to save her building. In 1969, Robert Hidden, the great grandson of Hidden Brick Company founder Lowell Mason Hidden, purchased the building. His family legacy enshrined in every Hidden brick that was used to compose Mother Joseph's architectural masterpiece. As a result, the building was not lost and eventually was purchase by a local heritage group, The Historic Trust. In this they have worked to reconnect many of the alum from the Academy with this important space. Today, within its halls interpretative displays communicate to a new generation the faith and feats of a group of sisters that arrived in this place in 1856.`,
 		year: "1873",
-		content: [{ type: "audio" }]
+		content: [{ type: "audio", linkToVideo: true }, {type: "video", location: cdn + "/videos/providence-video.mp4", thumbnail: cdn + "/videos/providence-thumbnail.jpg", title: "Begging Tours"}]
 	},
 	{
 		name: "schofield",

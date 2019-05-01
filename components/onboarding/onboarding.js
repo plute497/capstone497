@@ -49,6 +49,12 @@ export default class Onboarding extends Component {
 		return <View style={styles.solidDot}></View>
 	}
 
+	nextSlide = () => {
+		let index = this.state.currentSlide + 1;
+		this.scrollView.scrollTo({ x: index * width, y: 0, animated: true });
+		this.setState({ currentSlide: index });
+	}
+
 	emptyDot = (index) => {
 		return (
 			<TouchableOpacity
@@ -98,6 +104,10 @@ export default class Onboarding extends Component {
 								Tour 12 historic{"\n"}sites of downtown{"\n"}Vancouver, WA
 							</Text>
 						</View>
+
+						<TouchableOpacity style={styles.next} onPress={this.nextSlide}>
+							<Text style={styles.buttonText}>Next</Text>
+						</TouchableOpacity>
 						
 					</View>
 					{/* <View style={styles.page}>
@@ -128,6 +138,10 @@ export default class Onboarding extends Component {
 								Experience history{"\n"}through augmented{"\n"}reality!
 							</Text>
 						</View>	
+
+						<TouchableOpacity style={styles.next} onPress={this.nextSlide}>
+							<Text style={styles.buttonText}>Next</Text>
+						</TouchableOpacity>
 					</View>
 					{/* <View style={styles.page}>
 						<View style={[styles.pageInner, { borderColor: Colors.red }]}>
@@ -154,27 +168,13 @@ export default class Onboarding extends Component {
 							Learn about{"\n"}Vancouver's{"\n"}historic sites!
 							</Text>
 						</View>	
-						<Animated.View style={[styles.done, { opacity: opacity, transform: [{ translateY: transform }] }]}>
-							<TouchableOpacity onPress={this.props.close}>
-								<Text style={styles.buttonText}>Get Started</Text>
-							</TouchableOpacity>
-						</Animated.View>
+
+						<TouchableOpacity style={styles.next} onPress={this.props.close}>
+							<Text style={styles.buttonText}>Get Started</Text>
+						</TouchableOpacity>
 
 					</View>
 				</ScrollView>
-
-				{/* when we add back in the other two slides, change this to 4 and uncomment the other two dots */}
-				{currentSlide < 2 && (
-				<View style={styles.dots}>
-					<View style={styles.dotsInner}>
-						{currentSlide === 0 ? this.solidDot() : this.emptyDot(0)}
-						{currentSlide === 1 ? this.solidDot() : this.emptyDot(1)}
-						{currentSlide === 2 ? this.solidDot() : this.emptyDot(2)}
-						{/* {currentSlide === 3 ? this.solidDot() : this.emptyDot(3)}
-						{currentSlide === 4 ? this.solidDot() : this.emptyDot(4)} */}
-					</View>
-				</View>
-				)}
 			</View>
 		)
 	}
@@ -232,6 +232,22 @@ const styles = StyleSheet.create({
 		fontSize: 30,
 		fontFamily: "Lato-Light",
 		textAlign: 'center',
+	},
+	next: {
+		position: 'absolute',
+		left: '25%',
+		right: '25%',
+		bottom: 50,
+		height: 50,
+		borderRadius: 6,
+		backgroundColor: Colors.red,
+		alignItems: 'center',
+		justifyContent: 'center',
+		shadowColor: Colors.black,
+		shadowOffset: { width: 0, height: 5 },
+		shadowOpacity: 0.3,
+		shadowRadius: 5,
+		elevation: 7
 	},
 	done: {
 		position: 'absolute',

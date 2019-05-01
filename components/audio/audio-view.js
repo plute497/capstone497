@@ -20,6 +20,7 @@ import AudioImageHeritage from "../sounds/images/heritage.jpg";
 import AudioImageProvidence from "../sounds/images/providence.jpg";
 import AudioImageSchofield from "../sounds/images/schofield.jpg";
 import AudioImageSmith from "../sounds/images/smith.jpg";
+import { locations } from "../locations/locations";
 
 const getAudioImage = name => {
 	switch (name) {
@@ -120,7 +121,13 @@ export default class AudioView extends Component {
 		this.props.navigation.navigate("ArView", {
 			name: this.props.navigation.state.params.name
 		});
-	};
+    };
+    
+    linkToVideo = () => {
+        let loc = locations.find(loc => loc.name === this.props.navigation.state.params.name);
+        let video = loc.content.find(con => con.type === "video");
+        this.props.navigation.navigate("VideoView", {...video, name: this.props.navigation.state.params.name});
+    }
 
 	render() {
 		let { params } = this.props.navigation.state;
@@ -154,6 +161,34 @@ export default class AudioView extends Component {
 						}}>
 						{params.text}
 					</Animated.Text>
+                    {params.linkToVideo && (
+						<TouchableOpacity
+							onPress={this.linkToVideo}
+							style={{
+								flex: 0,
+								marginLeft: 30,
+								marginTop: 15,
+								marginRight: 30,
+								backgroundColor: Colors.orange,
+								alignItems: "center",
+								justifyContent: "center",
+								height: 60,
+								borderRadius: 6,
+								shadowOffset: { width: 0, height: 3 },
+								shadowOpacity: 0.2,
+								shadowRadius: 3,
+								elevation: 3
+							}}>
+							<Text
+								style={{
+									color: Colors.white,
+									fontFamily: "Lato-Black",
+									fontSize: 18
+								}}>
+								View Video
+							</Text>
+						</TouchableOpacity>
+					)}
 					{params.linkToAr && (
 						<TouchableOpacity
 							onPress={this.linkToAr}

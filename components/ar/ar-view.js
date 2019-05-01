@@ -30,9 +30,9 @@ const concreteMoldModel = require('../../res/Concrete_Mold.obj');
 const concreteSlabModel = require('../../res/Concrete_Slab.obj');
 const smithTowerModel = require('../../res/Smith_Tower.obj');
 
-const concreteMoldMateral = require('../../res/Concrete_Mold.mtl');
-const concreteSlabMaterial = require('../../res/Concrete_Slab.mtl');
-const smithTowerMaterial = require('../../res/Smith_Tower.mtl');
+const concreteMoldMateral = require('../../res/materials/Concrete_Mold.mtl');
+const concreteSlabMaterial = require('../../res/materials/Concrete_Slab.mtl');
+const smithTowerMaterial = require('../../res/materials/Smith_Tower.mtl');
 
 let api = "3D8F23E6-792C-4F66-B078-94EDB6E33A32";
 
@@ -175,7 +175,7 @@ export class SmithScene extends Component {
 					ref={ref => (this.slab = ref)}
 					materials={["concrete"]}
 					onDrag={this.onDragTower}
-					resources={[concreteMoldMateral]}
+					resources={[concreteSlabMaterial]}
 					position={[0, -0.5, -1]}
 					rotation={[0, 0, 0]}
 					scale={[0.009, 0.009, 0.009]}

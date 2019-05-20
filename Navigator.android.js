@@ -287,7 +287,7 @@ const Main = createStackNavigator({
 					headerTruncatedBackTitle: null,
 					headerTintColor: Colors.white,
 					headerStyle: {
-						backgroundColor: getColor(props.navigation.state.params.name),
+						backgroundColor: getColor(props.navigation.state.params.locationData.name),
 						shadowOffset: { width: 0, height: 2 },
 						shadowOpacity: 0.1,
 						shadowRadius: 2,
@@ -306,7 +306,7 @@ const Main = createStackNavigator({
 			headerTruncatedBackTitle: null,
 			headerTintColor: Colors.white,
 			headerStyle: {
-				backgroundColor: getColor(props.navigation.state.params.name),
+				backgroundColor: getColor(props.navigation.state.params.locationData.name),
 				shadowOffset: { width: 0, height: 2 },
 				shadowOpacity: 0.1,
 				shadowRadius: 2,
@@ -329,7 +329,7 @@ const Main = createStackNavigator({
 			headerTruncatedBackTitle: null,
 			headerTintColor: Colors.white,
 			headerStyle: {
-				backgroundColor: getColor(props.navigation.state.params.name),
+				backgroundColor: getColor(props.navigation.state.params.locationData.name),
 				shadowOffset: { width: 0, height: 2 },
 				shadowOpacity: 0.1,
 				shadowRadius: 2,

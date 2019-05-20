@@ -7,7 +7,6 @@ import {
 	TouchableOpacity
 } from 'react-native';
 
-import { locations } from '../locations/locations';
 import Colors from '../colors';
 
 export default class GeoFence extends Component {
@@ -55,6 +54,8 @@ export default class GeoFence extends Component {
 	}
 
 	checkFences = () => {
+		const { locations } = this.props;
+
 		let foundLoc = locations.find(thisLocation => {
 			if (this.check_a_point(this.props.lng, this.props.lat, thisLocation.lng, thisLocation.lat, 0.0006)) {
 				return thisLocation;
@@ -87,7 +88,7 @@ export default class GeoFence extends Component {
 	}
 
 	goToLocation = () => {
-		this.props.goToLocation(this.state.foundLoc.name);
+		this.props.goToLocation(this.state.foundLoc);
 	}
 
 	render() {

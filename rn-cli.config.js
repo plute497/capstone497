@@ -9,7 +9,8 @@ module.exports = {
 			"png",
 			"mp4",
 			"mp3",
-			"jpg"
+			"jpg",
+			"wav"
 		]
 	}
 };

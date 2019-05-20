@@ -9,11 +9,12 @@ import React, { Component } from 'react';
  * Anything we want to use, like buttons, text, input fields, everything in the 
  * render function of our class will NEED to be imported
  */
-import { StyleSheet, View, TouchableOpacity, Text, AsyncStorage, SafeAreaView, Modal } from 'react-native';
+import { StyleSheet, View, ActivityIndicator, Text, AsyncStorage, SafeAreaView, Modal, Alert } from 'react-native';
 import Header from './components/header/header-main';
 import { NavigationActions } from 'react-navigation';
 import Colors from './components/colors';
 import Onboarding from './components/onboarding/onboarding';
+import { FetchLocations, FetchAudioStories } from './components/_api/locations/locations';
 
 const jwtDecode = require('jwt-decode');
 
@@ -58,14 +59,27 @@ export default class App extends Component {
 			unset: true
 		},
 		onboarded: true,
-		checked: false
+		checked: false,
+		loaded: false
 	};
 
 	//build in react method, calls right when this component wakes up, which is right on app open
 	componentDidMount() {
+		this.getData();
 		//should check whether the user is signed in and whether or not they have gone through onboarding
 		this.checkSignedIn();
 		this.checkOnboarded();
+	}
+
+	getData = async () => {
+		try {
+			let locations = await FetchLocations();
+			let audioStories = await FetchAudioStories();
+
+			this.setState({locations: locations, audioStories: audioStories, loaded: true});
+		} catch(e) {
+			Alert.alert("Loading Error", "We were unable to load the location data. Please try again later");
+		}
 	}
 
 	//this async function will wait for the AsyncStorage promise to resolve before moving onto the next line
@@ -109,16 +123,28 @@ export default class App extends Component {
 		return (
 			<View style={styles.container}>
 				<View style={{ height: '100%', flex: 1, width: '100%' }}>
-					<Navigator
-						ref={ref => this.navigator = ref}
-						screenProps={{
-							setToken: this.setToken,
-							signOut: this.signOut,
-							user: this.state.user,
-							token: this.state.token,
-							onboarded: this.state.onboarded && this.state.checked
-						}}
-						style={{ flex: 1 }} />
+					{this.state.loaded ? (
+						<Navigator
+							ref={ref => this.navigator = ref}
+							screenProps={{
+								setToken: this.setToken,
+								signOut: this.signOut,
+								user: this.state.user,
+								token: this.state.token,
+								onboarded: this.state.onboarded && this.state.checked,
+								locations: this.state.locations,
+								audioStories: this.state.audioStories
+							}}
+							style={{ flex: 1 }} />
+					) : (
+						<View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+							<ActivityIndicator
+								animating={true}
+								color={Colors.blue}
+								size={'large'}
+								style={{alignSelf: 'center'}} />
+						</View>
+					)}
 				</View>
 
 				{/* This will only show if the onboarded state is set to false - look up JS ternary operators if you don't understand this: `myCondition ? 'myCondition is true' : 'myCondition is false'` */}
@@ -141,6 +167,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'flex-start',
 		alignItems: 'flex-start',
-		backgroundColor: '#eeffee',
+		backgroundColor: Colors.white,
 	}
 });

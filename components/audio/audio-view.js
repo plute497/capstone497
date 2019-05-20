@@ -13,42 +13,7 @@ import {
 
 import { Player, Recorder, MediaStates } from "react-native-audio-toolkit";
 
-import AudioImageArts from '../images/sites/arts.png';
-import AudioImageCchm from "../sounds/images/cchm.jpg";
-import AudioImageElks from "../sounds/images/elks.jpg";
-import AudioImageEvergreen from "../sounds/images/evergreen.jpg";
-import AudioImageHeritage from "../sounds/images/heritage.jpg";
-import AudioImageProvidence from "../sounds/images/providence.jpg";
-import AudioImageSchofield from "../sounds/images/schofield.jpg";
-import AudioImageSmith from "../sounds/images/smith.jpg";
-import { locations } from "../locations/locations";
-
-const getAudioImage = name => {
-	switch (name) {
-        case "arts": 
-            return AudioImageArts;
-		case "cchm":
-			return AudioImageCchm;
-		case "elks":
-			return AudioImageElks;
-		case "evergreen":
-			return AudioImageEvergreen;
-		case "heritage":
-			return AudioImageHeritage;
-		case "providence":
-			return AudioImageProvidence;
-		case "schofield":
-			return AudioImageSchofield;
-		case "smith":
-			return AudioImageSmith;
-	}
-};
-
 const { width, height } = Dimensions.get("window");
-
-const getAudio = name => {
-	return "https://s3-us-west-2.amazonaws.com/cmdc-cchm/" + name + ".mp3";
-};
 
 export default class AudioView extends Component {
 	state = {
@@ -63,13 +28,15 @@ export default class AudioView extends Component {
 	componentDidMount() {
 		let { params } = this.props.navigation.state;
 
+		console.log(params.location);
+
 		try {
-			this.audioPlayer = new Player(getAudio(params.name)).play();
+			this.audioPlayer = new Player(params.location).play();
 		} catch (e) {
 			console.log(e);
 		}
 
-        if(params.name !== "arts") {
+        if(params.locationData.name !== "arts") {
             Animated.sequence([
                 Animated.timing(this.animatedPosition, {
                     toValue: 0,
@@ -123,15 +90,21 @@ export default class AudioView extends Component {
 	}
 
 	linkToAr = () => {
+		if (this.audioPlayer) {
+			this.audioPlayer.stop();
+		}
+
 		this.props.navigation.navigate("ArView", {
-			name: this.props.navigation.state.params.name
+			name: this.props.navigation.state.params.locationData.name
 		});
     };
     
     linkToVideo = () => {
-        let loc = locations.find(loc => loc.name === this.props.navigation.state.params.name);
+		const { locations } = this.props.screenProps;
+
+        let loc = locations.find(loc => loc.name === this.props.navigation.state.params.locationData.name);
         let video = loc.content.find(con => con.type === "video");
-        this.props.navigation.navigate("VideoView", {...video, name: this.props.navigation.state.params.name});
+        this.props.navigation.navigate("VideoView", {...video, name: this.props.navigation.state.params.locationData.name});
     }
 
 	render() {
@@ -153,7 +126,7 @@ export default class AudioView extends Component {
 							transform: [{ translateX: this.animatedPosition }]
 						}}
 						resizeMode={"cover"}
-						source={getAudioImage(params.name)}
+						source={{uri: params.thumbnail}}
 					/>
 					<Animated.Text
 						style={{

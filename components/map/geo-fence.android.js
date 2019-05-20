@@ -8,7 +8,6 @@ import {
 	TouchableOpacity
 } from 'react-native';
 
-import { locations } from '../locations/locations';
 import Colors from '../colors';
 const { height, width } = Dimensions.get('window');
 
@@ -58,6 +57,8 @@ export default class GeoFence extends Component {
 	}
 
 	reorderedLocations = () => {
+		const { locations } = this.props;
+
 		//create a new array from the locations list
 		let locs = [...locations];
 
@@ -109,7 +110,7 @@ export default class GeoFence extends Component {
 	}
 
 	goToLocation = () => {
-		this.props.goToLocation(this.state.foundLoc.name);
+		this.props.goToLocation(this.state.foundLoc);
 	}
 
 	render() {

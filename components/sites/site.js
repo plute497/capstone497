@@ -9,110 +9,17 @@ import {
 	Easing,
 	Image,
 	Dimensions,
-	ScrollView
+	ScrollView,
+	ActivityIndicator
 } from 'react-native';
 
 import Video from 'react-native-video';
 import Colors, { getColor } from '../colors';
-
-import BackArts from '../images/sites/arts.png';
-import BackCchm from '../images/sites/cchm.png';
-import BackElks from '../images/sites/elks.png';
-import BackEstherShort from '../images/sites/esthershort.png';
-import BackEvergreen from '../images/sites/evergreen.png';
-import BackHeritage from '../images/sites/heritage.png';
-import BackHidden from '../images/sites/hidden.png';
-import BackKiggins from '../images/sites/kiggins.png';
-import BackProvidence from '../images/sites/providence.png';
-import BackSchofield from '../images/sites/schofield.png';
-import BackSlocum from '../images/sites/slocum.png';
-import BackSmith from '../images/sites/smith.png';
-
-import HeaderArts from '../images/sites/headers/arts.png';
-import HeaderCchm from '../images/sites/headers/cchm.png';
-import HeaderElks from '../images/sites/headers/elks.png';
-import HeaderEstherShort from '../images/sites/headers/esthershort.png';
-import HeaderEvergreen from '../images/sites/headers/evergreen.png';
-import HeaderHeritage from '../images/sites/headers/heritage.png';
-import HeaderHidden from '../images/sites/headers/hidden.png';
-import HeaderKiggins from '../images/sites/headers/kiggins.png';
-import HeaderProvidence from '../images/sites/headers/providence.png';
-import HeaderSchofield from '../images/sites/headers/schofield.png';
-import HeaderSlocum from '../images/sites/headers/slocum.png';
-import HeaderSmith from '../images/sites/headers/smith.png';
-import { isIphoneX } from 'react-native-iphone-x-helper';
-
-import ArtsTitle from '../images/sites/arts-title.png';
-
-import { locations, audioStories } from '../locations/locations';
+import WhiteGradient from '../images/white-gradient.png';
 import Chip from '../ui-components/chip';
-
-const SplashArts = require('../videos/splash-arts-small.mp4');
-const SplashCchm = require('../videos/splash-cchm-small.mp4');
-const SplashElks = require('../videos/splash-elks-small.mp4');
-const SplashEstherShort = require('../videos/splash-esthershort-small.mp4');
-const SplashEvergreen = require('../videos/splash-evergreen-small.mp4');
-const SplashHeritage = require('../videos/splash-heritage-small.mp4');
-const SplashHidden = require('../videos/splash-hidden-small.mp4');
-const SplashKiggins = require('../videos/splash-kiggins-small.mp4');
-const SplashProvidence = require('../videos/splash-providence-small.mp4');
-const SplashSchofield = require('../videos/splash-schofield-small.mp4');
-const SplashSlocum = require('../videos/splash-slocum-small.mp4');
-const SplashSmith = require('../videos/splash-smith-small.mp4');
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-
-const getVideo = (name) => {
-	switch (name) {
-		case 'arts': return SplashArts;
-		case 'cchm': return SplashCchm;
-		case 'elks': return SplashElks;
-		case 'esther': return SplashEstherShort;
-		case 'evergreen': return SplashEvergreen;
-		case 'heritage': return SplashHeritage;
-		case 'hidden': return SplashHidden;
-		case 'kiggins': return SplashKiggins;
-		case 'providence': return SplashProvidence;
-		case 'schofield': return SplashSchofield;
-		case 'slocum': return SplashSlocum;
-		case 'smith': return SplashSmith;
-	}
-}
-
-const getBackground = (name) => {
-	switch (name) {
-		case 'arts': return BackArts;
-		case 'cchm': return BackCchm;
-		case 'elks': return BackElks;
-		case 'esther': return BackEstherShort;
-		case 'evergreen': return BackEvergreen;
-		case 'heritage': return BackHeritage;
-		case 'hidden': return BackHidden;
-		case 'kiggins': return BackKiggins;
-		case 'providence': return BackProvidence;
-		case 'schofield': return BackSchofield;
-		case 'slocum': return BackSlocum;
-		case 'smith': return BackSmith;
-	}
-}
-
-const getHeader = (name) => {
-	switch (name) {
-		case 'arts': return HeaderArts;
-		case 'cchm': return HeaderCchm;
-		case 'elks': return HeaderElks;
-		case 'esther': return HeaderEstherShort;
-		case 'evergreen': return HeaderEvergreen;
-		case 'heritage': return HeaderHeritage;
-		case 'hidden': return HeaderHidden;
-		case 'kiggins': return HeaderKiggins;
-		case 'providence': return HeaderProvidence;
-		case 'schofield': return HeaderSchofield;
-		case 'slocum': return HeaderSlocum; 
-		case 'smith': return HeaderSmith;
-	}
-}
 
 const getAudioStory = (name) => {
 	return audioStories[name];
@@ -122,8 +29,11 @@ export default class Site extends Component {
 	state = {
 		showVideo: true,
 		location: {
-			niceName: ""
-		}
+			niceName: "",
+			
+		},
+		canReadMore: true,
+		loaded: false
 	}
 
 	videoRotation = new Animated.Value(0);
@@ -131,6 +41,7 @@ export default class Site extends Component {
 	opacity = new Animated.Value(1);
 	slowPan = new Animated.Value(0);
 	planeOpacity = new Animated.Value(0);
+	textHeight = new Animated.Value(height * 0.25);
 
 	videoEnded = () => {
 		Animated.sequence([
@@ -147,10 +58,18 @@ export default class Site extends Component {
 	}
 
 	readMore = () => {
+		Animated.timing(this.textHeight, { toValue: 10000, duration: 1000}).start(() => {
+			this.setState({canReadMore: false});
+		});
+	}
+
+	goToContent = () => {
 		this.props.navigation.navigate("SiteContent", { ...this.state.location });
 	}
 
 	componentDidMount() {
+		const { locations, audioStories } = this.props.screenProps;
+
 		let location = locations.find(loc => loc.name === this.props.navigation.state.params.name);
 		location.content = location.content.map(item => {
 			if (item.type === 'audio') {
@@ -298,10 +217,10 @@ export default class Site extends Component {
 					<Animated.Image
 						style={{ position: 'absolute', bottom: 0, left: -10, right: -10, width: '120%', top: 0, height: '100%', transform: [{ translateX: slowPan }] }}
 						resizeMode={'cover'}
-						source={getBackground(params.name)}
+						source={{uri: params.backgroundImage}}
 					/>
 					<View style={{ position: 'absolute', top: 0, left: 0, right: 0, width: '100%' }}>
-						<Image source={getHeader(params.name)} style={{ height: 120, width: '100%', flex: 0, tintColor: getColor(params.name) }} resizeMode={'contain'} />
+						<Image source={{uri: params.headerImage}} style={{ height: 120, width: '100%', flex: 0, tintColor: getColor(params.name) }} resizeMode={'contain'} />
 					</View>
 
 				</Animated.View>
@@ -325,7 +244,7 @@ export default class Site extends Component {
 						bottom: 0,
 						backgroundColor: Colors.white
 					}}>
-						<Image source={getHeader(params.name)} style={{ height: 120, width: '100%', flex: 0, tintColor: getColor(params.name) }} resizeMode={'contain'} />
+						<Image source={{uri: params.headerImage}} style={{ height: 120, width: '100%', flex: 0, tintColor: getColor(params.name) }} resizeMode={'contain'} />
 						<View style={{
 							padding: 15,
 
@@ -360,19 +279,26 @@ export default class Site extends Component {
 								</Text>
 							</View>
 
-							<Text
+							<Animated.Text
 								style={{
 									textAlign: 'justify',
 									marginTop: 15,
 									fontFamily: "Lato-Light",
+									maxHeight: this.textHeight,
 									fontSize: 18
-								}}>{location.longDescription}</Text>
+								}}>{location.longDescription}</Animated.Text>
 						</View>
-						<TouchableOpacity onPress={this.readMore} style={{ flex: 0, height: 50, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', marginBottom: 30 }}>
+						{this.state.canReadMore && <TouchableOpacity onPress={this.readMore} style={{ flex: 0, width: '100%', height: 50, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', marginBottom: 30, marginTop: -25 }}>
+							<Image source={WhiteGradient} style={{position: 'absolute', top: -70, left: 0, right: 0, bottom: 0, width: '100%'}} resizeMode={'stretch'} />
 							<Text style={{ color: getColor(params.name), fontSize: 18, fontFamily: 'Lato-Bold' }}>Read More</Text>
 							<Text style={{ color: getColor(params.name), fontSize: 18 }}>{"\u25BC"}</Text>
+						</TouchableOpacity>}
+
+						<TouchableOpacity style={styles.done} onPress={this.goToContent}>
+							<Text style={styles.buttonText}>View Content</Text>
 						</TouchableOpacity>
 					</ScrollView>
+					
 				</Animated.View>
 
 				{showVideo ? (
@@ -385,12 +311,15 @@ export default class Site extends Component {
 							bottom: 0,
 							backfaceVisibility: 'hidden',
 							backgroundColor: Colors.white,
-							opacity: this.opacity
+							opacity: this.opacity,
+							justifyContent: 'center',
+							alignItems: 'center'
 						}}>
 						<Video
 							onEnd={this.videoEnded}
-							source={getVideo(params.name)}
-							rate={1}
+							onLoad={() => this.setState({loaded: true})}
+							source={{uri: params.splashVideo}}
+							rate={2}
 							style={{
 								position: 'absolute',
 								top: 0,
@@ -400,6 +329,12 @@ export default class Site extends Component {
 								backgroundColor: Colors.white
 							}}
 						/>
+						{!this.state.loaded ? (
+							<ActivityIndicator
+								animating={true}
+								size={'large'}
+								color={getColor(params.name)} />
+						) : null}
 					</Animated.View>
 				) : null}
 
@@ -408,3 +343,24 @@ export default class Site extends Component {
 	}
 }
 
+const styles = StyleSheet.create({
+	done: {
+		width: '50%',
+		borderRadius: 6,
+		backgroundColor: Colors.red,
+		alignItems: 'center',
+		justifyContent: 'center',
+		shadowColor: Colors.black,
+		shadowOffset: { width: 0, height: 5 },
+		shadowOpacity: 0.3,
+		shadowRadius: 5,
+		elevation: 7,
+		height: 50,
+		alignSelf: 'center',
+		marginBottom: 50
+	},
+	buttonText: {
+		fontSize: 18,
+		color: Colors.white
+	},
+})

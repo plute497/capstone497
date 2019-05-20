@@ -20,7 +20,8 @@ const { width, height } = Dimensions.get("window");
 
 export default class StoryView extends Component {
 	state = {
-		loaded: false
+		loaded: false,
+		removeClippedSubviews: false
 	};
 
 	playing = false;
@@ -39,17 +40,9 @@ export default class StoryView extends Component {
 		}
 
 		this.setState({ loaded: true }, () => {
-			Animated.sequence([
-				Animated.timing(this.animatedPosition, {
-					toValue: 0,
-					duration: 3000,
-					easing: Easing.linear
-				}),
-				Animated.timing(this.animatedHeight, {
-					toValue: width,
-					duration: 500
-				})
-			]).start();
+			setTimeout(() => {
+				this.setState({removeClippedSubviews: true});
+			}, 100);
 		});
 	}
 
@@ -113,11 +106,12 @@ export default class StoryView extends Component {
 				<FlatList
 					style={{ margin: 0 }}
 					data={params.images}
+					extraData={params.images}
 					renderItem={this.renderItem}
 					keyExtractor={(item, i) => String(i)}
 					pagingEnabled={true}
 					horizontal={true}
-					removeClippedSubviews={true}
+					removeClippedSubviews={this.state.removeClippedSubviews}
 					getItemLayout={(data, index) => ({
 						length: width,
 						offset: width * index,
@@ -126,7 +120,7 @@ export default class StoryView extends Component {
 					initialNumToRender={2}
 					windowSize={2}
 					maxToRenderPerBatch={2}
-					progressViewOffset={2}
+					progressViewOffset={1}
 					contentContainerStyle={{ backgroundColor: Colors.black }}
 				/>
 			</View>

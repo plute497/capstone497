@@ -25,9 +25,52 @@ const html = `
 	<script src='https://static-assets.mapbox.com/gl-pricing/dist/mapbox-gl.js'></script>
 	<link href='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+	#marker {
+		border: 2px solid #ffffff;
+		box-shadow: 0 2px 3px -1px rgba(0,0,0,0.4);
+	  }
+	  
+	  #marker:before {
+		  content: '';
+		  position: relative;
+		  display: block;
+		  width: 300%;
+		  height: 300%;
+		  box-sizing: border-box;
+		  margin-left: -100%;
+		  margin-top: -100%;
+		  border-radius: 45px;
+		  background-color: #01a4e9;
+		  animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+
+		}
+	  
+	  @keyframes pulse-ring {
+		0% {
+		  transform: scale(.33);
+		}
+		80%, 100% {
+		  opacity: 0;
+		}
+	  }
+	  
+	  @keyframes pulse-dot {
+		0% {
+		  transform: scale(.8);
+		}
+		50% {
+		  transform: scale(1);
+		}
+		100% {
+		  transform: scale(.8);
+		}
+	  }
+	</style>
 </head>
 
 <body>
+	<div id="marker" style="background-color: ${Colors.blue}; height: 15px; width: 15px; border-radius: 100%"></div>
 	<div id='map' style='position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px;'></div>
 	<script>
 		mapboxgl.accessToken = 'pk.eyJ1IjoiY2FyZC1iIiwiYSI6ImNqdG45bmVvYjA4Ymc0YW1xenR5YjE4dDgifQ.BSraC2WHncupQX8aWt_2dA';
@@ -51,21 +94,11 @@ const html = `
 		});
 
 		map.on('touchend', (e) => {
-			window.postMessage(JSON.stringify(map.getCenter()));
+			window.ReactNativeWebView.postMessage(JSON.stringify(map.getCenter()));
 		});
 
-		// var options = {
-		// 	enableHighAccuracy: false,
-		// 	timeout: 5000,
-		// 	maximumAge: 0
-		// };
-
-		// map.addControl(new mapboxgl.GeolocateControl({
-		// 	positionOptions: {
-		// 		enableHighAccuracy: true
-		// 	},
-		// 	trackUserLocation: true
-		// }));
+		let markerAdded = false;
+		let marker = new mapboxgl.Marker({element: document.getElementById('marker')});
 
 		document.addEventListener('message', function (data) {
 			let { command, lat, long, bounds } = JSON.parse(data.data);
@@ -75,10 +108,17 @@ const html = `
 					if(!moving) {
 						map.jumpTo({ center: [long, lat], zoom: 15, bearing: -25,  });
 					}
+
+					marker.setLngLat([long, lat]);
+
+					if(!markerAdded) {
+						marker.addTo(map);
+						markerAdded = true;
+					}
 				}
 
 				if(command === "bounds") {
-					window.postMessage(JSON.stringify(map.getBounds()))
+					window.ReactNativeWebView.postMessage(JSON.stringify(map.getBounds()))
 				}
 			} catch (e) {
 				//console.log(e);
@@ -159,8 +199,8 @@ export default class MapMain extends Component {
 		}
 	}
 
-	goToLocation = (name) => {
-		this.props.navigation.navigate("Site", { name: name });
+	goToLocation = (location) => {
+		this.props.navigation.navigate("Site", location);
 	}
 
 	mapMoved = (e) => {
@@ -239,7 +279,7 @@ export default class MapMain extends Component {
 							resizeMode={"contain"} />
 					</TouchableOpacity>
 				) : null}
-				<GeoFence ref={ref => this.geoFence = ref} goToLocation={this.goToLocation} lng={this.state.lng} lat={this.state.lat} timer={this.state.currentCount} />
+				<GeoFence locations={this.props.screenProps.locations} ref={ref => this.geoFence = ref} goToLocation={this.goToLocation} lng={this.state.lng} lat={this.state.lat} timer={this.state.currentCount} />
 			</View>
 		) : null;
 	}

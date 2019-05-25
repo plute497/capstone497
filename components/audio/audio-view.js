@@ -90,21 +90,29 @@ export default class AudioView extends Component {
 	}
 
 	linkToAr = () => {
+		//stop playing the audio
 		if (this.audioPlayer) {
 			this.audioPlayer.stop();
 		}
 
+		//navigate to ar view, passing reference of which ar scene to load by name
 		this.props.navigation.navigate("ArView", {
 			name: this.props.navigation.state.params.locationData.name
 		});
     };
     
     linkToVideo = () => {
+		//get locations from screen props
 		const { locations } = this.props.screenProps;
 
+		//find this location in locations data
         let loc = locations.find(loc => loc.name === this.props.navigation.state.params.locationData.name);
-        let video = loc.content.find(con => con.type === "video");
-        this.props.navigation.navigate("VideoView", {...video, name: this.props.navigation.state.params.locationData.name});
+		
+		//find video content attached to this location
+		let video = loc.content.find(con => con.type === "video");
+
+		//navigate to videoView passing location data for this video and location
+        this.props.navigation.navigate("VideoView", {...video, locationData: this.props.navigation.state.params.locationData});
     }
 
 	render() {

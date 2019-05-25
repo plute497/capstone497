@@ -7,6 +7,7 @@ import {
 	Platform,
 	Alert,
 	Animated,
+	ActivityIndicator,
 	Image,
 	Linking
 } from 'react-native';
@@ -245,7 +246,19 @@ export default class MapMain extends Component {
 					onMessage={this.onMessage}
 					onNavigationStateChange={this.navigationChange}
 					startInLoadingState={true}
-					renderLoading={() => (<View><Text>Loading</Text></View>)}
+					renderLoading={() => (
+						<View 
+							style={{
+								flex: 1, 
+								alignItems: 'center', 
+								justifyContent: 'center'
+							}}>
+							<ActivityIndicator 
+								size={"large"} 
+								color={Colors.blue} 
+								animating={true} />
+						</View>
+					)}
 					originWhitelist={['*']}
 					ref={ref => this.webview = ref}
 				/>

@@ -1,4 +1,4 @@
-let api = "http://142.93.27.45:8080";
+let api = "https://api.historicroutes.org";
 
 export const FetchVideos = () => {
     return fetch(api + "/video/fetch-videos", {

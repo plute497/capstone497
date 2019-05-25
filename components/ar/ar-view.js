@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity, Platform } from "react-native";
 
 import {
 	ViroARScene,
@@ -35,6 +35,13 @@ const bookMaterial = require("../../assets/res/CCHMbookmobile.mtl");
 
 const concreteMoldModel = require('../../res/Concrete_Mold.obj');
 const concreteSlabModel = require('../../res/Concrete_Slab.obj');
+const concreteSlabModel1 = require('../../res/Concrete_Slab_1.obj');
+const concreteSlabModel2 = require('../../res/Concrete_Slab_2.obj');
+const concreteSlabModel3 = require('../../res/Concrete_Slab_3.obj');
+const concreteSlabModel4 = require('../../res/Concrete_Slab_4.obj');
+const concreteSlabModel5 = require('../../res/Concrete_Slab_5.obj');
+const concreteSlabModel6 = require('../../res/Concrete_Slab_6.obj');
+const concreteSlabModel7 = require('../../res/Concrete_Slab_7.obj');
 const smithTowerModel = require('../../res/Smith_Tower.obj');
 
 const concreteMoldMateral = require('../../res/materials/Concrete_Mold.mtl');
@@ -57,11 +64,8 @@ const arRemoveListener = (name) => {
 const removeListeners = () => listeners = [];
 
 const fireEvent = (name, ...args) => {
-	console.log("fired event", name)
 	listeners.forEach(listener => {
-		console.log(listener.name, listener.func);
 		if(listener.name === name) {
-			console.log('calling func');
 			listener.func(...args);
 		}
 	});
@@ -126,37 +130,39 @@ export default class ArView extends Component {
 					ref={ref => this.scene = ref}
 					apiKey={api}
 				/>
-				<TouchableOpacity
-					style={{
-						position: 'absolute',
-						top: 30,
-						left: 15,
-						height: 40,
-						width: 40,
-						backgroundColor: Colors.blue,
-						alignItems: 'center',
-						justifyContent: 'center',
-						borderRadius: 25,
-						shadowOffset: { width: 0, height: 3 },
-						shadowOpacity: 0.2,
-						shadowRadius: 3,
-					}}
-					hitSlop={{
-						top: 15,
-						left: 15,
-						right: 15,
-						bottom: 15
-					}}
-					onPress={this.close}>
-					<Image
-						source={CloseIcon}
+				{Platform.OS === 'ios' ? (
+					<TouchableOpacity
 						style={{
-							height: 20,
-							width: 20,
-							tintColor: Colors.white
+							position: 'absolute',
+							top: 30,
+							left: 15,
+							height: 40,
+							width: 40,
+							backgroundColor: Colors.blue,
+							alignItems: 'center',
+							justifyContent: 'center',
+							borderRadius: 25,
+							shadowOffset: { width: 0, height: 3 },
+							shadowOpacity: 0.2,
+							shadowRadius: 3,
 						}}
-						resizeMode={"contain"} />
-				</TouchableOpacity>
+						hitSlop={{
+							top: 15,
+							left: 15,
+							right: 15,
+							bottom: 15
+						}}
+						onPress={this.close}>
+						<Image
+							source={CloseIcon}
+							style={{
+								height: 20,
+								width: 20,
+								tintColor: Colors.white
+							}}
+							resizeMode={"contain"} />
+					</TouchableOpacity>
+				) : null}
 
 				{this.state.showBuildingInstructions ? (
 					<View style={{position: 'absolute', bottom: 0, left: 0, right: 0, padding: 15, opacity: 0.8, backgroundColor: Colors.white, alignItems: 'center', justifyContent: 'center'}}>
@@ -199,11 +205,13 @@ export class SmithScene extends Component {
 			'slab6',
 			'slab7',
 		],
+		shouldLoad: [],
 		shouldDelay: true
 	};
 
 	slabs = [];
 	loadedSlabs = 0;
+	shouldLoadSlab = 0;
 
 	onDragTower = ([x, y, z]) => {
 		console.log(y);
@@ -215,6 +223,12 @@ export class SmithScene extends Component {
 	componentDidMount() {
 		// alert('firing show building');
 		fireEvent('show-building');
+
+
+	}
+
+	loadSlab = () => {
+
 	}
 
 	showContents = () => {
@@ -225,7 +239,7 @@ export class SmithScene extends Component {
 		this.loadedSlabs += 1;
 		console.log("load ended for", this.loadedSlabs);
 
-		if(this.loadedSlabs === 6) {
+		if(this.loadedSlabs === 1) {
 			this.setState({playAnimations: true});
 		}
 	}
@@ -254,18 +268,11 @@ export class SmithScene extends Component {
 					shadowOpacity={.7} color="#ffffff" direction={[-1, -1, 0]} /> 
 
 				<ViroARPlaneSelector onPlaneSelected={this.showContents}>
-					{/* {this.state.showContents && ( */}
 						<ViroNode scale={[1,1,1]} position={[0,0,-0.5]}>
-						{/* <ViroDirectionalLight castsShadow={true}
-							shadowMapSize={1024}
-							shadowNearZ={0.1}
-							shadowFarZ={20}
-							shadowOpacity={.7} color="#ffffcc" direction={[-1, -1, -1]} /> */}
 							<Viro3DObject
 								source={concreteMoldModel}
 								ref={ref => (this.mold = ref)}
 								materials={["mold"]}
-								//onDrag={this.onDragTower}
 								resources={[concreteMoldMateral]}
 								position={[0, -0.12, 0]}
 								rotation={[0, 0, 0]}
@@ -276,10 +283,10 @@ export class SmithScene extends Component {
 							/>
 							<Viro3DObject
 								source={concreteSlabModel}
-								ref={ref => (this.slabs[0] = ref)}
+								// ref={ref => (this.slabs[0] = ref)}
 								materials={["concrete"]}
-								onDrag={this.onDragTower}
-								resources={[concreteSlabMaterial]}
+								// onDrag={this.onDragTower}
+								//resources={[concreteSlabMaterial]}
 								position={[0, slabY, 0]}
 								rotation={[0, 0, 0]}
 								scale={[0.01, 0.01, 0.01]}
@@ -288,11 +295,11 @@ export class SmithScene extends Component {
 								type={"OBJ"}
 							/>
 							<Viro3DObject
-								source={concreteSlabModel}
-								ref={ref => (this.slabs[1] = ref)}
+								source={concreteSlabModel1}
+								// ref={ref => (this.slabs[1] = ref)}
 								materials={["concrete"]}
-								onDrag={this.onDragTower}
-								resources={[concreteSlabMaterial]}
+								// onDrag={this.onDragTower}
+								//resources={[concreteSlabMaterial]}
 								position={[0, slabY, 0]}
 								rotation={[0, 0, 0]}
 								scale={[0.01, 0.01, 0.01]}
@@ -300,11 +307,11 @@ export class SmithScene extends Component {
 								type={"OBJ"}
 							/>
 							<Viro3DObject
-								source={concreteSlabModel}
-								ref={ref => (this.slabs[2] = ref)}
+								source={concreteSlabModel2}
+								// ref={ref => (this.slabs[2] = ref)}
 								materials={["concrete"]}
-								onDrag={this.onDragTower}
-								resources={[concreteSlabMaterial]}
+								// onDrag={this.onDragTower}
+								//resources={[concreteSlabMaterial]}
 								position={[0, slabY, 0]}
 								rotation={[0, 0, 0]}
 								scale={[0.01, 0.01, 0.01]}
@@ -312,11 +319,11 @@ export class SmithScene extends Component {
 								type={"OBJ"}
 							/>
 							<Viro3DObject
-								source={concreteSlabModel}
-								ref={ref => (this.slabs[3] = ref)}
+								source={concreteSlabModel3}
+								// ref={ref => (this.slabs[3] = ref)}
 								materials={["concrete"]}
-								onDrag={this.onDragTower}
-								resources={[concreteSlabMaterial]}
+								// onDrag={this.onDragTower}
+								//resources={[concreteSlabMaterial]}
 								position={[0, slabY, 0]}
 								rotation={[0, 0, 0]}
 								scale={[0.01, 0.01, 0.01]}
@@ -325,11 +332,11 @@ export class SmithScene extends Component {
 								type={"OBJ"}
 							/>
 							<Viro3DObject
-								source={concreteSlabModel}
-								ref={ref => (this.slabs[4] = ref)}
+								source={concreteSlabModel4}
+								// ref={ref => (this.slabs[4] = ref)}
 								materials={["concrete"]}
-								onDrag={this.onDragTower}
-								resources={[concreteSlabMaterial]}
+								// onDrag={this.onDragTower}
+								//resources={[concreteSlabMaterial]}
 								position={[0, slabY, 0]}
 								rotation={[0, 0, 0]}
 								scale={[0.01, 0.01, 0.01]}
@@ -338,11 +345,11 @@ export class SmithScene extends Component {
 								type={"OBJ"}
 							/>
 							<Viro3DObject
-								source={concreteSlabModel}
-								ref={ref => (this.slabs[5] = ref)}
+								source={concreteSlabModel5}
+								// ref={ref => (this.slabs[5] = ref)}
 								materials={["concrete"]}
-								onDrag={this.onDragTower}
-								resources={[concreteSlabMaterial]}
+								// onDrag={this.onDragTower}
+								//resources={[concreteSlabMaterial]}
 								position={[0, slabY, 0]}
 								rotation={[0, 0, 0]}
 								scale={[0.01, 0.01, 0.01]}
@@ -351,11 +358,11 @@ export class SmithScene extends Component {
 								type={"OBJ"}
 							/>
 							<Viro3DObject
-								source={concreteSlabModel}
-								ref={ref => (this.slabs[6] = ref)}
+								source={concreteSlabModel6}
+								// ref={ref => (this.slabs[6] = ref)}
 								materials={["concrete"]}
-								onDrag={this.onDragTower}
-								resources={[concreteSlabMaterial]}
+								// onDrag={this.onDragTower}
+								//resources={[concreteSlabMaterial]}
 								position={[0, slabY, 0]}
 								rotation={[0, 0, 0]}
 								scale={[0.01, 0.01, 0.01]}
@@ -364,11 +371,11 @@ export class SmithScene extends Component {
 								type={"OBJ"}
 							/>
 							<Viro3DObject
-								source={concreteSlabModel}
-								ref={ref => (this.slabs[7] = ref)}
+								source={concreteSlabModel7}
+								// ref={ref => (this.slabs[7] = ref)}
 								materials={["concrete"]}
-								onDrag={this.onDragTower}
-								resources={[concreteSlabMaterial]}
+								// onDrag={this.onDragTower}
+								//resources={[concreteSlabMaterial]}
 								position={[0, slabY, 0]}
 								rotation={[0, 0, 0]}
 								scale={[0.01, 0.01, 0.01]}
@@ -522,6 +529,7 @@ export class CowScene extends Component {
 	
 	componentDidMount() {
 		this.animationLoop();
+		this.replayAudio();
 		// this.animationInterval = setInterval(this.animationLoop, 10000);
 	}
 
@@ -541,11 +549,16 @@ export class CowScene extends Component {
 		this.setState({currentAnimation: this.animationSets[2]});
 	}
 
+	replayAudio = () => {
+		if(this.sound) {
+			this.sound.seekToTime(0);
+		}
+	}
+
 	render() {
 		return (
 			<ViroARScene
 				style={{ flex: 1 }}
-				displayPointCloud={true}
 				onTrackingUpdated={this._onInitialized}>
 				<ViroDirectionalLight castsShadow={true}
 					shadowMapSize={1024}
@@ -564,8 +577,16 @@ export class CowScene extends Component {
 							rotation={[0, 0, 0]}
 							scale={[0.01, 0.01, 0.01]}
 							animation={this.state.currentAnimation[1]}
+							onClick={this.replayAudio}
 							type={"VRX"}
 						/>	
+						<ViroSpatialSound
+							source={require('../../res/moo.mp3')}
+							minDistance={0}
+							maxDistance={10}
+							ref={ref => this.sound = ref}
+							paused={false}
+							position={[0,0,0]} />
 					</ViroNode>
 					<ViroQuad position={[0, -1.5, 0]} height={20} width={20} rotation={[-90, 0, 0]} arShadowReceiver={true} />
 			</ViroARScene>
@@ -694,7 +715,7 @@ ViroMaterials.createMaterials({
 		metalness: 0.2,
 		lightingModel: "Lambert",
 		diffuseColor: "#eeeeee",
-		roughnessTexture: require('../../res/ConcreteTexture.jpg')
+		roughnessTexture: require('../../res/concrete_texture.jpg')
 	  },
 	concrete: {
 		shininess: 1.0,
@@ -703,7 +724,7 @@ ViroMaterials.createMaterials({
 		wrapS: "Repeat",
 		wrapT: "Repeat",
 		diffuseColor: "#999999",
-		roughnessTexture: require('../../res/ConcreteTexture.jpg')
+		roughnessTexture: require('../../res/concrete_texture.jpg')
 	},
 	mold: {
 		shininess: 1.5,

@@ -1,4 +1,4 @@
-let api = "http://165.22.146.157:8080";
+let api = "https://api.historicroutes.org";
 
 export const FetchLocations = () => {
     console.log("going to fetch locations...", api + "/location-data");

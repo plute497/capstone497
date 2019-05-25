@@ -319,14 +319,15 @@ export default class Site extends Component {
 							onEnd={this.videoEnded}
 							onLoad={() => this.setState({loaded: true})}
 							source={{uri: params.splashVideo}}
-							rate={2}
+							rate={1}
 							style={{
 								position: 'absolute',
 								top: 0,
 								left: 0,
 								right: 0,
 								bottom: 0,
-								backgroundColor: Colors.white
+								backgroundColor: Colors.white,
+								opacity: this.state.loaded ? 1 : 0
 							}}
 						/>
 						{!this.state.loaded ? (

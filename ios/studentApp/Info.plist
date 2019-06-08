@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>4</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -47,6 +47,12 @@
 	<string>Use for Map Location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Needed to view map location</string>
+	<key>NSMainNibFile</key>
+	<string>LaunchScreen</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Needed to record audio for story submission</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Needed to upload photos for story submission</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Lato-Black.ttf</string>
@@ -66,6 +72,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIRequiresFullScreen</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

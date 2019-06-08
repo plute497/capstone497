@@ -76,12 +76,12 @@ const html = `
 	<div id="marker" style="background-color: ${Colors.blue}; height: 15px; width: 15px; border-radius: 100%"></div>
 	<div id='map' style='position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px;'></div>
 	<script>
-		mapboxgl.accessToken = 'pk.eyJ1IjoiY2FyZC1iIiwiYSI6ImNqdG45bmVvYjA4Ymc0YW1xenR5YjE4dDgifQ.BSraC2WHncupQX8aWt_2dA';
+		mapboxgl.accessToken = 'pk.eyJ1IjoiY2NobXVzZXVtIiwiYSI6ImNqdzg4ZDQ5bjEybGM0YXFrd3Zib2o4aTAifQ.ZhnuJ9Tsq7etatt2OyxhpA';
 		let bounds = new mapboxgl.LngLatBounds([-122.68101379537353, 45.61673251292356], [-122.66463567033702, 45.63848011716303]);
 		
 		const map = new mapboxgl.Map({
 			container: 'map',
-			style: 'mapbox://styles/card-b/cju1tmxi71ojf1fo0ongxvlqq',
+			style: 'mapbox://styles/cchmuseum/cjw8mki2y5shp1dnt6fudw1w8',
 			center: [-122.671605, 45.627714],
 			zoom: 16,
 			pitch: 40,

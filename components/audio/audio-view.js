@@ -12,12 +12,15 @@ import {
 } from "react-native";
 
 import { Player, Recorder, MediaStates } from "react-native-audio-toolkit";
+import PlayButton from '../images/play.png';
+import PauseButton from '../images/pause.png';
 
 const { width, height } = Dimensions.get("window");
 
 export default class AudioView extends Component {
 	state = {
 		// loaded: false
+		playing: false
 	};
 
 	playing = false;
@@ -32,6 +35,8 @@ export default class AudioView extends Component {
 
 		try {
 			this.audioPlayer = new Player(params.location).play();
+			this.setState({playing: true});
+			this.playing = true;
 		} catch (e) {
 			console.log(e);
 		}
@@ -60,23 +65,25 @@ export default class AudioView extends Component {
 				this.audioPlayer.play(error => {
 					if (error) {
 						//the audio couldn't be played, so we better tell the user an error has happened
-						alert("Could not play audio file");
+						//alert("Could not play audio file");
 						return;
 					}
 
 					//now that it's playing, we set the variable to true
 					this.playing = true;
+					this.setState({playing: true});
 				});
 			} else {
 				//the audio file IS playing, so we want to pause it
 				this.audioPlayer.pause(error => {
 					if (error) {
-						alert("Could not pause audio file");
+						//alert("Could not pause audio file");
 						return;
 					}
 
 					//sets playing to false so that the next time the user hits the button they'll resume playing
 					this.playing = false;
+					this.setState({playing: false});
 				});
 			}
 		}
@@ -136,13 +143,34 @@ export default class AudioView extends Component {
 						resizeMode={"cover"}
 						source={{uri: params.thumbnail}}
 					/>
+					<Animated.View style={{alignSelf: 'center', paddingTop: 15, marginTop: this.animatedHeight}}>
+						<TouchableOpacity 
+							style={{
+								height: 50, 
+								width: 50, 
+								backgroundColor: Colors.black, 
+								alignItems: 'center', 
+								justifyContent: 'center',
+								borderRadius: 25,
+								shadowOffset: { width: 0, height: 3 },
+								shadowOpacity: 0.2,
+								shadowRadius: 3,
+								elevation: 3}}
+								onPress={this.toggleAudio}>
+							<Image 
+								style={{height: 25,
+									width: 25}}
+								source={this.state.playing ? PauseButton : PlayButton} />
+						</TouchableOpacity>
+					</Animated.View>
+					
 					<Animated.Text
 						style={{
 							fontFamily: "Lato-Regular",
 							lineHeight: 20,
 							fontSize: 16,
 							padding: 15,
-							marginTop: this.animatedHeight,
+							//marginTop: this.animatedHeight,
 							width: width - 15
 						}}>
 						{params.text}

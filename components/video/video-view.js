@@ -84,7 +84,6 @@ export default class VideoView extends Component {
                 }
             }
         }
-        
     }
 
     togglePaused = () => {
@@ -198,7 +197,7 @@ export default class VideoView extends Component {
             <View style={{flex: 1, backgroundColor: Colors.white}}>
                 {!this.state.fullscreen && (
                     <View style={{height: 120, width: '100%', elevation: 10}}>
-                        <Image source={{uri: params.thumbnail}} resizeMode={'cover'} style={{position: 'absolute', height: '100%', width: '100%'}} />
+                        <Image source={{uri: params.locationData.backgroundImage}} resizeMode={'cover'} style={{position: 'absolute', height: '100%', width: '100%'}} />
                         <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, opacity: 0.5, backgroundColor: getColor(params.locationData.name)}}></View>
                         <Image source={{uri: params.locationData.headerImage}} resizeMode={'contain'} style={{position: 'absolute', height: '100%', width: '100%'}} />
                     </View>
@@ -239,59 +238,13 @@ export default class VideoView extends Component {
                         </Animated.View>
                 </View>
                 {!this.state.fullscreen && (
-                    <View style={{flex: 1, padding: 15}}>
-                        <Text style={{fontFamily: 'Lato-Light', fontSize: 25, textAlign: 'center', marginBottom: 15, textTransform: 'uppercase'}}>{params.title}</Text>
-                        <View style={{flex: 0, flexDirection: 'row', marginBottom: 15, height: imageSize}}>
-                            <View style={{paddingRight: 15, width: width - imageSize - 30}}>
-                                <Text numberOfLines={5} style={{ fontSize: 18, fontFamily: 'Lato-Light'}}>{cleanText(params.content)}</Text>
-                                {/* <TouchableOpacity onPress={this.openModal} style={{height: 50, alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.5)', flexDirection: 'row', alignSelf: 'center'}}>
-                                    <Text style={{color: getColor(params.name), fontSize: 18, fontFamily: 'Lato-Bold'}}>Read More</Text>
-                                    <Text style={{color: getColor(params.name), fontSize: 18}}>{"\u25BC"}</Text>
-                                </TouchableOpacity> */}
-                            </View>
-                            
-                            {/* <View style={{backgroundColor: Colors.orange, width: imageSize, height: imageSize}}></View> */}
+                    <View style={{flex: 1, backgroundColor: Colors.lightGray}}>
+                        <View style={{flex: 0, backgroundColor: Colors.darkGray, padding: 15}}>
+                            <Text style={{fontFamily: 'Lato-Bold', color: Colors.lightGray, fontSize: 16, textAlign: 'center'}}>{params.title}</Text>
                         </View>
-                        
                     </View>
                 )}
                 
-                <Modal
-                    animationType={'slide'}
-                    transparent={true}
-                    visible={this.state.showExtra && !this.state.fullscreen}
-                    onRequestClose={() => {}}>
-                    <View style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}>
-                        <View style={{
-                            backgroundColor: Colors.white,
-                            borderRadius: 6,
-                            padding: 15,
-                            flex: 0,
-                            margin: 50,
-                            maxHeight: '50%',
-                            shadowColor: Colors.black,
-                            shadowOffset: { width: 0, height: 5},
-                            shadowOpacity: 0.3,
-                            shadowRadius: 50,
-                        }}>
-                            <TouchableOpacity style={{borderTopLeftRadius: 6, borderTopRightRadius: 6, alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 0, left: 0, right: 0, height: 50, backgroundColor: getColor(params.locationData.name)}} onPress={this.closeModal}>
-                                <Text style={{color: Colors.white, fontSize: 18, fontFamily: 'Lato-Black'}}>Close</Text>
-                            </TouchableOpacity>
-                            <ScrollView style={{flex: 0, marginTop: 50}}>
-                                <Text>{cleanText(params.content)}</Text>
-                            </ScrollView>
-                            
-                        </View>
-                    </View>
-                </Modal>
             </View>
         ) : <View></View>
     }

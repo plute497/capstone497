@@ -1,6 +1,6 @@
 # This file uses centimeters as units for non-parametric coordinates.
 
-mtllib CCHMbookmobile.mtl
+mtllib CCHMbookmobile_mat.mtl
 g default
 v -3.740405 5.417472 -0.621605
 v -3.740405 5.417472 -0.404813

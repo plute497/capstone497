@@ -44,6 +44,7 @@
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		BC332ED22230E6EE00BB277C /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC332EBC2230E6DC00BB277C /* libRCTVideo.a */; };
 		BC5646802279577C00118FFB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCA8CF38223752E80047553C /* CoreLocation.framework */; };
+		BC95F095229A3CBC007C5187 /* libRNCWebView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC95F093229A3CAD007C5187 /* libRNCWebView.a */; };
 		BCA665C322377D2600604D42 /* libReactNativeAudioToolkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCA665C122377D0D00604D42 /* libReactNativeAudioToolkit.a */; };
 		BCA8CF4B223753320047553C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCA8CF4A223753320047553C /* SystemConfiguration.framework */; };
 		BCA8CF4D223753380047553C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCA8CF4C223753380047553C /* UIKit.framework */; };
@@ -350,6 +351,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNGestureHandler;
 		};
+		BC95F092229A3CAD007C5187 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC95F067229A3CAD007C5187 /* RNCWebView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNCWebView;
+		};
 		BCA665C022377D0D00604D42 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCA6659522377D0D00604D42 /* ReactNativeAudioToolkit.xcodeproj */;
@@ -414,6 +422,7 @@
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B493D81CA3EA4D4395458DED /* Lato-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Black.ttf"; path = "../assets/fonts/Lato-Black.ttf"; sourceTree = "<group>"; };
 		BC332EA62230E6DC00BB277C /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/ios/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
+		BC95F067229A3CAD007C5187 /* RNCWebView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCWebView.xcodeproj; path = "../node_modules/react-native-webview/ios/RNCWebView.xcodeproj"; sourceTree = "<group>"; };
 		BCA6659522377D0D00604D42 /* ReactNativeAudioToolkit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeAudioToolkit.xcodeproj; path = "../node_modules/react-native-audio-toolkit/ios/ReactNativeAudioToolkit/ReactNativeAudioToolkit.xcodeproj"; sourceTree = "<group>"; };
 		BCA8CF28223752040047553C /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsBase.framework; path = GoogleMaps/GoogleMapsBase.framework; sourceTree = "<group>"; };
 		BCA8CF2A2237521D0047553C /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = GoogleMaps/GoogleMaps.framework; sourceTree = SOURCE_ROOT; };
@@ -475,6 +484,7 @@
 				F8D6767273C6414A97177612 /* libRNGestureHandler.a in Frameworks */,
 				BC332ED22230E6EE00BB277C /* libRCTVideo.a in Frameworks */,
 				BCA665C322377D2600604D42 /* libReactNativeAudioToolkit.a in Frameworks */,
+				BC95F095229A3CBC007C5187 /* libRNCWebView.a in Frameworks */,
 				0CDF3404CD3FE5DF96D179FF /* Pods_studentApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -682,6 +692,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				BC95F067229A3CAD007C5187 /* RNCWebView.xcodeproj */,
 				BCA6659522377D0D00604D42 /* ReactNativeAudioToolkit.xcodeproj */,
 				BC332EA62230E6DC00BB277C /* RCTVideo.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -788,6 +799,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		BC95F068229A3CAD007C5187 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BC95F093229A3CAD007C5187 /* libRNCWebView.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		BCA6659622377D0D00604D42 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -886,11 +905,11 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = WE775FB8C6;
+						DevelopmentTeam = YP4B923M8W;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = WE775FB8C6;
+						DevelopmentTeam = YP4B923M8W;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -972,6 +991,10 @@
 				{
 					ProductGroup = BCA6659622377D0D00604D42 /* Products */;
 					ProjectRef = BCA6659522377D0D00604D42 /* ReactNativeAudioToolkit.xcodeproj */;
+				},
+				{
+					ProductGroup = BC95F068229A3CAD007C5187 /* Products */;
+					ProjectRef = BC95F067229A3CAD007C5187 /* RNCWebView.xcodeproj */;
 				},
 				{
 					ProductGroup = BC3EF32222289CDF00C5FD0A /* Products */;
@@ -1262,6 +1285,13 @@
 			remoteRef = BC3EF32522289CDF00C5FD0A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		BC95F093229A3CAD007C5187 /* libRNCWebView.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNCWebView.a;
+			remoteRef = BC95F092229A3CAD007C5187 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		BCA665C122377D0D00604D42 /* libReactNativeAudioToolkit.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1496,7 +1526,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = WE775FB8C6;
+				DEVELOPMENT_TEAM = YP4B923M8W;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1527,7 +1557,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = WE775FB8C6;
+				DEVELOPMENT_TEAM = YP4B923M8W;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
@@ -1556,7 +1586,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = WE775FB8C6;
+				DEVELOPMENT_TEAM = YP4B923M8W;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1575,7 +1605,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.historicroutes;
+				PRODUCT_BUNDLE_IDENTIFIER = org.historicroutes.historicroutes;
 				PRODUCT_NAME = studentApp;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1588,7 +1618,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WE775FB8C6;
+				DEVELOPMENT_TEAM = YP4B923M8W;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1607,7 +1637,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.historicroutes;
+				PRODUCT_BUNDLE_IDENTIFIER = org.historicroutes.historicroutes;
 				PRODUCT_NAME = studentApp;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";

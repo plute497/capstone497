@@ -31,7 +31,7 @@ import Colors from '../colors';
 const cowFBX = require("../../res/cow.vrx");
 // const cowTexture = require("../../assets/res/cow-text.png");
 const bookModel = require("../../res/CCHMbookmobile.obj");
-const bookMaterial = require("../../assets/res/CCHMbookmobile.mtl");
+const bookMaterial = Platform.OS === "ios" ? require("../../res/CCHMbookmobile_mat.mtl") : require("../../res/CCHMbookmobile_mat.mtl");
 
 const concreteMoldModel = require('../../res/Concrete_Mold.obj');
 const concreteSlabModel = require('../../res/Concrete_Slab.obj');
@@ -268,7 +268,7 @@ export class SmithScene extends Component {
 					shadowOpacity={.7} color="#ffffff" direction={[-1, -1, 0]} /> 
 
 				<ViroARPlaneSelector onPlaneSelected={this.showContents}>
-						<ViroNode scale={[1,1,1]} position={[0,0,-0.5]}>
+						<ViroNode scale={[1,1,1]} position={[0,0,0]}>
 							<Viro3DObject
 								source={concreteMoldModel}
 								ref={ref => (this.mold = ref)}
@@ -473,21 +473,27 @@ export class BookScene extends Component {
 						onClick={this.touch}
 						animation={{name: 'truckTouch', loop: true, run: this.state.touched}}
 					/>
-					<ViroSpatialSound
-						source={require('../../res/carhonk.mp3')}
-						minDistance={0}
-						maxDistance={10}
-						ref={ref => this.sound = ref}
-						paused={false}
-						position={[0, -1.5, -5]} />
-					<ViroSpatialSound
-						source={require('../../res/truckidle.mp3')}
-						minDistance={5}
-						maxDistance={100}
-						loop={true}
-						paused={false}
-						rolloffModel={"Logarithmic"}
-						position={[0, -1.5, -5]} />
+					{Platform.OS !== 'ios' ? (
+						<ViroSpatialSound
+							source={require('../../res/carhonk.mp3')}
+							minDistance={0}
+							maxDistance={10}
+							//ref={ref => this.sound = ref}
+							paused={false}
+							volume={1}
+							position={[0, -1.5, -5]} />
+					) : null}
+					{Platform.OS !== 'ios' ? (
+						<ViroSpatialSound
+							source={require('../../res/truckidle.mp3')}
+							minDistance={5}
+							maxDistance={100}
+							loop={true}
+							paused={false}
+							volume={1}
+							rolloffModel={"Logarithmic"}
+							position={[0, -1.5, -5]} />
+					) : null}
 				</ViroNode>
 				
 			</ViroARScene>
@@ -572,7 +578,8 @@ export class CowScene extends Component {
 						<Viro3DObject
 							source={cowFBX}
 							ref={ref => (this.object = ref)}
-							resources={[require('../../assets/res/cow_texture.png')]}
+							//was ../../assets/res/cow_texture.png in android
+							resources={Platform.OS === "ios" ? [require('../../res/cow_texture.png')] : [require('../../assets/res/cow_texture.png')]}
 							position={[0, 0, 0]}
 							rotation={[0, 0, 0]}
 							scale={[0.01, 0.01, 0.01]}
@@ -584,8 +591,9 @@ export class CowScene extends Component {
 							source={require('../../res/moo.mp3')}
 							minDistance={0}
 							maxDistance={10}
-							ref={ref => this.sound = ref}
+							//ref={ref => this.sound = ref}
 							paused={false}
+							volume={1}
 							position={[0,0,0]} />
 					</ViroNode>
 					<ViroQuad position={[0, -1.5, 0]} height={20} width={20} rotation={[-90, 0, 0]} arShadowReceiver={true} />

@@ -22,7 +22,7 @@ export default function Card(props) {
                         animating={true}
                         color={Colors.white}
                         style={{alignSelf: 'center'}} />
-                    <Image resizeMode={'cover'} style={[styles.image]} source={props.uri ? {uri: props.uri} : props.thumbnail} />
+                    <Image resizeMode={'contain'} style={[styles.image]} source={props.uri ? {uri: props.uri} : props.thumbnail} />
                 </View>
                 <View style={styles.dataWrapper}>
                     <Text style={[styles.title, {color: props.color}]}>{props.title}</Text>
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         marginBottom: 30
     },
     imageWrapper: {
-        height: (width - 30) * (9/16),
+        height: (width - 31) * (9/16),
         width: '100%',
         overflow: 'hidden',
         borderTopLeftRadius: 6,
@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
     image: {
         ...StyleSheet.absoluteFillObject,
         width: '100%',
-        height: '100%'
+        height: '100%',
+        backgroundColor: Colors.black
     },
     dataWrapper: {
         paddingHorizontal: 15,

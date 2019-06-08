@@ -9,7 +9,8 @@ export default Colors = {
     transWhite: 'rgba(255, 255, 255, 0.8)',
     black: '#000000',
     lightGray: '#dddddd',
-    lighterGray: '#f5f5f5'
+    lighterGray: '#f5f5f5',
+    darkGray: '#333333'
 };
 
 export const getColor = (name) => {
